@@ -6,55 +6,39 @@
 #    By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2021/10/25 21:20:52 by hyeonsok         ###   ########.fr        #
+#    Updated: 2021/10/31 19:17:55 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-.SUFFIXES : .c .o
-
-#### Start of system configuration section. ####
-srcdir = ./src
-
 CC = clang
+CFLAGS = -Wall -Werror -Wextra
 
-LIBS =
-CFLAGS = $(include_dirs) -Wall -Werror -Wextra
-include_dirs = -Iinclude
-#### End of system configuration section. ####
+INCLUDES = -I ./include/ -I /Users/$(USER)/.brew/opt/readline/include/
+LIBS = -L /Users/$(USER)/.brew/opt/readline/lib/ -lreadline
+
+SRCDIR := ./src
+OBJDIR := ./obj
+OBJS	= $(addprefix $(OBJDIR)/, main.o)
 
 NAME = minishell
-
-SRCS	= main.c
-OBJS	= $(SRCS:.c=.o)
-OBJDIR	= ./obj/
-SRCDIR	= ./src/
-OBJS	= $(addprefix $(OBJDIR), main.o)
-
-
-
-
-
-
-
-
-.PHONY:	$(OBJS)
-$(OBJS): | $(OBJDIR)
-$(OBJDIR):
-			mkdir $(OBJDIR)
-
-$(OBJDIR)/%.o : $(SRCDIR)/%.c
-			$(COMPILE.c) $(OUTPUT_OPTION) $<
 
 .PHONY:		all
 all:		$(NAME)
 
+$(OBJDIR)/%.o : $(SRCDIR)/%.c
+			$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
+
 .PHONY:		NAME
-$(NAME):	$(OBJS)
-			$(CC) $(OBJS) -o $(NAME)
+$(NAME):	$(OBJDIR) $(OBJS)
+			$(CC) $(INCLUDES) $(OBJS) -o $(NAME) $(LIBS)
+
+$(OBJS): | $(OBJDIR)
+$(OBJDIR):
+			mkdir $(OBJDIR)
 
 .PHONY:		clean
 clean:
-			$(RM) -r $(OBJS)
+			$(RM) -r $(OBJDIR)
 
 .PHONY:		fclean
 fclean:		clean
