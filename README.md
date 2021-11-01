@@ -34,7 +34,7 @@
 
 - [ ] `$?` 경우 `g_exit_status` 값 출력
 
-- [ ] option `-n == -nnnnn` 동일 하게 출력
+- [x] option `-n == -nnnnn` 동일 하게 출력
 
 - [ ] `; ;`  or ` | |`  이면 `syntax error` 처리
 
