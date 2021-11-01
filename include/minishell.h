@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 19:20:34 by hyeonsok          #+#    #+#             */
-/*   Updated: 2021/10/31 18:05:40 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2021/11/01 17:09:58 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,10 @@
 # include <fcntl.h>
 # include <term.h>
 # include <termios.h>
+
+/*
+**ft_echo.c
+*/
+void ft_echo(char *args[]);
 
 #endif

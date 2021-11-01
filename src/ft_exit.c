@@ -5,12 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/11 15:43:38 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/08/19 14:58:56 by gpaeng           ###   ########.fr       */
+/*   Created: 2021/11/01 16:32:50 by gpaeng            #+#    #+#             */
+/*   Updated: 2021/11/01 16:32:51 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+
+
+#include "minishell.h"
 
 void    ft_exit(char **str)
 {

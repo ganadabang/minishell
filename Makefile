@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+         #
+#    By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2021/10/31 19:17:55 by hyeonsok         ###   ########.fr        #
+#    Updated: 2021/11/01 17:01:47 by gpaeng           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBS = -L /Users/$(USER)/.brew/opt/readline/lib/ -lreadline
 
 SRCDIR := ./src
 OBJDIR := ./obj
-OBJS	= $(addprefix $(OBJDIR)/, main.o)
+OBJS	= $(addprefix $(OBJDIR)/, main.o ft_echo.o)
 
 NAME = minishell
 

@@ -5,16 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/08/11 15:17:52 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/08/19 14:59:04 by gpaeng           ###   ########.fr       */
+/*   Created: 2021/11/01 16:32:39 by gpaeng            #+#    #+#             */
+/*   Updated: 2021/11/01 16:32:41 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
 
 // #include <stdio.h>
 // #include <stdlib.h>
 // #include <unistd.h>
+#include "minishell.h"
 
 // PWD 환경변수
 //https://www.unixtutorial.org/pwd-command-and-pwd-variable/
@@ -28,7 +28,3 @@ void ft_pwd(void)
 		exit(1); // 비정상 종료 => error
 	printf("%s\n", buf);
 }
-
-// int main(int argc, char *argv[]) {
-//     ft_pwd();
-// }

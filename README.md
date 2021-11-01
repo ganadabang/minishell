@@ -14,13 +14,13 @@
 
 #### < Case >
 
-- [ ] `args` 출력
-- [ ] 빈칸 여러개 -> 빈칸 하나로 출력
-- [ ] option `-n` 일 시 `\n` 개행 제거
+- [x] `args` 출력
+- [x] 빈칸 여러개 -> 빈칸 하나로 출력
+- [x] option `-n` 일 시 `\n` 개행 제거
 
-- [ ] `option flags`가 `0`이면 `\n` 개행 출력
+- [x] `option flags`가 `0`이면 `\n` 개행 출력
 
-- [ ] `single quote(' ')` 일 때 환경 변수를 치환하지 않고 그래도 출력
+- [x] `single quote(' ')` 일 때 환경 변수를 치환하지 않고 그래도 출력
 
   ```shell
   > echo '$PATH'
