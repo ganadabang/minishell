@@ -99,7 +99,7 @@
 
 #### < Case >
 
-- [ ] 현재 `directory 경로` 출력
+- [x] 현재 `directory 경로` 출력
 
 
 

@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 19:25:36 by hyeonsok          #+#    #+#             */
-/*   Updated: 2021/11/01 17:18:49 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/01 19:52:48 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	init_minishell(struct termios *term)
 
 int main(int argc, char *argv[])
 {
-	argc = 0;
-	ft_echo(argv);
+	UNUSED((void)argc);
+	
+	ft_pwd(argv);
 }
