@@ -30,9 +30,6 @@
   > PATH 경로 출력
   ```
 
-  
-
-- [ ] `$?` 경우 `g_exit_status` 값 출력
 
 - [x] option `-n == -nnnnn` 동일 하게 출력
 
