@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/25 19:20:34 by hyeonsok          #+#    #+#             */
-/*   Updated: 2021/11/02 14:55:40 by gpaeng           ###   ########.fr       */
+/*   Created: 2021/11/02 14:53:53 by gpaeng            #+#    #+#             */
+/*   Updated: 2021/11/02 14:55:55 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef BUILTINS_H
+# define BUILTINS_H
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <unistd.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include <term.h>
-# include <termios.h>
+# define UNUSED(x) (void)(x)
 
-# include "builtins.h"
+/*
+**ft_echo.c
+*/
+void ft_echo(char *args[]);
+
+/*
+**ft_pwd.c
+*/
+void ft_pwd(char *args[]);
+
 
 #endif
