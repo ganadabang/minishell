@@ -216,3 +216,7 @@ https://wiki.kldp.org/HOWTO/html/Adv-Bash-Scr-HOWTO/internal.html
 
 [https://velog.io/@hidaehyunlee/minishell-2.-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%A8-%EA%B5%AC%EC%A1%B0-%EB%B0%8F-%EA%B0%9C%EB%B0%9C-%EA%B8%B0%EB%A1%9D%EB%93%A4](https://velog.io/@hidaehyunlee/minishell-2.-프로그램-구조-및-개발-기록들)
 
+https://velog.io/@dogfootbirdfoot/Minishell-function
+
+
+https://gday2code.tistory.com/73
