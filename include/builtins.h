@@ -6,14 +6,13 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:53 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/11 15:30:09 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/11 17:37:01 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-# define UNUSED(x) (void)(x)
 #include <stddef.h>
 #include <stdlib.h>
 
@@ -26,6 +25,7 @@ char **ft_split(char const *s, char c);
 char *ft_strdup(const char *str);
 char *ft_strjoin(char const *s1, char const *s2);
 size_t ft_strlcpy(char *dest, const char *src, size_t size);
+int	ft_strncmp(const char *s1, const char *s2, size_t n);
 
 /*
 **ft_echo.c

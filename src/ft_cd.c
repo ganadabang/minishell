@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/10 21:21:31 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/11 16:42:19 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,32 @@ void ft_add_path(char **path, char slash)
     free(*path);
     *path = tmp;
 }
-
-static void ft_do_chdir(char *path)
+char    *ft_get_pwd(void)
 {
+    char buffer[4096];
+    char *pwd;
+
+    if (getcwd(buffer, 4096) == 0)
+    {
+        pwd = ft_get_env("PWD");
+        return (pwd);
+    }
+    pwd = ft_strdup(buffer);
+    return (pwd);
+}
+
+void    ft_set_env()
+{
+    
+}
+
+static void ft_do_chdir(char *path, char *oldpwd)
+{
+    char *pwd;
+
     chdir(path);
+    pwd = ft_get_pwd("PWD");
+    
 }
 
 // static void ft_set_home()
@@ -107,20 +129,6 @@ char *ft_get_env(char *path)
 
 
 
-char    *ft_get_pwd(void)
-{
-    char buffer[4096];
-    char *pwd;
-
-    if (getcwd(buffer, 4096) == 0)
-    {
-        pwd = ft_get_env("PWD");
-        return (pwd);
-    }
-    pwd = ft_strdup(buffer);
-    return (pwd);
-}
-
 void    ft_cd(char *args[])
 {
     char **splitted_path;
@@ -131,13 +139,12 @@ void    ft_cd(char *args[])
     i = 0;
     splitted_path = ft_split(*args, '/');
     pwd = ft_get_pwd();
-    printf("%s\n", pwd);
     // if (!splitted_path)
         //환경합수에서 HOME 찾아서 경로로 보내주기
     while (splitted_path[i])
     {
         ft_add_path(&splitted_path[i], '/');
-        ft_do_chdir(splitted_path[i]);
+        ft_do_chdir(splitted_path[i], pwd);
         i++;
     }
 }

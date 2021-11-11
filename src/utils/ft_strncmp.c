@@ -1,18 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_export.c                                        :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/02 14:53:12 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/11 18:17:39 by gpaeng           ###   ########.fr       */
+/*   Created: 2021/11/11 17:30:37 by gpaeng            #+#    #+#             */
+/*   Updated: 2021/11/11 17:32:18 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/builtins.h"
 
-void ft_export(char *args[])
+int ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-    
+    size_t i;
+
+    i = 0;
+    while (*s1 && *s2 && *s1 == *s2 && i < n)
+    {
+        s1++;
+        s2++;
+        i++;
+    }
+    if (i == n)
+        return (0);
+    return (*(unsigned char *)s1 - *(unsigned char *)s2);
 }

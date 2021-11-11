@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:28:29 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/06 14:29:48 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/11 16:48:22 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,13 @@
 
 void ft_env(char **args)
 {
+    char **env;
     
+    (void)args;
+    env = job.envp;
+    while (*env)
+    {
+        printf("%s\n", *env);
+        env++;
+    }
 }

@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:32:39 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/10 14:45:26 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/11 18:02:16 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void ft_pwd(char *args[])
 {
 	char buf[4096];
 
-	UNUSED((void)args);
+	(void)args;
 	if (getcwd(buf, 4096) == NULL)
 		exit(1); // 비정상 종료 => error
 	printf("%s\n", buf);
