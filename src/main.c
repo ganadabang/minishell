@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 19:25:36 by hyeonsok          #+#    #+#             */
-/*   Updated: 2021/11/03 18:01:04 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/10 17:38:49 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,39 @@ void	init_minishell(struct termios *term)
 // 	return (0);
 // }
 
+extern char **environ;
+
 int main(int argc, char *argv[])
 {
-	UNUSED((void)argc);
-	ft_echo(argv);
-	ft_pwd(argv);
+	char **new_argv;
+	char command[] = "cd";
+	int idx;
+
+	new_argv = (char **)malloc(sizeof(char *) * (argc + 1));
+
+	new_argv[0] = command;
+
+	for (idx = 1; idx < argc; idx++)
+	{
+		new_argv[idx] = argv[idx];
+	}
+
+	new_argv[argc] = NULL;
+	if (execve("/usr/bin/cd", new_argv, environ) == -1)
+	{
+		printf("execve >>> 에러\n");	
+	}
+	
+	// ft_echo(argv);
+	// ft_pwd(argv);
+	// ft_env(argv);
+	// ft_cd(argv);
+	if(chdir("include") == -1)
+	{
+		printf("이동 실패\n");
+	}
+	else {
+		printf("이동 성공");
+		
+	}
 }
