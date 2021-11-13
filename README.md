@@ -117,10 +117,9 @@
 
 #### < Case >
 
-- [ ] `export` , `export $환경변수`면 `print_export`
-- [ ] `export` 뒤에 인자가 1개이면 환경변수에 저장 X
-- [ ] `export key=value`이면 환경변수에 저장 (key에 숫자 있으면 안된다.)
-- [ ] `|` 뒤에 `export` 가 있으면 환경변수 생성 X
+- [x] `export` , `export $환경변수`면 `print_export`
+- [x] `export` 뒤에 인자가 1개이면 환경변수에 저장 X
+- [x] `export key=value`이면 환경변수에 저장 (key에 숫자 있으면 안된다.)
 
 
 
@@ -136,9 +135,8 @@
 
 #### < Case >
 
-- [ ] `unset 환경변수` 해당 환경 변수가 있으면 삭제 O
-- [ ] `unset 환경변수` 해당 환경 변수가 없으면 삭제 X
-- [ ] `|` 뒤에 `unset` 있으면 환경 변수 삭제 X
+- [x] `unset 환경변수` 해당 환경 변수가 있으면 삭제 O
+- [x] `unset 환경변수` 해당 환경 변수가 없으면 삭제 X
 
 
 
@@ -156,9 +154,9 @@
 
 #### < Case >
 
-- [ ] `env`  입력시 환경 변수 전체 출력
+- [x] `env`  입력시 환경 변수 전체 출력
 
-- [ ] `env $PATH` 입력 시 PATH값에 상관 없이 환경 변수 전체 출력 
+- [x] `env $PATH` 입력 시 PATH값에 상관 없이 환경 변수 전체 출력 
 
 - [ ] `env path` 입력 시 Error 출력
 
@@ -182,7 +180,7 @@
 
 #### < Case >
 
-- [ ] `exit` 입력 시 `exit` 출력 후 `shell` 끄기
+- [x] `exit` 입력 시 `exit` 출력 후 `shell` 끄기
 
 - [ ] `exit` 뒤의 숫자 인자 + 인자가 2개(인자 개수) 이상이면 `Error` 발생 후 `shell` 종료 X
 
