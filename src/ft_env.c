@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:28:29 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/11 16:48:22 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/12 17:40:19 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,30 @@
 // job.envp 에 환경변수 값이 저장되어 있습니다.
 #include "minishell.h"
 
+int ft_check_args_env(char **args)
+{
+    int i;
+
+    args++;
+    i = 0;
+    while (args[1][i])
+    {
+        if (args[1][i] == '/')
+            return (1);
+        i++;
+    }
+    return (0);
+}
+
 void ft_env(char **args)
 {
     char **env;
     
-    (void)args;
     env = job.envp;
+    if (ft_check_args_env(args))
+    {
+        printf("env: '%s': No such file or directory", args[1]);
+    }
     while (*env)
     {
         printf("%s\n", *env);

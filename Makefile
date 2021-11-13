@@ -6,7 +6,7 @@
 #    By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2021/11/11 15:29:35 by gpaeng           ###   ########.fr        #
+#    Updated: 2021/11/12 13:34:37 by gpaeng           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,6 @@ OBJ		=	main.o		\
 			ft_strjoin.o\
 			ft_strlcpy.o\
 			ft_strlen.o	\
-			ft_cd.o		\
 			ft_echo.o	\
 			
 OBJS	= $(addprefix $(OBJDIR)/, $(OBJ))

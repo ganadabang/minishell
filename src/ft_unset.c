@@ -6,12 +6,11 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 16:49:34 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/11 18:18:57 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/12 17:31:22 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int     ft_check_env(char *args)
 {
@@ -46,7 +45,7 @@ char *ft_set_malloc(int size)
     return (arr);
 }
 
-int     ft_cnt_arr(char *args[])
+int     ft_cnt_arg(char *args[])
 {
     int i;
 
@@ -78,7 +77,7 @@ void    ft_remove_env(char *args[], int env_line)
     int i;
     int envp_i;
     
-    cnt_env_arr = ft_cnt_arr(args) - 1;
+    cnt_env_arr = ft_cnt_arg(job.envp) - 1;
     env = ft_set_malloc(cnt_env_arr);
     i = 0;
     envp_i = 0;
@@ -102,6 +101,7 @@ void    ft_unset(char *args[])
 
     i = 0;
     env_line = 0;
+    args++;
     while (args[i])
     {
         env_line = ft_check_env(args[i]);
