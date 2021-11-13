@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:53 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/13 13:38:27 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/13 13:40:29 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ size_t ft_strlcpy(char *dest, const char *src, size_t size);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 char *ft_set_malloc(int size);
 void    ft_free_arr(char **arr);
+int     ft_cnt_arg(char *args[]);
 
 /*
 **ft_echo.c

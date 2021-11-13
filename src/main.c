@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 19:25:36 by hyeonsok          #+#    #+#             */
-/*   Updated: 2021/11/12 13:37:33 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/13 13:43:57 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,22 +59,7 @@ void	init_minishell(struct termios *term)
 // }
 
 extern char **environ;
-char *ft_set_malloc(int size)
-{
-    char *arr;
-    int i;
 
-    i = 0;
-    if (!(arr = (char *)malloc(sizeof(char) * size)))
-        return (0);
-    while (i < size)
-    {
-        arr[i] = 0;
-        i++;
-    }
-    arr[i] = '\0';
-    return (arr);
-}
 int main(int argc, char *argv[])
 {
 	char **new_argv;
