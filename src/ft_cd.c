@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/12 17:31:16 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/13 13:36:30 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,6 @@ static void ft_do_chdir(char *path_v, char *oldpwd)
     free(pwd);
 }
 
-char *ft_set_malloc(int size)
-{
-    char *arr;
-    int i;
-
-    i = 0;
-    if (!(arr = (char *)malloc(sizeof(char) * size)))
-        return (0);
-    while (i < size)
-    {
-        arr[i] = 0;
-        i++;
-    }
-    arr[i] = '\0';
-    return (arr);
-}
 
 char    *ft_get_pwd(char *path_n)
 {

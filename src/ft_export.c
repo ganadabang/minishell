@@ -6,40 +6,11 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:12 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/12 16:56:56 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/13 13:39:21 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int     ft_cnt_arg(char *args[])
-{
-    int i;
-
-    i = 0;
-    while (args[i])
-    {
-        i++;
-    }
-    return (i);
-}
-
-char *ft_set_malloc(int size)
-{
-    char *arr;
-    int i;
-
-    i = 0;
-    if (!(arr = (char *)malloc(sizeof(char) * size)))
-        return (0);
-    while (i < size)
-    {
-        arr[i] = 0;
-        i++;
-    }
-    arr[i] = '\0';
-    return (arr);
-}
 
 void ft_print_env_export(void)
 {
@@ -80,19 +51,6 @@ void ft_check_arg_form(char *args[])
         i++;
     }
     return (1);
-}
-
-void    ft_free_arr(char **arr)
-{
-    int i;
-
-    i = 0;
-    while (arr[i])
-    {
-        free(arr[i]);
-        i++;
-    }
-    free(arr);
 }
 
 void ft_update_env_export(char *args[])

@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 16:49:34 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/12 17:31:22 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/13 13:39:15 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,48 +26,6 @@ int     ft_check_env(char *args)
         i++;
     }
     return (-1);
-}
-
-char *ft_set_malloc(int size)
-{
-    char *arr;
-    int i;
-
-    i = 0;
-    if (!(arr = (char *)malloc(sizeof(char) * size)))
-        return (0);
-    while (i < size)
-    {
-        arr[i] = 0;
-        i++;
-    }
-    arr[i] = '\0';
-    return (arr);
-}
-
-int     ft_cnt_arg(char *args[])
-{
-    int i;
-
-    i = 0;
-    while (args[i])
-    {
-        i++;
-    }
-    return (i);
-}
-
-void    ft_free_arr(char **arr)
-{
-    int i;
-
-    i = 0;
-    while (arr[i])
-    {
-        free(arr[i]);
-        i++;
-    }
-    free(arr);
 }
 
 void    ft_remove_env(char *args[], int env_line)
