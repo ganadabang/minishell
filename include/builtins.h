@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:53 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/13 13:40:29 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/14 15:47:28 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n);
 char *ft_set_malloc(int size);
 void    ft_free_arr(char **arr);
 int     ft_cnt_arg(char *args[]);
+int		ft_isdigit(int c);
+int		ft_strisdigit(char *str);
 
 /*
 **ft_echo.c

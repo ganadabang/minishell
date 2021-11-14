@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/13 13:36:30 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/14 15:51:46 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,31 +28,6 @@ void ft_add_path(char **path_v, char slash)
     *path_v = tmp;
 }
 
-static void ft_do_chdir(char *path_v, char *oldpwd)
-{
-    char *pwd;
-
-    chdir(path_v);
-    pwd = ft_get_pwd("PWD");
-    ft_update_env("PWD", pwd);
-    ft_update_env("OLDPWD", oldpwd);
-    free(pwd);
-}
-
-
-char    *ft_get_pwd(char *path_n)
-{
-    char buffer[4096];
-    char *pwd;
-
-    if (getcwd(buffer, 4096) == 0)
-    {
-        pwd = ft_get_env(path_n);
-        return (pwd);
-    }
-    pwd = ft_strdup(buffer);
-    return (pwd);
-}
 
 void    ft_update_env(char *path_n, char *path_v)
 {
@@ -66,7 +41,7 @@ void    ft_update_env(char *path_n, char *path_v)
         path_name_num = 0;
         while (job.envp[i][path_name_num] != '=')
             path_name_num++;
-        if (ft_strncmp(job.envp[i], path_n) == 0) // 같은 경우
+        if (ft_strncmp(job.envp[i], path_n, ft_strlen(path_n)) == 0) // 같은 경우
         {   
             path = ft_set_malloc(ft_strlen(job.envp[i]));
             ft_strlcpy(path, job.envp[i], path_name_num + 1);
@@ -123,6 +98,31 @@ char *ft_get_env(char *path_n)
     return (0);
 }
 
+char    *ft_get_pwd(char *path_n)
+{
+    char buffer[4096];
+    char *pwd;
+
+    if (getcwd(buffer, 4096) == 0)
+    {
+        pwd = ft_get_env(path_n);
+        return (pwd);
+    }
+    pwd = ft_strdup(buffer);
+    return (pwd);
+}
+
+static void ft_do_chdir(char *path_v, char *oldpwd)
+{
+    char *pwd;
+
+    chdir(path_v);
+    pwd = ft_get_pwd("PWD");
+    ft_update_env("PWD", pwd);
+    ft_update_env("OLDPWD", oldpwd);
+    free(pwd);
+}
+
 void    ft_cd(char *args[])
 {
     char **splitted_path;
@@ -133,7 +133,7 @@ void    ft_cd(char *args[])
     args++;
     i = 0;
     splitted_path = ft_split(*args, '/');
-    pwd = ft_get_pwd();
+    pwd = ft_get_pwd("PWD");
     if (!splitted_path)
     {
         path_value = ft_get_env("HOME");

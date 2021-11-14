@@ -6,7 +6,7 @@
 #    By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2021/11/13 13:43:00 by gpaeng           ###   ########.fr        #
+#    Updated: 2021/11/14 15:46:03 by gpaeng           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,19 +16,29 @@ CFLAGS = -Wall -Werror -Wextra
 INCLUDES = -I ./include/ -I /Users/$(USER)/.brew/opt/readline/include/
 LIBS = -L /Users/$(USER)/.brew/opt/readline/lib/ -lreadline
 
-OBJ		=	main.o			\
-			ft_memcpy.o		\
-			ft_split.o		\
-			ft_strdup.o		\
-			ft_cnt_arg.o	\
-			ft_free_arr.o	\
-			ft_set_malloc.o	\
-			ft_strjoin.o	\
-			ft_strlcpy.o	\
-			ft_strlen.o		\
-			ft_echo.o		\
+OBJ_UTILS	=	ft_memcpy.o		\
+				ft_split.o		\
+				ft_strdup.o		\
+				ft_cnt_arg.o	\
+				ft_free_arr.o	\
+				ft_set_malloc.o	\
+				ft_strjoin.o	\
+				ft_strlcpy.o	\
+				ft_strlen.o		\
+				ft_isdigit.o	\
+				ft_strisdigit.o	\
+				ft_strncmp.o	\
 			
-OBJS	= $(addprefix $(OBJDIR)/, $(OBJ))
+OBJ_BUILTINS	=	main.o		\
+					ft_cd.o		\
+					ft_echo.o	\
+					ft_env.o	\
+					ft_exit.o	\
+					ft_export.o	\
+					ft_pwd.o	\
+					ft_unset.o	\
+			
+OBJS	= $(addprefix $(OBJDIR)/, $(OBJ_UTILS) $(OBJ_BUILTINS))
 
 SRCDIR := ./src
 SRCDIRUTILS := ./src/utils

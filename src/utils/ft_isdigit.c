@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/01 16:32:50 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/14 15:41:53 by gpaeng           ###   ########.fr       */
+/*   Created: 2021/11/14 15:40:49 by gpaeng            #+#    #+#             */
+/*   Updated: 2021/11/14 15:46:49 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../include/builtins.h"
 
-void    ft_exit(char *args[])
+int		ft_isdigit(int c)
 {
-	printf("exit\n");
-	if (ft_cnt_arg(args) > 1)
-	{
-		if (!ft_strisdigit(args[1]))
-		{
-			printf("minishell: exit: %s: numberic argument required", args[1]);
-			return ;	
-		}
-		else if (ft_cnt_arg(args) > 2)
-		{
-			printf(">minishell: exit: too many arguments");
-		}
-	}
-	exit(0);
+	return (c >= '0' && c <= '9');
 }
