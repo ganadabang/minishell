@@ -158,7 +158,7 @@
 
 - [x] `env $PATH` 입력 시 PATH값에 상관 없이 환경 변수 전체 출력 
 
-- [ ] `env path` 입력 시 Error 출력
+- [x] `env path` 입력 시 Error 출력
 
   ```shell
   env: path: No such file or directory
@@ -182,7 +182,7 @@
 
 - [x] `exit` 입력 시 `exit` 출력 후 `shell` 끄기
 
-- [ ] `exit` 뒤의 숫자 인자 + 인자가 2개(인자 개수) 이상이면 `Error` 발생 후 `shell` 종료 X
+- [x] `exit` 뒤의 숫자 인자 + 인자가 2개(인자 개수) 이상이면 `Error` 발생 후 `shell` 종료 X
 
   ```shell
   > exit 111 222 333
@@ -194,15 +194,13 @@
   exit 된다.
   ```
 
-- [ ] `exit` 뒤의 인자가 숫자가 아닌 경우 `Error` 발생 후 `shell` 종료 O
+- [x] `exit` 뒤의 인자가 숫자가 아닌 경우 `Error` 발생 후 `shell` 종료 O
 
   ```shell
   > exit gpaeng
   exit
   bash: exit: gpaeng: numeric argument required
   ```
-
-- [ ] `|` 뒤에 `exit` 있으면 쉘 종료 X (자식 Process의 exit이기 때문)
 
 
 
