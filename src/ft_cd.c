@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/14 15:51:46 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/15 16:45:38 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,15 +112,50 @@ char    *ft_get_pwd(char *path_n)
     return (pwd);
 }
 
-static void ft_do_chdir(char *path_v, char *oldpwd)
+int ft_do_chdir(char *path_v, char *oldpwd, char **args)
 {
+    struct stat file_buffer;
     char *pwd;
-
-    chdir(path_v);
+    int file_status;
+    
+    if (chdir(path_v) == -1)
+    {
+        chdir(oldpwd);
+        file_status = stat(*args, &file_buffer);
+        if (file_status == -1)
+            printf("minishell: cd: %s No such file or directory", args[0]);
+        return (1);
+    }
     pwd = ft_get_pwd("PWD");
     ft_update_env("PWD", pwd);
     ft_update_env("OLDPWD", oldpwd);
     free(pwd);
+    return (0);
+}
+
+int     ft_check_args_cd(char *args[])
+{
+    char *path_value;
+    char *pwd;
+    
+    if (ft_cnt_arg(args) > 1)
+    {
+        printf("minishell: cd: too many arguments");
+        return (0);
+    }
+    else if (ft_cnt_arg(args) == 1)
+    {
+        pwd = ft_get_pwd("PWD");
+        if (ft_strncmp(args[0], "-", 1) == 0)
+        {
+            path_value = ft_get_env("OLDPWD");
+            ft_do_chdir(path_value, pwd);
+            printf("%s\n", pwd);
+            return (0);
+        }
+        free(pwd);
+    }
+    return (1);
 }
 
 void    ft_cd(char *args[])
@@ -132,6 +167,8 @@ void    ft_cd(char *args[])
     
     args++;
     i = 0;
+    if (!ft_check_args_cd(args))
+        return ;
     splitted_path = ft_split(*args, '/');
     pwd = ft_get_pwd("PWD");
     if (!splitted_path)
@@ -142,7 +179,10 @@ void    ft_cd(char *args[])
     while (splitted_path[i])
     {
         ft_add_path(&splitted_path[i], '/');
-        ft_do_chdir(splitted_path[i], pwd);
+        if (ft_do_chdir(splitted_path[i], pwd, args))
+            break ;
         i++;
     }
+    free(pwd);
+    ft_free_arr(splitted_path);
 }
