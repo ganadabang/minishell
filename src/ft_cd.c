@@ -6,18 +6,11 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/15 16:45:38 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/17 15:28:20 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char envp[3][50] = 
-{
-    "HOME=/hello/world",
-    "PWD=/jjjj/ddd",
-    "OLDPWD=/jjjj/ddd"
-};
 
 void ft_add_path(char **path_v, char slash)
 { // Put the slash
@@ -28,7 +21,6 @@ void ft_add_path(char **path_v, char slash)
     *path_v = tmp;
 }
 
-
 void    ft_update_env(char *path_n, char *path_v)
 {
     char *path;
@@ -36,18 +28,18 @@ void    ft_update_env(char *path_n, char *path_v)
     int path_name_num;
     
     i = 0;
-    while (job.envp[i])
+    while (jop.envp[i])
     {
         path_name_num = 0;
-        while (job.envp[i][path_name_num] != '=')
+        while (jop.envp[i][path_name_num] != '=')
             path_name_num++;
-        if (ft_strncmp(job.envp[i], path_n, ft_strlen(path_n)) == 0) // 같은 경우
+        if (ft_strncmp(jop.envp[i], path_n, ft_strlen(path_n)) == 0) // 같은 경우
         {   
-            path = ft_set_malloc(ft_strlen(job.envp[i]));
-            ft_strlcpy(path, job.envp[i], path_name_num + 1);
+            path = ft_set_malloc(ft_strlen(jop.envp[i]));
+            ft_strlcpy(path, jop.envp[i], path_name_num + 1);
             ft_strlcpy(path, path_v, ft_strlen(path_v) + 1);
-            free(job.envp[i]);
-            job.envp[i] = path;
+            free(jop.envp[i]);
+            jop.envp[i] = path;
         }
         i++;
     }
@@ -77,15 +69,15 @@ char *ft_get_env(char *path_n)
     int j;
     
     i = 0;
-    while (job.envp[i])
+    while (jop.envp[i])
     {
         j = 0;
-        while (job.envp[i][j] != '=')
+        while (jop.envp[i][j] != '=')
             j++;
         path_name = ft_set_malloc(j + 1);
-        path_value = ft_set_malloc(ft_strlen(job.envp[i] - j + 1));
-        ft_strlcpy(path_name, job.envp[i], j + 1);
-        ft_strlcpy(path_value, job.envp[i] + j + 1, ft_strlen(job.envp[i]) - j);
+        path_value = ft_set_malloc(ft_strlen(jop.envp[i] - j + 1));
+        ft_strlcpy(path_name, jop.envp[i], j + 1);
+        ft_strlcpy(path_value, jop.envp[i] + j + 1, ft_strlen(jop.envp[i]) - j);
         if (ft_check_pathname(path_name, path_n))
         {
             free(path_name);
@@ -149,7 +141,7 @@ int     ft_check_args_cd(char *args[])
         if (ft_strncmp(args[0], "-", 1) == 0)
         {
             path_value = ft_get_env("OLDPWD");
-            ft_do_chdir(path_value, pwd);
+            ft_do_chdir(path_value, pwd, args);
             printf("%s\n", pwd);
             return (0);
         }
@@ -174,7 +166,7 @@ void    ft_cd(char *args[])
     if (!splitted_path)
     {
         path_value = ft_get_env("HOME");
-        ft_do_chdir(path_value, pwd);
+        ft_do_chdir(path_value, pwd, args);
     }
     while (splitted_path[i])
     {

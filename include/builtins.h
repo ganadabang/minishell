@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:53 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/14 15:47:28 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/17 15:19:13 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,29 @@ int		ft_isdigit(int c);
 int		ft_strisdigit(char *str);
 
 /*
+**ft_cd.c
+*/
+void ft_cd(char *args[]);
+
+/*
 **ft_echo.c
 */
 void ft_echo(char *args[]);
+
+/*
+**ft_env.c
+*/
+void ft_env(char *args[]);
+
+/*
+**ft_exit.c
+*/
+void    ft_exit(char *args[]);
+
+/*
+**ft_export.c
+*/
+void ft_export(char *args[]);
 
 /*
 **ft_pwd.c
@@ -43,8 +63,8 @@ void ft_echo(char *args[]);
 void ft_pwd(char *args[]);
 
 /*
-**ft_cd.c
+**ft_unset.c
 */
-void ft_cd(char *args[]);
+void    ft_unset(char *args[]);
 
 #endif

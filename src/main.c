@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 19:25:36 by hyeonsok          #+#    #+#             */
-/*   Updated: 2021/11/13 13:43:57 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/17 15:35:47 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,35 +60,19 @@ void	init_minishell(struct termios *term)
 
 extern char **environ;
 
-int main(int argc, char *argv[])
+int main(int argc, char *argv[], char *env[])
 {
-	char **new_argv;
-	char command[] = "cd";
-	int idx;
-
-	new_argv = (char **)malloc(sizeof(char *) * (argc + 1));
-
-	new_argv[0] = command;
-
-	for (idx = 1; idx < argc; idx++)
-	{
-		new_argv[idx] = argv[idx];
-	}
-
-	new_argv[argc] = NULL;
-	if (execve("/usr/bin/cd", new_argv, environ) == -1)
-	{
-		printf("execve >>> 에러\n");	
-	}
-	
+	jop.envp = env;
+	(void)argc;
 	// ft_echo(argv);
 	// ft_pwd(argv);
 	// ft_env(argv);
-	// ft_cd(argv);
-	char *a;
-	char *b = "env=/ddd/ddd/fff";
-	a = ft_set_malloc(4);
-	ft_strlcpy(a, b, 4);
+	ft_exit(argv);
+	// printf("%s", getenv("PATH"));
+	// char *a;
+	// char *b = "env=/ddd/ddd/fff";
+	// a = ft_set_malloc(4);
+	// ft_strlcpy(a, b, 4);
 	
-	printf(">> \"%s\"\"%s\"\n", a, b);
+	// printf(">> \"%s\"\"%s\"\n", a, b);
 }

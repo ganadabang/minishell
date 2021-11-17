@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 16:49:34 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/13 13:39:15 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/17 15:23:34 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ int     ft_check_env(char *args)
     int i;
 
     i = 0;
-    while (job.envp[i])
+    while (jop.envp[i])
     {
-        if (!(ft_strncmp(job.envp[i], args, ft_strlen(args))))
+        if (!(ft_strncmp(jop.envp[i], args, ft_strlen(args))))
         {
             return (i);
         }
@@ -28,28 +28,30 @@ int     ft_check_env(char *args)
     return (-1);
 }
 
-void    ft_remove_env(char *args[], int env_line)
+void    ft_remove_env(int env_line)
 {
     char **env;
     int cnt_env_arr;
     int i;
     int envp_i;
-    
-    cnt_env_arr = ft_cnt_arg(job.envp) - 1;
-    env = ft_set_malloc(cnt_env_arr);
+
+    cnt_env_arr = ft_cnt_arg(jop.envp) - 1;
+    env = (char **)malloc(sizeof(char *) * cnt_env_arr);
+    if (!env)
+        return ;
     i = 0;
     envp_i = 0;
     while (i < cnt_env_arr)
     {
         if (i != env_line)
         {
-            env[i] = ft_strdup(job.envp[envp_i]);
+            env[i] = ft_strdup(jop.envp[envp_i]);
             i++;
         }
         envp_i++;
     }
-    ft_free_arr(job.envp);
-    job.envp = env;
+    ft_free_arr(jop.envp);
+    jop.envp = env;
 }
 
 void    ft_unset(char *args[])
@@ -65,7 +67,7 @@ void    ft_unset(char *args[])
         env_line = ft_check_env(args[i]);
         if (env_line != -1)
         {//환경변수가 있는 것
-            ft_remove_env(args, env_line)
+            ft_remove_env(env_line);
         }
         i++;
     }
