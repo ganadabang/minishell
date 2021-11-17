@@ -1,27 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strisdigit.c                                    :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/14 15:41:32 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/17 15:42:44 by gpaeng           ###   ########.fr       */
+/*   Created: 2021/11/17 19:36:05 by gpaeng            #+#    #+#             */
+/*   Updated: 2021/11/17 19:36:48 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtins.h"
 
-int		ft_strisdigit(char *str)
+int ft_isalpha(int c)
 {
-	int i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (0);
-		i++;
-	}
-	return (1);
+    return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'));
 }

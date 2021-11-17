@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:28:29 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/17 14:49:37 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/17 16:57:39 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ void ft_env(char *args[])
     char **env;
     
     env = jop.envp;
-    if (ft_check_args_env(args))
+    if (ft_check_args_env(env))
     {
-        printf("env: '%s': No such file or directory", args[1]);
+        printf("en: '%s': No such file or directory\n", args[1]);
+        return ;
     }
     while (*env)
     {

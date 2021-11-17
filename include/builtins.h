@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:53 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/17 15:19:13 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/17 19:45:44 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 /*
 **utils
@@ -30,7 +31,7 @@ char *ft_set_malloc(int size);
 void    ft_free_arr(char **arr);
 int     ft_cnt_arg(char *args[]);
 int		ft_isdigit(int c);
-int		ft_strisdigit(char *str);
+int     ft_isalpha(int c);
 
 /*
 **ft_cd.c
