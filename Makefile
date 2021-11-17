@@ -6,12 +6,12 @@
 #    By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2021/11/17 19:53:18 by gpaeng           ###   ########.fr        #
+#    Updated: 2021/11/17 21:28:39 by gpaeng           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 
 INCLUDES = -I ./include/ -I /Users/$(USER)/.brew/opt/readline/include/
 LIBS = -L /Users/$(USER)/.brew/opt/readline/lib/ -lreadline
