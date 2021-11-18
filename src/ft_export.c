@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:12 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/17 21:03:27 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/18 16:44:03 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void ft_print_env_export(void)
         j = 0;
         while (jop.envp[i][j] != '=')
             j++;
-        path_name = ft_set_malloc(j + 1);
-        path_value = ft_set_malloc(ft_strlen(jop.envp[i]) - j + 1);
+        path_name = (char *)ft_set_malloc(sizeof(char), j + 1);
+        path_value = (char *)ft_set_malloc(sizeof(char), ft_strlen(jop.envp[i]) - j + 1);
         ft_strlcpy(path_name, jop.envp[i], j + 1);
         ft_strlcpy(path_value, jop.envp[i] + j + 1, ft_strlen(jop.envp[i]) - j);
         printf("declare -x %s=\"%s\"\n", path_name, path_value);
@@ -68,7 +68,7 @@ int ft_check_key_form(int i, int j, char *args[])
 {
     char *path_name;
 
-    path_name = ft_set_malloc(j + 1);
+    path_name = (char *)ft_set_malloc(sizeof(char), j + 1);
     ft_strlcpy(path_name, args[i], j + 1);
     if (!ft_str_digit_check(path_name))
     {
@@ -105,10 +105,8 @@ void ft_update_env_export(char *args[])
     int cnt_env_arr;
     int i;
 
-    cnt_env_arr = ft_cnt_arg(jop.envp) + 1;
-    env = (char **)malloc(sizeof(char *) * (cnt_env_arr + 1));
-    if (!env)
-        return ;
+    cnt_env_arr = ft_cnt_arg(jop.envp);
+    env = (char **)ft_set_malloc(sizeof(char *), cnt_env_arr + 2);
     i = 0;
     if (ft_check_arg_form(args)) //key=value형태
     {

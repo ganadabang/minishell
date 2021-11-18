@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 16:49:34 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/17 21:36:45 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/18 16:43:05 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int     ft_check_env(char *args)
     return (-1);
 }
 
+
 void    ft_remove_env(int env_line)
 {
     char **env;
@@ -36,14 +37,12 @@ void    ft_remove_env(int env_line)
     int envp_i;
 
     cnt_env_arr = ft_cnt_arg(jop.envp);
-    env = (char **)malloc(sizeof(char *) * cnt_env_arr);
-    if (!env)
-        return ;
+    env = (char **)ft_set_malloc(sizeof(char *), cnt_env_arr);
     i = 0;
     envp_i = 0;
-    while (i < cnt_env_arr)
+    while (envp_i < cnt_env_arr)
     {
-        if (jop.envp[i] && i != env_line)
+        if (envp_i != env_line)
         {
             env[i] = ft_strdup(jop.envp[envp_i]);
             i++;
@@ -59,7 +58,7 @@ void    ft_unset(char *args[])
     int i;
     int env_line;
 
-    i = 0;
+    i = 1;
     env_line = 0;
     // args++;
     while (args[i])
