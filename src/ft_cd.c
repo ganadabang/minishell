@@ -6,17 +6,17 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/18 15:48:48 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/18 18:11:26 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void ft_add_path(char **path_v, char slash)
+void ft_add_path(char **path_v, char *slash)
 { // Put the slash
     char *tmp;
 
-    tmp = ft_strjoin(*path_v, &slash);
+    tmp = ft_strjoin(*path_v, slash);
     free(*path_v);
     *path_v = tmp;
 }
@@ -25,18 +25,18 @@ void    ft_update_env(char *path_n, char *path_v)
 {
     char *path;
     int i;
-    int path_name_num;
+    int j;
     
     i = 0;
     while (jop.envp[i])
     {
-        path_name_num = 0;
-        while (jop.envp[i][path_name_num] != '=')
-            path_name_num++;
-        if (ft_strncmp(jop.envp[i], path_n, ft_strlen(path_n)) == 0) // 같은 경우
+        j = 0;
+        while (jop.envp[i][j] != '=')
+            j++;
+        if (ft_strncmp(jop.envp[i], path_n, j) == 0) // 같은 경우
         {   
-            path = (char *)ft_set_malloc(sizeof(char), ft_strlen(jop.envp[i]));
-            ft_strlcpy(path, jop.envp[i], path_name_num + 1);
+            path = (char *)ft_set_malloc(sizeof(char), ft_strlen(jop.envp[i]) - j + 1);
+            ft_strlcpy(path, jop.envp[i], j + 1);
             ft_strlcpy(path, path_v, ft_strlen(path_v) + 1);
             free(jop.envp[i]);
             jop.envp[i] = path;
@@ -67,7 +67,7 @@ char *ft_get_env(char *path_n)
     char *path_value;
     int i;
     int j;
-    
+
     i = 0;
     while (jop.envp[i])
     {
@@ -109,7 +109,7 @@ int ft_do_chdir(char *path_v, char *oldpwd, char **args)
     struct stat file_buffer;
     char *pwd;
     int file_status;
-    
+
     if (chdir(path_v) == -1)
     {
         chdir(oldpwd);
@@ -135,6 +135,8 @@ int     ft_check_args_cd(char *args[])
         printf("minishell: cd: too many arguments");
         return (0);
     }
+    else if (ft_cnt_arg(args) == 0)
+        return (0);
     else if (ft_cnt_arg(args) == 1)
     {
         pwd = ft_get_pwd("PWD");
@@ -156,7 +158,7 @@ void    ft_cd(char *args[])
     char *pwd;
     char *path_value;
     int i;
-    
+
     args++;
     i = 0;
     if (!ft_check_args_cd(args))
@@ -170,7 +172,9 @@ void    ft_cd(char *args[])
     }
     while (splitted_path[i])
     {
-        ft_add_path(&splitted_path[i], '/');
+        printf("splitted >>> %s\n", splitted_path[i]);
+        ft_add_path(&splitted_path[i], "/");
+        printf("after splitted >>> %s\n", splitted_path[i]);
         if (ft_do_chdir(splitted_path[i], pwd, args))
             break ;
         i++;

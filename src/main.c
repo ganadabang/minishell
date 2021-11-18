@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 19:25:36 by hyeonsok          #+#    #+#             */
-/*   Updated: 2021/11/18 16:43:30 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/18 17:15:40 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,15 @@ int main(int argc, char *argv[], char *env[])
 	// ft_echo(argv);
 	// ft_pwd(argv);
 	// ft_exit(argv);
-	int i;
-	i = 0;
-	while (jop.envp[i])
-	{
-		printf("before >>>> %s\n", jop.envp[i]);
-		i++;
-	}
-	ft_export(argv);
+	// ft_export(argv);
 	// ft_unset(argv);
-	i = 0;
-	while (jop.envp[i])
-	{
-		printf("after >>>> %s\n", jop.envp[i]);
-		i++;
-	}
 	// ft_env(argv);
+	ft_cd(argv);
+	// int i = 0;
+	// while (jop.envp[i])
+	// {
+	// 	printf(">>>> %s\n", jop.envp[i]);
+	// 	i++;
+	// }
+	// ft_pwd(argv);
 }
