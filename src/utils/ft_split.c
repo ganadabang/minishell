@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:30:43 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/18 21:15:40 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/18 21:20:16 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ char			**ft_split(char const *s, char c)
 	size_t	lenword;
 	size_t	aidx;
 
+	if (!s)
+		return (0);
 	cntword = ft_cntword(s, c);
 	if (!(arr = (char **)malloc(sizeof(char *) * (cntword + 1))))
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/18 21:13:06 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/18 21:20:59 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ void    ft_cd(char *args[])
         path_value = ft_get_env("HOME");
         ft_do_chdir(path_value, pwd, args);
     }
-    while (splitted_path[i])
+    while (splitted_path && splitted_path[i])
     {
         ft_add_path(&splitted_path[i], "/");
         if (ft_do_chdir(splitted_path[i], pwd, args))

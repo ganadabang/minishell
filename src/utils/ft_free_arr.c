@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 13:37:26 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/17 17:39:48 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/18 21:21:45 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void    ft_free_arr(char **arr)
     int i;
 
     i = 0;
-    
+    if (!arr)
+        return ; 
     while (arr[i])
     {
         free(arr[i]);
