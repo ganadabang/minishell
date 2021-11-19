@@ -6,15 +6,15 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:34:22 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/17 14:35:55 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/19 20:08:31 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_str_length(char *str)
+int	ft_str_length(char *str)
 {
-	int cnt;
+	int	cnt;
 
 	cnt = 0;
 	while (*str)
@@ -25,9 +25,9 @@ int ft_str_length(char *str)
 	return (cnt);
 }
 
-int ft_check_option(int str_length, char *str)
+int	ft_check_option(int str_length, char *str)
 {
-	int idx;
+	int	idx;
 
 	idx = 1;
 	while (idx < str_length)
@@ -39,9 +39,9 @@ int ft_check_option(int str_length, char *str)
 	return (1);
 }
 
-int ft_echo_option(char *str)
+int	ft_echo_option(char *str)
 {
-	int str_length;
+	int	str_length;
 
 	str_length = ft_str_length(str);
 	if (ft_check_option(str_length, str))
@@ -49,7 +49,7 @@ int ft_echo_option(char *str)
 	return (0);
 }
 
-void ft_echo_print(char *args[])
+void	ft_echo_print(char *args[])
 {
 	while (*args)
 	{
@@ -60,16 +60,15 @@ void ft_echo_print(char *args[])
 	}
 }
 
-
-void ft_echo(char *args[])
+void	ft_echo(char *args[])
 {
-	
-	int option;
-	
+	int	option;
+
 	option = 0;
 	args++; //echo 다음 문자열
 
-	if (ft_echo_option(*args)) {
+	if (ft_echo_option(*args))
+	{
 		args++;
 		option = 1;
 	}
