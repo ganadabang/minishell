@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 19:25:36 by hyeonsok          #+#    #+#             */
-/*   Updated: 2021/11/18 20:26:44 by gpaeng           ###   ########.fr       */
+/*   Updated: 2021/11/19 16:57:13 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int main(int argc, char *argv[], char *env[])
 	// ft_unset(argv);
 	// ft_env(argv);
 	ft_cd(argv);
+	
 	// int i = 0;
 	// while (jop.envp[i])
 	// {
