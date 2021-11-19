@@ -33,8 +33,6 @@
 
 - [x] option `-n == -nnnnn` 동일 하게 출력
 
-- [ ] `; ;`  or ` | |`  이면 `syntax error` 처리
-
 
 
 
@@ -55,15 +53,15 @@
 
 #### < Case >
 
-- [ ] `cd` or `cd 경로 ` 일 경우 HOME 경로를 찾아서 이동
+- [x] `cd` or `cd 경로 ` 일 경우 HOME 경로를 찾아서 이동
 
-- [ ] `cd $PATH` 일 경우 `PATH` 경로 찾아서 이동 
+- [x] `cd $PATH` 일 경우 `PATH` 경로 찾아서 이동 
 
-- [ ] `cd 경로` 이후에 인자가 들어올 경우 Error message 없이 경로로 이동
+- [x] `cd 경로` 이후에 인자가 들어올 경우 Error message 없이 경로로 이동
 
-- [ ] `cd [env에 없는 환경변수]`일 경우 HOME 경로를 찾아서 이동
+- [x] `cd [env에 없는 환경변수]`일 경우 HOME 경로를 찾아서 이동
 
-- [ ] `cd 222 333` 와 같이 인자 2개이상 일 때 Error 출력
+- [x] `cd 222 333` 와 같이 인자 2개이상 일 때 Error 출력
 
   ```shell
   bash: cd: [첫번째 인자]: No such file or directory
@@ -81,7 +79,7 @@
   bash: cd: HOME not set
   ```
 
-- [ ] `cd -` 이전 경로로 이동
+- [x] `cd -` 이전 경로로 이동
 
 
 
