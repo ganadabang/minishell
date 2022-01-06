@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:53 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/18 15:45:40 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/01/06 12:49:29 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <stdio.h>
+
+struct Jop {
+    char **envp;
+}jop;
 
 /*
 **utils
@@ -32,6 +36,7 @@ void    ft_free_arr(char **arr);
 int     ft_cnt_arg(char *args[]);
 int		ft_isdigit(int c);
 int     ft_isalpha(int c);
+char	*ft_get_env(char *path_n);
 
 /*
 **ft_cd.c

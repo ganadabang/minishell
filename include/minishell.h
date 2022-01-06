@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/25 19:20:34 by hyeonsok          #+#    #+#             */
-/*   Updated: 2021/11/17 14:43:19 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/01/06 12:49:16 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # include <sys/stat.h>
 # include "builtins.h"
 
-struct Jop {
-    char **envp;
-}jop;
+// struct Jop {
+//     char **envp;
+// }jop;
 
 #endif
