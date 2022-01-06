@@ -6,7 +6,7 @@
 #    By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2021/11/17 21:28:39 by gpaeng           ###   ########.fr        #
+#    Updated: 2022/01/06 12:56:38 by gpaeng           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ OBJ_UTILS	=	ft_memcpy.o		\
 				ft_isdigit.o	\
 				ft_isalpha.o	\
 				ft_strncmp.o	\
+				ft_get_env.o	\
 			
 OBJ_BUILTINS	=	main.o		\
 					ft_cd.o		\
