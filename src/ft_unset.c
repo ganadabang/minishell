@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 16:49:34 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/19 20:20:12 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/01/06 11:29:52 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,13 @@ void	ft_remove_env(int env_line)
 	jop.envp = env;
 }
 
+void	ft_check_args_unset(char c)
+{
+	if (c == '_' || ft_isalpha(c) || ft_isdigit(c))
+		return (1);
+	return (0);
+}
+
 void	ft_unset(char *args[])
 {
 	int	i;
@@ -64,6 +71,11 @@ void	ft_unset(char *args[])
 	while (args[i])
 	{
 		env_line = ft_check_env(args[i]);
+		if (ft_check_args_unset(args[i]))
+		{
+			printf("minishell: unset: %s not a valid identifier", args[i]);
+            return ;
+		}
 		if (env_line != -1)
 		{//환경변수가 있는 것
 			ft_remove_env(env_line);
