@@ -6,15 +6,15 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:30:43 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/18 21:20:16 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/01/06 15:07:52 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtins.h"
 
-static size_t	ft_cntword(char const *s, char c)
+static	size_t	ft_cntword(char const *s, char c)
 {
-	size_t cnt;
+	size_t	cnt;
 
 	cnt = 0;
 	while (*s && *s == c)
@@ -35,7 +35,7 @@ static size_t	ft_cntword(char const *s, char c)
 
 static size_t	ft_lenword(char const *s, char c)
 {
-	size_t lenword;
+	size_t	lenword;
 
 	lenword = 0;
 	while (*s && *s++ != c)
@@ -43,13 +43,14 @@ static size_t	ft_lenword(char const *s, char c)
 	return (lenword);
 }
 
-static char		*ft_fd_strdup(const char *s, size_t lenword)
+static	char	*ft_fd_strdup(const char *s, size_t lenword)
 {
 	char	*arr;
 	size_t	idx;
 
 	idx = 0;
-	if (!(arr = (char *)malloc(sizeof(char) * (lenword + 1))))
+	arr = (char *)malloc(sizeof(char) * (lenword + 1));
+	if (!(arr))
 		return (0);
 	while (idx < lenword)
 	{
@@ -60,14 +61,14 @@ static char		*ft_fd_strdup(const char *s, size_t lenword)
 	return (arr);
 }
 
-static void		ft_free(char **s, int idx)
+static	void	ft_free(char **s, int idx)
 {
 	while (idx--)
 		free(s[idx]);
 	free(s);
 }
 
-char			**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**arr;
 	size_t	cntword;
@@ -77,7 +78,8 @@ char			**ft_split(char const *s, char c)
 	if (!s)
 		return (0);
 	cntword = ft_cntword(s, c);
-	if (!(arr = (char **)malloc(sizeof(char *) * (cntword + 1))))
+	arr = (char **)malloc(sizeof(char *) * (cntword + 1));
+	if (!(arr))
 		return (0);
 	aidx = 0;
 	while (aidx < cntword)
@@ -85,7 +87,8 @@ char			**ft_split(char const *s, char c)
 		while (*s && *s == c)
 			s++;
 		lenword = ft_lenword(s, c);
-		if (!(arr[aidx] = ft_fd_strdup(s, lenword)))
+		arr[aidx] = ft_fd_strdup(s, lenword);
+		if (!(arr[aidx]))
 		{
 			ft_free(arr, aidx - 1);
 			return (0);

@@ -6,23 +6,23 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 13:37:26 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/18 21:21:45 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/01/06 15:27:49 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtins.h"
 
-void    ft_free_arr(char **arr)
+void	ft_free_arr(char **arr)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    if (!arr)
-        return ; 
-    while (arr[i])
-    {
-        free(arr[i]);
-        i++;
-    }
-    free(arr);
+	i = 0;
+	if (!arr)
+		return ;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
 }

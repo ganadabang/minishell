@@ -6,19 +6,20 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 17:30:55 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/11 17:30:56 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/01/06 15:09:19 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtins.h"
-size_t ft_strlen(const char *str)
-{
-    unsigned int i;
 
-    i = 0;
-    while (str[i])
-    {
-        i++;
-    }
-    return (i);
+size_t	ft_strlen(const char *str)
+{
+	unsigned int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		i++;
+	}
+	return (i);
 }

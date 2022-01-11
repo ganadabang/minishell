@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:34:22 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/19 20:08:31 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/01/06 14:42:28 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,7 @@ void	ft_echo(char *args[])
 	int	option;
 
 	option = 0;
-	args++; //echo 다음 문자열
-
+	args++;
 	if (ft_echo_option(*args))
 	{
 		args++;

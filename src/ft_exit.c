@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:32:50 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/19 20:12:04 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/01/06 14:43:18 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_str_alpha_check(char *str)
 			return (0);
 		i++;
 	}
-	return (1); //전체 숫자
+	return (1);
 }
 
 void	ft_exit(char *args[])

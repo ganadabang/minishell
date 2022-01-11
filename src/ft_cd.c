@@ -6,27 +6,18 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/06 12:48:10 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/01/11 11:59:19 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_add_path(char **path_v, char *slash)
-{ // Put the slash
-	char	*tmp;
-
-	tmp = ft_strjoin(*path_v, slash);
-	free(*path_v);
-	*path_v = tmp;
-}
-
 void	ft_update_env(char *path_n, char *path_v)
 {
+	int		i;
+	int		j;
 	char	*path;
 	char	*path_name;
-	int	i;
-	int	j;
 
 	i = 0;
 	while (jop.envp[i])
@@ -34,62 +25,17 @@ void	ft_update_env(char *path_n, char *path_v)
 		j = 0;
 		while (jop.envp[i][j] != '=')
 			j++;
-		if (ft_strncmp(jop.envp[i], path_n, j) == 0) // 같은 경우
+		if (ft_strncmp(jop.envp[i], path_n, j) == 0)
 		{
 			path_name = (char *)ft_set_malloc(sizeof(char), j);
 			ft_strlcpy(path_name, jop.envp[i], j + 2);
 			path = ft_strjoin(path_name, path_v);
-            // free(jop.envp[i]);
+			// free(jop.envp[i]);
 			jop.envp[i] = path;
 		}
 		i++;
 	}
 }
-
-// int	ft_check_pathname(char *a, char *b)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	if (ft_strlen(a) != ft_strlen(b))
-// 		return (0);
-// 	while (i < (int)ft_strlen(a))
-// 	{
-// 		if (a[i] != b[i])
-// 			return (0);
-// 		i++;
-// 	}
-// 	return (1);
-// }
-
-// char	*ft_get_env(char *path_n)
-// {
-// 	char	*path_name;
-// 	char	*path_value;
-// 	int	i;
-// 	int	j;
-
-// 	i = 0;
-// 	while (jop.envp[i])
-// 	{
-// 		j = 0;
-// 		while (jop.envp[i][j] != '=')
-// 			j++;
-// 		path_name = (char *)ft_set_malloc(sizeof(char), j + 1);
-// 		path_value = (char *)ft_set_malloc(sizeof(char), ft_strlen(jop.envp[i]) - j + 1);
-// 		ft_strlcpy(path_name, jop.envp[i], j + 1);
-// 		ft_strlcpy(path_value, jop.envp[i] + j + 1, ft_strlen(jop.envp[i]) - j);
-// 		if (ft_check_pathname(path_name, path_n))
-// 		{
-// 			free(path_name);
-// 			return (path_value);
-// 		}
-// 		free(path_name);
-// 		free(path_value);
-// 		i++;
-// 	}
-// 	return (0);
-// }
 
 char	*ft_get_pwd(char *path_n)
 {
@@ -108,8 +54,8 @@ char	*ft_get_pwd(char *path_n)
 int	ft_do_chdir(char *path_v, char *oldpwd, char **args)
 {
 	struct stat	file_buffer;
-	char	*pwd;
-	int	file_status;
+	char		*pwd;
+	int			file_status;
 
 	if (chdir(path_v) == -1)
 	{
@@ -156,7 +102,7 @@ void	ft_cd(char *args[])
 	char	**splitted_path;
 	char	*pwd;
 	char	*path_value;
-	int	i;
+	int		i;
 
 	args++;
 	i = 0;

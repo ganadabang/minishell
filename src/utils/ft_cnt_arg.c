@@ -6,20 +6,20 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 13:38:55 by gpaeng            #+#    #+#             */
-/*   Updated: 2021/11/13 13:39:08 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/01/06 14:51:27 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/builtins.h"
 
-int     ft_cnt_arg(char *args[])
+int	ft_cnt_arg(char *args[])
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (args[i])
-    {
-        i++;
-    }
-    return (i);
+	i = 0;
+	while (args[i])
+	{
+		i++;
+	}
+	return (i);
 }
