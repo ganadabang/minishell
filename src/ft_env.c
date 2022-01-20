@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/25 19:20:34 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/06 12:49:16 by gpaeng           ###   ########.fr       */
+/*   Created: 2021/11/06 14:28:29 by gpaeng            #+#    #+#             */
+/*   Updated: 2021/11/19 20:11:10 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "minishell.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <unistd.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include <term.h>
-# include <termios.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include "builtins.h"
+void	ft_env(char *args[])
+{
+	char	**env;
 
-// struct Jop {
-//     char **envp;
-// }jop;
-
-#endif
+	env = jop.envp;
+	if (ft_cnt_arg(args) >= 2)
+	{
+		printf("en: '%s': No such file or directory\n", args[1]);
+		return ;
+	}
+	while (*env)
+	{
+		printf("%s\n", *env);
+		env++;
+	}
+}

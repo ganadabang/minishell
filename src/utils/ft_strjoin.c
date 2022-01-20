@@ -1,33 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/25 19:20:34 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/06 12:49:16 by gpaeng           ###   ########.fr       */
+/*   Created: 2021/11/11 17:30:49 by gpaeng            #+#    #+#             */
+/*   Updated: 2022/01/11 11:57:36 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../../include/builtins.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <unistd.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include <term.h>
-# include <termios.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include "builtins.h"
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	int		ls1;
+	int		ls2;
+	char	*arr;
 
-// struct Jop {
-//     char **envp;
-// }jop;
-
-#endif
+	ls1 = ft_strlen(s1);
+	ls2 = ft_strlen(s2);
+	arr = (char *)malloc(sizeof(char) * (ls1 + ls2));
+	if (!(arr))
+		return (0);
+	ft_memcpy(arr, s1, ls1);
+	ft_memcpy(arr + ls1, s2, ls2);
+	arr[ls1 + ls2] = '\0';
+	return (arr);
+}

@@ -1,33 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/25 19:20:34 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/06 12:49:16 by gpaeng           ###   ########.fr       */
+/*   Created: 2021/11/11 17:30:40 by gpaeng            #+#    #+#             */
+/*   Updated: 2022/01/11 11:57:23 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "../../include/builtins.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-# include <readline/readline.h>
-# include <readline/history.h>
-# include <unistd.h>
-# include <sys/wait.h>
-# include <fcntl.h>
-# include <term.h>
-# include <termios.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include "builtins.h"
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	char		*dtmp;
+	const char	*stmp;
 
-// struct Jop {
-//     char **envp;
-// }jop;
-
-#endif
+	if (!dest && !src)
+		return (0);
+	dtmp = dest;
+	stmp = src;
+	while (n--)
+	{
+		*dtmp++ = *stmp++;
+	}
+	return (dest);
+}
