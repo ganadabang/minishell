@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+         #
+#    By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/01/06 15:25:18 by gpaeng           ###   ########.fr        #
+#    Updated: 2022/01/24 21:20:26 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -g
 
-INCLUDES = -I ./include/ -I /Users/$(USER)/.brew/opt/readline/include/
+INCLUDES = -I ./include/ -I ./include/minishell -I /Users/$(USER)/.brew/opt/readline/include/
 LIBS = -L /Users/$(USER)/.brew/opt/readline/lib/ -lreadline
 
 OBJ_UTILS	=	ft_memcpy.o			\
