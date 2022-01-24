@@ -3,20 +3,39 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+         #
+#    By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/01/24 21:20:26 by hyeonsok         ###   ########.fr        #
+#    Updated: 2022/01/24 23:49:43 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -g
 
-INCLUDES = -I ./include/ -I ./include/minishell -I /Users/$(USER)/.brew/opt/readline/include/
+RM = rm -f
+
+INCLUDES = -I ./include/ -I /Users/$(USER)/.brew/opt/readline/include/
 LIBS = -L /Users/$(USER)/.brew/opt/readline/lib/ -lreadline
 
-OBJ_UTILS	=	ft_memcpy.o			\
+OBJDIR := ./obj
+
+# ./src
+OBJS		=	$(addprefix $(OBJDIR)/, \
+				main2.o			\
+				array.o)
+
+# ./src/mush
+OBJS		+=	$(addprefix $(OBJDIR)/, \
+				exec_expn.o			\
+				exec_pipe.o		\
+				exec_redir.o		\
+				exec_state.o		\
+				exec.o)
+
+# ./src/utils
+OBJS		+=	$(addprefix $(OBJDIR)/, \
+				ft_memcpy.o			\
 				ft_split.o			\
 				ft_strdup.o			\
 				ft_cnt_arg.o		\
@@ -30,38 +49,43 @@ OBJ_UTILS	=	ft_memcpy.o			\
 				ft_strncmp.o		\
 				ft_get_env.o		\
 				ft_check_arg_form.o	\
-				ft_add_path.o		\
-			
-OBJ_BUILTINS	=	main.o		\
-					ft_cd.o		\
-					ft_echo.o	\
-					ft_env.o	\
-					ft_exit.o	\
-					ft_export.o	\
-					ft_pwd.o	\
-					ft_unset.o	\
-			
-OBJS	= $(addprefix $(OBJDIR)/, $(OBJ_UTILS) $(OBJ_BUILTINS))
+				ft_add_path.o)
 
-SRCDIR := ./src
-SRCDIRUTILS := ./src/utils
-OBJDIR := ./obj
+# ./src/builtin
+OBJS		+=	$(addprefix $(OBJDIR)/, \
+				builtin_cd.o		\
+				builtin_echo.o	\
+				builtin_env.o	\
+				builtin_exit.o	\
+				builtin_export.o	\
+				builtin_pwd.o	\
+				builtin_unset.o)
+
+SRC_DIR = ./src
+SRC_UTILS_DIR = ./src/utils
+SRC_BUILTIN_DIR = ./src/builtin
+SRC_MUSH_DIR = ./src/mush
 
 NAME = minishell
+
 .PHONY:		all
 all:		$(NAME)
-
-SRCS = $(addprefix $(SRCDIR), $(SRC))
-		
-$(OBJDIR)/%.o : $(SRCDIR)/%.c
-			$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
-
-$(OBJDIR)/%.o : $(SRCDIRUTILS)/%.c
-			$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
 
 .PHONY:		NAME
 $(NAME):	$(OBJDIR) $(OBJS)
 			$(CC) $(INCLUDES) $(OBJS) -o $(NAME) $(LIBS)
+
+$(OBJDIR)/%.o : $(SRC_DIR)/%.c
+			$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
+
+$(OBJDIR)/%.o : $(SRC_UTILS_DIR)/%.c
+			$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
+
+$(OBJDIR)/%.o : $(SRC_MUSH_DIR)/%.c
+			$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
+
+$(OBJDIR)/%.o : $(SRC_BUILTIN_DIR)/%.c
+			$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
 
 $(OBJS): | $(OBJDIR)
 $(OBJDIR):

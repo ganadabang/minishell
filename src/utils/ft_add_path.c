@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_add_path.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:24:06 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/06 15:24:45 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/01/24 23:41:13 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/builtins.h"
+#include "mush/builtin.h"
 
 void	ft_add_path(char **path_v, char *slash)
 {

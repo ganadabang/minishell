@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cnt_arg.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 13:38:55 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/06 14:51:27 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/01/24 23:41:07 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/builtins.h"
+#include "mush/builtin.h"
 
 int	ft_cnt_arg(char *args[])
 {
