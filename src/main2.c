@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:51:09 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/25 19:40:30 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/25 20:52:51 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(void)
 	
 
 	//signal
-	signal(SIGSTOP, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
 	signal(SIGWINCH, mush_signal);
 	//TODO: lexer
 	//TODO: parser
@@ -69,16 +69,20 @@ int	main(void)
 		term.c_lflag |= ECHOCTL;
 		tcsetattr(STDOUT_FILENO, TCSANOW, &term);
 
+		//restore signal
+		signal(SIGINT, SIG_IGN);
+
 		//control + D
 		if (!input)
 			break ;
-
 		//parse
 		//TODO: mush_parser
 
 		//execute
 		mush_exec(&job);
 		free(input);
+		if (job.last_status > 128)
+			write(1, "\n", 1);
 		// TODO: mush_clean
 	}
 	printf("last status: %d \n", job.last_status);

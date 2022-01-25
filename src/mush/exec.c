@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/25 17:51:10 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/25 20:35:57 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	mush_exec(t_job *job)
 		proc->pid = pid;
 		if (pid == 0)
 		{
+			signal(SIGINT, SIG_DFL);
 			pipe_setup(pde, is_last_proc(i, job->pipeline.len));
 			io_redirect((t_file **)proc->io_redirect.data, proc->io_redirect.len);
 			//proc_expansioin
@@ -59,9 +60,7 @@ void	mush_exec(t_job *job)
 				if (process->iscompleted == 0)
 				{
 					// process->iscompleted = 1;
-					process->status = stat >> 8;
-					//debug
-					dprintf(2, "ret:%d status:%d\n", ret, stat >> 8);
+					process->status = WIFSIGNALED(stat) * (128 + WTERMSIG(stat)) + WEXITSTATUS(stat);
 				}
 			}
 		}
