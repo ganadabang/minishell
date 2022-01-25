@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 21:37:15 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/25 01:16:51 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/25 23:43:43 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,5 @@
 
 int	ft_dputendl(int fd, const char *s)
 {
-	return (ft_dputs(fd, s) + ft_dputc(fd, '\n'));
+	return (ft_dputs(fd, s) + ft_dputchar(fd, '\n'));
 }
