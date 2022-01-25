@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:12 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/25 13:23:54 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/25 23:24:19 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,11 @@ void	ft_update_env_export(char *args[])
 	return ;
 }
 
-void	builtin_export(char *args[])
+int	builtin_export(char *args[])
 {
 	if (ft_cnt_arg(args) == 1)
 		ft_print_env_export();
 	else if (ft_cnt_arg(args) >= 2)
 		ft_update_env_export(args);
+	return (0);
 }

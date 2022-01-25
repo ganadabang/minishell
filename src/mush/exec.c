@@ -6,11 +6,13 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/25 20:35:57 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/26 00:05:54 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mush/exec.h"
+#include "mush/builtin.h"
+#include "libft.h"
 #include <sys/wait.h>
 #include <sys/errno.h>
 
@@ -18,31 +20,53 @@ void	mush_exec(t_job *job)
 {
 	int			pde[2][2] = {{-1, -1}, {-1, -1}};
 	pid_t		pid;
+	int			tmp[2];
+	int		(*f)(char *[]) = NULL;
+	t_proc *proc = job->pipeline.data[0];
 
-	for (size_t i = 0; i < job->pipeline.len; ++i)
+	if (job->pipeline.len == 1 && builtin_search(proc->name, &f))
 	{
-		pipe(pde[0]);
-		pid = fork();
-		if (pid < 0)
-		{
-			perror("fork");
-			exit(EXIT_FAILURE);
-		}
-		t_proc *proc = job->pipeline.data[i];
-		proc->pid = pid;
-		if (pid == 0)
-		{
-			signal(SIGINT, SIG_DFL);
-			pipe_setup(pde, is_last_proc(i, job->pipeline.len));
-			io_redirect((t_file **)proc->io_redirect.data, proc->io_redirect.len);
-			//proc_expansioin
-			//filename_expansion
-			execve(proc->name, proc->argv, job->envp);
-			puts("Error");
-		}
-		pipe_unset(pde);
+		signal(SIGINT, SIG_DFL);
+		tmp[0] = dup(0);
+		tmp[1] = dup(1);
+		io_redirect((t_file **)proc->io_redirect.data, proc->io_redirect.len);
+		f(proc->argv);
+		dup2(tmp[0], 0);
+		dup2(tmp[1], 1);
+		close(tmp[0]);
+		close(tmp[1]);
+		return ;
 	}
-	close(pde[1][0]);
+	else
+	{
+		for (size_t i = 0; i < job->pipeline.len; ++i)
+		{
+			pipe(pde[0]);
+			pid = fork();
+			if (pid < 0)
+			{
+				perror("fork");
+				exit(EXIT_FAILURE);
+			}
+			t_proc *proc = job->pipeline.data[i];
+			proc->pid = pid;
+			if (pid == 0)
+			{
+				signal(SIGINT, SIG_DFL);
+				pipe_setup(pde, is_last_proc(i, job->pipeline.len));
+				io_redirect((t_file **)proc->io_redirect.data, proc->io_redirect.len);
+				//proc_expansioin
+				//filename_expansion
+
+				if(builtin_search(proc->name, &f))
+					exit (f(proc->argv));
+				else
+					execve(proc->name, proc->argv, job->envp);
+			}
+			pipe_unset(pde);
+		}
+		close(pde[1][0]);
+	}
 	//update_status; It's going to be separated.
 	int	stat;
 	int	ret;
@@ -58,10 +82,9 @@ void	mush_exec(t_job *job)
 			if (ret == process->pid)
 			{
 				if (process->iscompleted == 0)
-				{
-					// process->iscompleted = 1;
-					process->status = WIFSIGNALED(stat) * (128 + WTERMSIG(stat)) + WEXITSTATUS(stat);
-				}
+					process->status = WIFSIGNALED(stat) * (128 + WTERMSIG(stat)) \
+						+ WEXITSTATUS(stat);
+				printf("%d: %d\n", ret, process->status);
 			}
 		}
 	}

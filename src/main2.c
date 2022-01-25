@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:51:09 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/25 20:52:51 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/26 00:04:08 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,15 @@ int	main(void)
 	//TODO: lexer
 	//TODO: parser
 	t_job		job = (t_job){{0}, environ, -1};
-	// t_file		io_file = {"outfile2", IO_OUT};
-	// t_proc		proc1 = {"/bin/ls", (char *[]){"/bin/cat", NULL}, {0}, 0, 0, 0};
-	t_proc		proc1 = {"/bin/cat", (char *[]){"/bin/cat", NULL}, {0}, 0, 0, 0};
-	t_proc		proc2 = {"/usr/bin/grep", (char *[]){"/usr/bin/grep", "a.out", NULL}, {0}, 0, 0, 0};
+	t_file		io_file = {"outfile2", IO_OUT};
+	t_proc		proc1 = {"/bin/ls", (char *[]){"/bin/ls", NULL}, {0}, 0, 0, 0};
+	t_proc		proc3 = {"/bin/cat", (char *[]){"/bin/cat", NULL}, {0}, 0, 0, 0};
+	// t_proc		proc2 = {"/usr/bin/grep", (char *[]){"/usr/bin/grep", "a.out", NULL}, {0}, 0, 0, 0};
+	// t_proc		proc3 = {"echo", (char *[]){"echo", "hello", NULL}, {0}, 0, 0, 0};
 	
-	// hx_array_push(&proc2.io_redirect, &io_file);
+	hx_array_push(&proc3.io_redirect, &io_file);
 	hx_array_push(&job.pipeline, &proc1);
-	hx_array_push(&job.pipeline, &proc2);
+	hx_array_push(&job.pipeline, &proc3);
 	
 	char		*input;
 	while (1)

@@ -6,26 +6,30 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:28:29 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/25 13:23:33 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/25 23:34:23 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mush/builtin.h"
 #include <stdio.h>
 
-void	builtin_env(char *args[])
+int	builtin_env(char *args[])
 {
 	char	**env;
+	char	*str;
 
 	env = jop.envp;
 	if (ft_cnt_arg(args) >= 2)
 	{
-		printf("en: '%s': No such file or directory\n", args[1]);
-		return ;
+		str = strerror(22);
+		write(2, "env: ", 4);
+		write(2, str, ft_strlen(str));
+		write(2, "\n", 1);
 	}
 	while (*env)
 	{
 		printf("%s\n", *env);
 		env++;
 	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/01/25 17:31:56 by hyeonsok         ###   ########.fr        #
+#    Updated: 2022/01/25 21:54:25 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ OBJS		+=	$(addprefix $(OBJDIR)/, \
 				exec_pipe.o				\
 				exec_redir.o			\
 				exec_state.o			\
+				exec_builtin.o			\
 				exec.o)
 
 # ./src/utils

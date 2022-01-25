@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:53 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/25 13:21:55 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/26 00:01:25 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ struct	Jop {
 	char	**envp;
 }jop;
 
+struct s_builtin {
+	char	*name;
+	int	(*builtin)(char *[]);
+};
+
 /*
 **utils
 */
@@ -29,39 +34,14 @@ char	*ft_get_env(char *path_n);
 int		ft_check_arg_form(char *args[]);
 void	ft_add_path(char **path_v, char *slash);
 
-/*
-**builtin_cd.c
-*/
-void	builtin_cd(char *args[]);
 
-/*
-**builtin_echo.c
-*/
-void	builtin_echo(char *args[]);
-
-/*
-**builtin_env.c
-*/
-void	builtin_env(char *args[]);
-
-/*
-**builtin_exit.c
-*/
-void	builtin_exit(char *args[]);
-
-/*
-**builtin_export.c
-*/
-void	builtin_export(char *args[]);
-
-/*
-**builtin_pwd.c
-*/
-void	builtin_pwd(char *args[]);
-
-/*
-**builtin_unset.c
-*/
-void	builtin_unset(char *args[]);
+int	builtin_cd(char *args[]);
+int	builtin_echo(char *args[]);
+int	builtin_env(char *args[]);
+int	builtin_exit(char *args[]);
+int	builtin_export(char *args[]);
+int	builtin_pwd(char *args[]);
+int	builtin_unset(char *args[]);
+int	builtin_search(const char *name, int (**f)(char *p[]));
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:34:22 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/25 13:23:22 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/26 00:00:32 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	ft_echo_print(char *args[])
 	}
 }
 
-void	builtin_echo(char *args[])
+int	builtin_echo(char *args[])
 {
 	int	option;
 
@@ -75,4 +75,5 @@ void	builtin_echo(char *args[])
 	ft_echo_print(args);
 	if (!option)
 		printf("\n");
+	return (0);
 }

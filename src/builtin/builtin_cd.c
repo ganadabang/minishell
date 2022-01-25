@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/25 13:23:00 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/25 23:21:45 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	ft_check_args_cd(char *args[])
 	return (1);
 }
 
-void	builtin_cd(char *args[])
+int	builtin_cd(char *args[])
 {
 	char	**splitted_path;
 	char	*pwd;
@@ -109,7 +109,7 @@ void	builtin_cd(char *args[])
 	args++;
 	i = 0;
 	if (!ft_check_args_cd(args))
-		return ;
+		return (1);
 	splitted_path = ft_split(*args, "/");
 	pwd = ft_get_pwd("PWD");
 	if (!splitted_path || ft_cnt_arg(args) == 0)
@@ -126,4 +126,5 @@ void	builtin_cd(char *args[])
 	}
 	free(pwd);
 	ft_free_arr(splitted_path);
+	return (0);
 }

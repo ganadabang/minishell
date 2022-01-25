@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 16:49:34 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/25 13:24:24 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/25 23:36:36 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	ft_check_args_unset(char c)
 	return (0);
 }
 
-void	builtin_unset(char *args[])
+int	builtin_unset(char *args[])
 {
 	int	i;
 	int	env_line;
@@ -74,10 +74,11 @@ void	builtin_unset(char *args[])
 		if (ft_check_args_unset(*args[i]))
 		{
 			printf("minishell: unset: %s not a valid identifier", args[i]);
-			return ;
+			return (1);
 		}
 		if (env_line != -1)
 			ft_remove_env(env_line);
 		i++;
 	}
+	return (0);
 }
