@@ -6,11 +6,13 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/24 23:46:36 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/25 17:10:35 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mush/exec.h"
+#include <sys/wait.h>
+#include <sys/errno.h>
 
 void	mush_exec(t_job *job)
 {
@@ -27,6 +29,7 @@ void	mush_exec(t_job *job)
 			exit(EXIT_FAILURE);
 		}
 		t_proc *proc = job->pipeline.data[i];
+		proc->pid = pid;
 		if (pid == 0)
 		{
 			pipe_setup(pde, is_last_proc(i, job->pipeline.len));
@@ -38,5 +41,29 @@ void	mush_exec(t_job *job)
 		}
 		pipe_unset(pde);
 	}
-	close(pde[1][0]);
+	//update_status; It's going to be separated.
+	int	stat;
+	int	ret;
+	t_proc	*process;
+	while (1)
+	{
+		ret = wait(&stat);
+		if (errno == ECHILD)
+			break ;
+		for (size_t i = 0; i < job->pipeline.len; ++i)
+		{
+			process = (t_proc *)job->pipeline.data[i];
+			if (ret == process->pid)
+			{
+				if (process->iscompleted == 0)
+				{
+					process->iscompleted = 1;
+					process->status = stat >> 8;
+					//debug
+					dprintf(2, "ret:%d status:%d\n", ret, stat >> 8);
+				}
+			}
+		}
+	}
+	job->last_status = ((t_proc *)job->pipeline.data[job->pipeline.len - 1])->status;
 }

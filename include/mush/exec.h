@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:56:20 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/25 14:31:26 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/25 15:56:45 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,14 @@ typedef struct s_proc {
 	char **argv;
 	t_array	io_redirect;
 	pid_t	pid;
+	int		status;
+	int		iscompleted;
 }	t_proc;
 
 typedef struct s_job {
 	t_array	pipeline;
 	char	**envp;
-	char	last_status;
-	char	exit;
+	int		last_status;
 }	t_job;
 
 typedef struct s_file {
