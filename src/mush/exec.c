@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/25 17:10:35 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/25 17:51:10 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	mush_exec(t_job *job)
 		}
 		pipe_unset(pde);
 	}
+	close(pde[1][0]);
 	//update_status; It's going to be separated.
 	int	stat;
 	int	ret;
@@ -57,7 +58,7 @@ void	mush_exec(t_job *job)
 			{
 				if (process->iscompleted == 0)
 				{
-					process->iscompleted = 1;
+					// process->iscompleted = 1;
 					process->status = stat >> 8;
 					//debug
 					dprintf(2, "ret:%d status:%d\n", ret, stat >> 8);
