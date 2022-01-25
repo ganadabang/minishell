@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:56:20 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/24 23:40:46 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/25 00:11:08 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <stdio.h>
-# include "array.h"
+
+# include "libftx.h"
 
 typedef struct s_proc {
 	char *name;
