@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/26 00:05:54 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/26 01:20:27 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,18 @@ void	mush_exec(t_job *job)
 {
 	int			pde[2][2] = {{-1, -1}, {-1, -1}};
 	pid_t		pid;
-	int			tmp[2];
 	int		(*f)(char *[]) = NULL;
 	t_proc *proc = job->pipeline.data[0];
 
+	//exec_builtin
 	if (job->pipeline.len == 1 && builtin_search(proc->name, &f))
 	{
+		int	tmp[2];
 		signal(SIGINT, SIG_DFL);
 		tmp[0] = dup(0);
 		tmp[1] = dup(1);
 		io_redirect((t_file **)proc->io_redirect.data, proc->io_redirect.len);
-		f(proc->argv);
+		job->last_status = f(proc->argv);
 		dup2(tmp[0], 0);
 		dup2(tmp[1], 1);
 		close(tmp[0]);
@@ -48,8 +49,8 @@ void	mush_exec(t_job *job)
 				perror("fork");
 				exit(EXIT_FAILURE);
 			}
-			t_proc *proc = job->pipeline.data[i];
 			proc->pid = pid;
+			t_proc *proc = job->pipeline.data[i];
 			if (pid == 0)
 			{
 				signal(SIGINT, SIG_DFL);
@@ -84,7 +85,6 @@ void	mush_exec(t_job *job)
 				if (process->iscompleted == 0)
 					process->status = WIFSIGNALED(stat) * (128 + WTERMSIG(stat)) \
 						+ WEXITSTATUS(stat);
-				printf("%d: %d\n", ret, process->status);
 			}
 		}
 	}
