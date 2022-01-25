@@ -6,7 +6,7 @@
 #    By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/01/25 14:22:35 by hyeonsok         ###   ########.fr        #
+#    Updated: 2022/01/25 17:31:56 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,12 @@ CFLAGS = -Wall -Werror -Wextra -g3
 
 RM = rm -f
 
-INCLUDES	=	-I include/ -I /Users/$(USER)/.brew/opt/readline/include/ \
+# INCLUDES	=	-I include/ -I /Users/$(USER)/.brew/opt/readline/include/
+INCLUDES	=	-I include/ -I /usr/local/opt/readline/include/ \
 				-I lib/libft/include/
+
 # LIBS		=	-L /Users/$(USER)/.brew/opt/readline/lib/ -lreadline
-LIBS		=	-lreadline \
+LIBS		=	-L /usr/local/opt/readline/lib/ -lreadline \
 				-L lib/libft -lft
 
 OBJDIR := ./obj
