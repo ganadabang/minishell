@@ -6,11 +6,11 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 20:44:55 by hyeonsok          #+#    #+#             */
-/*   Updated: 2021/11/05 01:57:38 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/25 13:51:41 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_string.h"
+#include "libft.h"
 
 char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {

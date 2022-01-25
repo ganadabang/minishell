@@ -6,11 +6,12 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:17:49 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/24 23:41:15 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/25 13:22:17 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mush/builtin.h"
+#include <stdio.h>
 
 int	ft_str_digit_check(char *str)
 {

@@ -6,10 +6,11 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:32:39 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/24 23:41:07 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/25 13:24:14 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "mush/builtin.h"
 
 void	builtin_pwd(char *args[])

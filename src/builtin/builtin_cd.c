@@ -6,11 +6,12 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/24 23:40:05 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/25 13:23:00 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/stat.h>
+#include <stdio.h>
 #include "mush/builtin.h"
 
 void	ft_update_env(char *path_n, char *path_v)
@@ -109,7 +110,7 @@ void	builtin_cd(char *args[])
 	i = 0;
 	if (!ft_check_args_cd(args))
 		return ;
-	splitted_path = ft_split(*args, '/');
+	splitted_path = ft_split(*args, "/");
 	pwd = ft_get_pwd("PWD");
 	if (!splitted_path || ft_cnt_arg(args) == 0)
 	{

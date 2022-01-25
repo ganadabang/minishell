@@ -6,11 +6,12 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:34:22 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/24 23:40:12 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/25 13:23:22 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mush/builtin.h"
+#include <stdio.h>
 
 int	ft_str_length(char *str)
 {

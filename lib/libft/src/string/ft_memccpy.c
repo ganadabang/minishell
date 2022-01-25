@@ -6,11 +6,11 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/24 17:27:07 by SSONG             #+#    #+#             */
-/*   Updated: 2021/11/05 00:39:15 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/25 13:50:33 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_string.h"
+#include "libft/string.h"
 
 void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {

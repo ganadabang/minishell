@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:51:09 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/24 23:39:25 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/25 14:30:58 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	main(void)
 	hx_array_push(&job.pipeline, &proc1);
 	hx_array_push(&job.pipeline, &proc2);
 
-	//executor
-	//sync exit state
+	mush_exec(&job);
 	return (0);
 }

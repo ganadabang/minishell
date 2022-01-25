@@ -6,11 +6,11 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/24 23:17:19 by SSONG             #+#    #+#             */
-/*   Updated: 2022/01/25 00:48:42 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/25 13:50:33 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_string.h"
+#include "libft/string.h"
 
 /*
  * TODO: TEST

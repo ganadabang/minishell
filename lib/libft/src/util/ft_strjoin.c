@@ -6,11 +6,11 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 18:22:07 by hyeonsok          #+#    #+#             */
-/*   Updated: 2021/11/05 03:27:26 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/25 13:51:44 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_string.h"
+#include "libft.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

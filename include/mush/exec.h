@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:56:20 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/25 00:11:08 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/25 14:31:26 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ int		is_last_proc(size_t idx, size_t size);
 void	pipe_setup(int pde[2][2], int is_last_proc);
 void	pipe_unset(int pde[2][2]);
 void	io_redirect(t_file **io_files, size_t len);
+void	mush_exec(t_job *job);
 
 #endif

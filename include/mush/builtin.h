@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:53 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/25 00:31:44 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/25 13:21:55 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ struct	Jop {
 /*
 **utils
 */
-void	*builtin_set_malloc(size_t nmemb, int size);
+void	*ft_set_malloc(size_t nmemb, int size);
 void	ft_free_arr(char **arr);
 int		ft_cnt_arg(char *args[]);
 char	*ft_get_env(char *path_n);
