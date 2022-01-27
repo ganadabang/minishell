@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:51:09 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/26 00:37:19 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/27 11:04:39 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	main(void)
 
 	//signal
 	signal(SIGTSTP, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	signal(SIGWINCH, mush_signal);
 	//TODO: lexer
 	//TODO: parser
@@ -69,7 +70,6 @@ int	main(void)
 	while (1)
 	{
 		signal(SIGINT, mush_signal);
-		//set term
 		term.c_lflag &= ~ECHOCTL;
 		tcsetattr(STDOUT_FILENO, TCSANOW,&term);
 

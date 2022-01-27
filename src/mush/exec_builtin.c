@@ -6,11 +6,10 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 20:54:27 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/25 23:58:32 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/27 12:30:10 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// 경로에 대한 확인이고 이제 여기서 해야할 일은 ..
 #include "mush/exec.h"
 #include "mush/builtin.h"
 
@@ -38,4 +37,21 @@ int	builtin_search(const char *name, int (**f)(char *p[]))
 		}
 	}
 	return (0);
+}
+
+int	exec_builtin_on_parent(t_array *io_files, char **argv)
+{
+	int	status;
+	int	tmp[2];
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
+	tmp[0] = dup(0);
+	tmp[1] = dup(1);
+	io_redirect((t_file **)io_files->data, io_files->len);
+	status = f(argv);
+	dup2(tmp[0], 0);
+	dup2(tmp[1], 1);
+	close(tmp[0]);
+	close(tmp[1]);
+	return (f(argv));
 }

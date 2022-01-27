@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:56:20 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/25 15:56:45 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/27 12:22:19 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,10 @@ enum	e_iotype {
 };
 
 int		is_last_proc(size_t idx, size_t size);
-void	pipe_setup(int pde[2][2], int is_last_proc);
-void	pipe_unset(int pde[2][2]);
+void	exec_pipe_connect(int pde[2][2]);
+void	exec_pipe_disconnect(int pde[2][2]);
 void	io_redirect(t_file **io_files, size_t len);
 void	mush_exec(t_job *job);
+int		exec_state_update(t_proc *procs[], size_t len);
 
 #endif
