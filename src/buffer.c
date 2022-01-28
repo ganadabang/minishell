@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "buffer.h"
+#include "libftx.h"
 
 bool	hx_buffer_secure(t_buf *buf, size_t size)
 {
@@ -47,7 +47,7 @@ bool	hx_buffer_putchar(t_buf *buf, char c)
 {
 	if (!hx_buffer_secure(buf, sizeof(char)))
 		return (false);
-	buf->data[buf->len] = c;
+	((char *)buf->data)[buf->len] = c;
 	buf->len += 1;
 	return (true);
 }
@@ -56,8 +56,8 @@ char	*hx_buffer_withdraw(t_buf *buf)
 {
 	char	*data;
 
-	data = buf->data;
-	buf->data = NULL;
+	data = ft_strdup((char *)buf->data);
+	ft_memset(buf->data, 0, buf->cap);
 	buf->len = 0;
 	return (data);
 }
