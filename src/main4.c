@@ -12,8 +12,9 @@
 
 #include <unistd.h>
 #include <termios.h>
-#include <readline/history.h>
+#include <stdio.h>
 #include <readline/readline.h>
+#include <readline/history.h>
 
 #include "libftx.h"
 
@@ -77,47 +78,45 @@ void	mush_sighandler(int signum)
 
 void	mush_state_create(t_state *state, char **envrion)
 {
-	tcgetattr(STDOUT_FILENO, &state[0].term);
-	state[0].job->procs = NULL;
-	state[0].envp = environ;
-	state[0].exit = -1;
-	state[0].last_status = 0;
+	tcgetattr(STDOUT_FILENO, &state->term);
+	state->job = NULL;
+	state->envp = environ;//?
+	state->exit = -1;
+	state->last_status = 0;
 }
 
 void	mush_mode_interactive(struct termios *term)
 {
 	signal(SIGINT, mush_sighandler);
 	term->c_lflag &= ~ECHOCTL;
-	tcsetattr(STDOUT_FILENO, TCSANOW ,&term);
+	tcsetattr(STDOUT_FILENO, TCSANOW ,term);
 }
 
 void	mush_mode_executive(struct termios *term)
 {
 	signal(SIGINT, SIG_IGN);
 	term->c_lflag |= ECHOCTL;
-	tcsetattr(STDOUT_FILENO, TCSANOW ,&term);
+	tcsetattr(STDOUT_FILENO, TCSANOW ,term);
 }
 
 void	mush_signal(void)
 {
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGWINCH, mush_signal);
+	signal(SIGWINCH, mush_sighandler);
 	return ;
 }
 
 void	mush_term_restored(struct termios *term)
 {
 	term->c_lflag |= ECHOCTL;
-	tcsetattr(STDOUT_FILENO, TCSANOW ,&term);
+	tcsetattr(STDOUT_FILENO, TCSANOW ,term);
 }
 
 t_job	*mush_parse_line(char *input)
 {
-	reuturn (NULL);
+	return (NULL);
 }
-
-
 
 int	mush_parse(t_state *state, char *input)
 {
@@ -128,23 +127,25 @@ int	mush_parse(t_state *state, char *input)
 		state->exit = 0;
 		return (-1);
 	}
-	add_history(input);
-	parser.input = input;
-	if (mush_parser_tokenize(&parser) == -1)
-	{
-		state->last_status = 1;
-		free(input);
-		return (-1);
-	}
-	mush_job_create(&parser, state);
-	mush_parser_destroy(&parser);
-	if (mush_syntax_check(&state.job) == -1)
-	{
-		state->last_status = 258;
-		mush_job_destory(&state.job);
-		return (-1);
-	}
+	free(input);
 	return (0);
+	// add_history(input);
+	// parser.input = input;
+	// if (mush_parser_tokenize(&parser) == -1)
+	// {
+	// 	state->last_status = 1;
+	// 	free(input);
+	// 	return (-1);
+	// }
+	// mush_job_create(&parser, state);
+	// mush_parser_destroy(&parser);
+	// if (mush_syntax_check(&state.job) == -1)
+	// {
+	// 	state->last_status = 258;
+	// 	mush_job_destory(&state.job);
+	// 	return (-1);
+	// }
+	// return (0);
 }
 
 int	main(int argc, char *argv[])
@@ -152,6 +153,7 @@ int	main(int argc, char *argv[])
 	t_state	state;
 	int		status;
 	char	*input;
+
 
 	mush_state_create(&state, environ);
 	mush_signal();
@@ -161,7 +163,7 @@ int	main(int argc, char *argv[])
 		input = readline("mush+> ");
 		if (mush_parse(&state, input) == -1)
 			continue ;
-		mush_mode_executive(&state->term);
+		mush_mode_executive(&state.term);
 		status = mush_execute(&state);
 		if (status > 128)
 			write(1, "\n", 1);

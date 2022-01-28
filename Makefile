@@ -11,27 +11,28 @@
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g3
+# CFLAGS = -Wall -Werror -Wextra -g3 
+CFLAGS = -g3
 
 RM = rm -f
 
-# INCLUDES	=	-I include/ -I /Users/$(USER)/.brew/opt/readline/include/
-INCLUDES	=	-I include/ -I /usr/local/opt/readline/include/ \
+INCLUDES	=	-I include/ -I /Users/$(USER)/local/opt/readline/include/ \
 				-I lib/libft/include/
+# INCLUDES	=	-I include/ -I /usr/local/opt/readline/include/ \
 
-# LIBS		=	-L /Users/$(USER)/.brew/opt/readline/lib/ -lreadline
-LIBS		=	-L /usr/local/opt/readline/lib/ -lreadline \
+LIBS		=	-L /Users/$(USER)/local/opt/readline/lib/ -lreadline \
 				-L lib/libft -lft
+# LIBS		=	-L /usr/local/opt/readline/lib/ -lreadline \
 
 OBJDIR := ./obj
 
 # ./src
 OBJS		=	$(addprefix $(OBJDIR)/, \
-				main2.o					\
+				main4.o					\
 				array.o)
 
 # ./src/mush
-OBJS		+=	$(addprefix $(OBJDIR)/, \
+# OBJS		+=	$(addprefix $(OBJDIR)/, \
 				exec_expn.o				\
 				exec_pipe.o				\
 				exec_redir.o			\
