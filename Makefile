@@ -29,7 +29,8 @@ OBJDIR := ./obj
 # ./src
 OBJS		=	$(addprefix $(OBJDIR)/, \
 				main4.o					\
-				array.o)
+				array.o					\
+				buffer.o)
 
 # ./src/mush
 OBJS		+=	$(addprefix $(OBJDIR)/, \
