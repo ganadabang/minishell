@@ -16,6 +16,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include <errno.h>
+#include <string.h>
 
 #include "libftx.h"
 
@@ -134,6 +135,116 @@ t_proc		procs[] = { \
 };
 //__
 
+
+void	mush_parser_tokenize(t_parser *parser)
+{
+	t_array		*tokens;
+	t_buf		buffer;
+	char		*input;
+	int			i;
+
+	input = parser->input;
+	tokens = &parser->tokens;
+	memset(&buffer, 0, sizeof(t_buf));
+	memset(tokens, 0, sizeof(t_array));
+	i = 0;
+	while (input[i] != '\0')
+	{
+		// if (input[i] == ' ') || input[i] == '\t' || input[i] == '\n')
+		if (strchr(" \t\n", input[i]) != NULL)
+		{
+			if (buffer.len > 0)
+			{
+				hx_buffer_putchar(&buffer, '\0');
+				hx_array_push(tokens, hx_buffer_withdraw(&buffer));
+			}
+			else if (buffer.len == 0)
+				i += strspn(&input[i], " \t\n");
+			continue ;
+		}
+		if (input[i] == '|')
+		{
+			if (buffer.len > 0)
+			{
+				hx_buffer_putchar(&buffer, '\0');
+				hx_array_push(tokens, hx_buffer_withdraw(&buffer));
+			}
+
+			hx_buffer_putchar(&buffer, '|');
+			hx_buffer_putchar(&buffer, '\0');
+			hx_array_push(tokens, hx_buffer_withdraw(&buffer));
+			++i;
+			continue ;
+		}
+		if (input[i] == '<' || input[i] == '>')
+		{
+			if (buffer.len > 0)
+			{
+				hx_buffer_putchar(&buffer, '\0');
+				hx_array_push(tokens, hx_buffer_withdraw(&buffer));
+			}
+
+			int op_size;
+			op_size = 1 + (input[i + 1] == input[i]);
+			hx_buffer_putstr(&buffer, &input[i], op_size);
+			hx_buffer_putchar(&buffer, '\0');
+			hx_array_push(tokens, hx_buffer_withdraw(&buffer));
+			i += op_size;
+			continue ;
+		}
+		if (input[i] == '"')
+		{
+			hx_buffer_putchar(&buffer, '"');
+			++i;
+			while (input[i] != '\0')
+			{
+				hx_buffer_putchar(&buffer, input[i]);
+				++i;
+			}
+			if (input[i] == '\0')
+			{
+				printf("unclosed double quoting\n");
+				return ;
+			}
+			hx_buffer_putchar(&buffer, input[i]);
+			continue ;
+		}
+		if (input[i] == '\'')
+		{
+			hx_buffer_putchar(&buffer, '\'');
+			++i;
+			while (input[i] != '0')
+			{
+				hx_buffer_putchar(&buffer, input[i]);
+				++i;
+			}
+			if (input[i] == '\0')
+			{
+				printf("unclosed single quoting\n");
+				return ;
+			}
+			hx_buffer_putchar(&buffer, input[i]);
+			continue ;
+		}
+		hx_buffer_putchar(&buffer, input[i]);
+		++i;
+	}
+	hx_buffer_putchar(&buffer, '\0');
+	hx_array_push(tokens, hx_buffer_withdraw(&buffer));
+	hx_buffer_cleanup(&buffer);
+	for (int i = 0; i < tokens->len; ++i)
+	{
+		printf("[%d]: %s\n", i, (char *)tokens->data[i]);
+	}
+}
+
+// hx_array_push(&job->procs, &procs[3]);
+// hx_array_push(&job->procs, &procs[4]);
+// hx_array_push(&job->procs, &procs[5]);
+// hx_array_push(&procs[2].io_files, &files[0]);
+// hx_array_push(&procs[1].io_files, &files[2]);
+// hx_array_push(&job->procs, &procs[1]);
+
 int	mush_parse(t_state *state, char *input)
 {
 	t_parser	parser;
@@ -143,30 +254,11 @@ int	mush_parse(t_state *state, char *input)
 		state->exit = 0;
 		return (-1);
 	}
-	free(input);
+	add_history(input);
+	parser.input = input;
+	mush_parser_tokenize(&parser);
 
-	t_job		*job;
-
-	job = (t_job *)calloc(1, sizeof(t_job));
-	
-	hx_array_push(&job->procs, &procs[3]);
-	hx_array_push(&job->procs, &procs[4]);
-	hx_array_push(&job->procs, &procs[5]);
-	// hx_array_push(&procs[2].io_files, &files[0]);
-	// hx_array_push(&procs[1].io_files, &files[2]);
-	// hx_array_push(&job->procs, &procs[1]);
-
-	state->job = job;
-
-	return (0);
-	// add_history(input);
-	// parser.input = input;
-	// if (mush_parser_tokenize(&parser) == -1)
-	// {
-	// 	state->last_status = 1;
-	// 	free(input);
-	// 	return (-1);
-	// }
+	return (-1);
 	// mush_job_create(&parser, state);
 	// mush_parser_destroy(&parser);
 	// if (mush_syntax_check(&state.job) == -1)
