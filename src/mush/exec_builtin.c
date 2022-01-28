@@ -39,19 +39,19 @@ int	builtin_search(const char *name, int (**f)(char *p[]))
 	return (0);
 }
 
-int	exec_builtin_on_parent(t_array *io_files, char **argv)
-{
-	int	status;
-	int	tmp[2];
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGINT, SIG_DFL);
-	tmp[0] = dup(0);
-	tmp[1] = dup(1);
-	io_redirect((t_file **)io_files->data, io_files->len);
-	status = f(argv);
-	dup2(tmp[0], 0);
-	dup2(tmp[1], 1);
-	close(tmp[0]);
-	close(tmp[1]);
-	return (f(argv));
-}
+// int	mush_execute_builtin(t_array *io_files, char **argv)
+// {
+// 	int	status;
+// 	int	tmp[2];
+
+// 	signal(SIGQUIT, SIG_DFL);
+// 	signal(SIGINT, SIG_DFL);
+// 	tmp[0] = dup(0);
+// 	tmp[1] = dup(1);
+// 	io_redirect((t_file **)io_files->data, io_files->len);
+// 	status = f(argv);
+// 	dup2(tmp[0], 0);
+// 	dup2(tmp[1], 1);
+// 	close(tmp[0]);
+// 	close(tmp[1]);
+// }

@@ -32,8 +32,9 @@ OBJS		=	$(addprefix $(OBJDIR)/, \
 				array.o)
 
 # ./src/mush
-# OBJS		+=	$(addprefix $(OBJDIR)/, \
-				exec_expn.o				\
+OBJS		+=	$(addprefix $(OBJDIR)/, \
+				exec_builtin.o)
+#				exec_expn.o				\
 				exec_pipe.o				\
 				exec_redir.o			\
 				exec_state.o			\
