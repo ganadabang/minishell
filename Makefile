@@ -6,7 +6,7 @@
 #    By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/01/29 13:27:03 by hyeonsok         ###   ########.fr        #
+#    Updated: 2022/01/29 17:29:43 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ OBJDIR := ./obj
 
 # ./src
 OBJS		=	$(addprefix $(OBJDIR)/, \
-				main4.o					\
+				main.o					\
 				array.o					\
 				buffer.o)
 
