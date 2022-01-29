@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 16:15:48 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/23 22:01:39 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/29 14:05:40 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*hx_buffer_withdraw(t_buf *buf)
 {
 	char	*data;
 
-	data = ft_strdup((char *)buf->data);
+	data = strndup((char *)buf->data, buf->len);
 	ft_memset(buf->data, 0, buf->cap);
 	buf->len = 0;
 	return (data);

@@ -6,7 +6,7 @@
 #    By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/01/25 21:54:25 by hyeonsok         ###   ########.fr        #
+#    Updated: 2022/01/29 13:27:03 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,11 @@ RM = rm -f
 
 INCLUDES	=	-I include/ -I /Users/$(USER)/local/opt/readline/include/ \
 				-I lib/libft/include/
-# INCLUDES	=	-I include/ -I /usr/local/opt/readline/include/ \
+INCLUDES	+=	-I include/ -I /usr/local/opt/readline/include/ \
 
 LIBS		=	-L /Users/$(USER)/local/opt/readline/lib/ -lreadline \
 				-L lib/libft -lft
-# LIBS		=	-L /usr/local/opt/readline/lib/ -lreadline \
+LIBS		+=	-L /usr/local/opt/readline/lib/ -lreadline \
 
 OBJDIR := ./obj
 

@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:47:55 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/27 23:14:11 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/01/29 15:10:52 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,16 @@ enum	e_iotype {
 	IO_APPEND,
 	IO_HERE
 };
+
+typedef struct	s_word {
+	char	*str;
+	int		word_type;
+}	t_word;
+
+typedef struct	s_token {
+	char	*str;
+	int		token_type;
+}	t_token;
 
 typedef struct s_proc {
 	char	*name;
@@ -136,106 +146,59 @@ t_proc		procs[] = { \
 //__
 
 
-void	mush_parser_tokenize(t_parser *parser)
+int	mush_parser_tokenize(t_parser *parser)
 {
 	t_array		*tokens;
 	t_buf		buffer;
 	char		*input;
-	int			i;
+	char		ch;
+	size_t		i;
+	size_t		size;
 
 	input = parser->input;
 	tokens = &parser->tokens;
 	memset(&buffer, 0, sizeof(t_buf));
 	memset(tokens, 0, sizeof(t_array));
-	i = 0;
+	i = strspn(input, " \t\n");
 	while (input[i] != '\0')
 	{
-		// if (input[i] == ' ') || input[i] == '\t' || input[i] == '\n')
-		if (strchr(" \t\n", input[i]) != NULL)
+		ch = input[i];
+		if (ch == '\n' || ch == '\t' || ch == ' ' || ch == '|' || ch == '<' \
+			|| ch == '>' || ch == '"' || ch == '\'')
 		{
-			if (buffer.len > 0)
+			if (buffer.len > 0 && ch != '\'' && ch != '"')
 			{
-				hx_buffer_putchar(&buffer, '\0');
 				hx_array_push(tokens, hx_buffer_withdraw(&buffer));
-			}
-			else if (buffer.len == 0)
 				i += strspn(&input[i], " \t\n");
-			continue ;
-		}
-		if (input[i] == '|')
-		{
-			if (buffer.len > 0)
+			}
+			else if (ch == '|' || ch == '<' || ch == '>')
 			{
-				hx_buffer_putchar(&buffer, '\0');
+				size = 1 + (ch == input[i + 1] && (ch == '<' || ch == '>'));
+				hx_buffer_putstr(&buffer, &input[i], size);
 				hx_array_push(tokens, hx_buffer_withdraw(&buffer));
+				i += size;
 			}
-
-			hx_buffer_putchar(&buffer, '|');
-			hx_buffer_putchar(&buffer, '\0');
-			hx_array_push(tokens, hx_buffer_withdraw(&buffer));
-			++i;
+			else if (input[i] == '"' || input[i] == '\'')
+			{
+				hx_buffer_putchar(&buffer, input[i++]);
+				while (input[i] != '\0' && input[i] != ch)
+					hx_buffer_putchar(&buffer, input[i++]);
+				if (input[i] == '\0')
+				{
+					printf("mush: quoting unclosed\n");
+					return (-1);
+				}
+				hx_buffer_putchar(&buffer, input[i++]);
+			}
 			continue ;
 		}
-		if (input[i] == '<' || input[i] == '>')
-		{
-			if (buffer.len > 0)
-			{
-				hx_buffer_putchar(&buffer, '\0');
-				hx_array_push(tokens, hx_buffer_withdraw(&buffer));
-			}
-
-			int op_size;
-			op_size = 1 + (input[i + 1] == input[i]);
-			hx_buffer_putstr(&buffer, &input[i], op_size);
-			hx_buffer_putchar(&buffer, '\0');
-			hx_array_push(tokens, hx_buffer_withdraw(&buffer));
-			i += op_size;
-			continue ;
-		}
-		if (input[i] == '"')
-		{
-			hx_buffer_putchar(&buffer, '"');
-			++i;
-			while (input[i] != '\0')
-			{
-				hx_buffer_putchar(&buffer, input[i]);
-				++i;
-			}
-			if (input[i] == '\0')
-			{
-				printf("unclosed double quoting\n");
-				return ;
-			}
-			hx_buffer_putchar(&buffer, input[i]);
-			continue ;
-		}
-		if (input[i] == '\'')
-		{
-			hx_buffer_putchar(&buffer, '\'');
-			++i;
-			while (input[i] != '0')
-			{
-				hx_buffer_putchar(&buffer, input[i]);
-				++i;
-			}
-			if (input[i] == '\0')
-			{
-				printf("unclosed single quoting\n");
-				return ;
-			}
-			hx_buffer_putchar(&buffer, input[i]);
-			continue ;
-		}
-		hx_buffer_putchar(&buffer, input[i]);
-		++i;
+		hx_buffer_putchar(&buffer, input[i++]);
 	}
-	hx_buffer_putchar(&buffer, '\0');
 	hx_array_push(tokens, hx_buffer_withdraw(&buffer));
 	hx_buffer_cleanup(&buffer);
-	for (int i = 0; i < tokens->len; ++i)
-	{
-		printf("[%d]: %s\n", i, (char *)tokens->data[i]);
-	}
+	for (i = 0; i < tokens->len; ++i)
+		printf("[%zu]: %s\n", i, (char *)tokens->data[i]);
+	return (0);
 }
 
 // hx_array_push(&job->procs, &procs[3]);
@@ -457,7 +420,7 @@ int	main(int argc, char *argv[])
 		input = readline("mush+> ");
 		if (mush_parse(&state, input) == -1)
 		{
-			return (0);
+			continue ;
 		}
 		mush_mode_executive(&state.term);
 		status = mush_execute(&state);
