@@ -6,7 +6,7 @@
 #    By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/01/29 17:29:43 by hyeonsok         ###   ########.fr        #
+#    Updated: 2022/02/01 23:01:46 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,8 @@ OBJS		=	$(addprefix $(OBJDIR)/, \
 
 # ./src/mush
 OBJS		+=	$(addprefix $(OBJDIR)/, \
-				exec_builtin.o)
+				exec_builtin.o \
+				mode.o )
 #				exec_expn.o				\
 				exec_pipe.o				\
 				exec_redir.o			\
