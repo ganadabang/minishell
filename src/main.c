@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:47:55 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/29 17:29:41 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/03 01:45:24 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <string.h>
 
 #include "libftx.h"
+#include "mush/mode.h"
 
 extern char	**environ;
 
@@ -36,18 +37,18 @@ typedef struct	s_word {
 
 typedef struct	s_token {
 	char	*str;
-	int		token_type;
+	int		type;
 }	t_token;
 
 typedef struct s_proc {
 	char	*name;
-	char	**argv;
+	t_array	argv;
 	t_array	io_files;
 	pid_t	pid;
 	int		status;
 	int		(*fp_builtin)(char *[]);
-	int		io_read;
-	int		io_write;
+	int		stdin;
+	int		stdout;
 }	t_proc;
 
 typedef struct s_file {
@@ -56,7 +57,7 @@ typedef struct s_file {
 }	t_file;
 
 typedef struct s_job {
-	t_array	procs;
+	t_array	pipeline;
 	int		status;
 }	t_job;
 
@@ -72,233 +73,258 @@ typedef struct s_state {
 
 typedef struct s_parser
 {
+	t_array	token_list;
 	char	*input;
-	t_array	tokens;
+	int		syntax_error;
+	size_t	pos;
 }	t_parser;
-
-void	mush_sighandler(int signum)
-{
-	if (signum == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_replace_line("", 1);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-	else if (signum == SIGWINCH)
-		rl_on_new_line();
-	return ;
-}
-
-void	mush_state_create(t_state *state, char **envrion)
-{
-	tcgetattr(STDOUT_FILENO, &state->term);
-	state->job = NULL;
-	state->envp = environ;//?
-	state->exit = -1;
-	state->last_status = 0;
-}
-
-void	mush_mode_interactive(struct termios *term)
-{
-	signal(SIGINT, mush_sighandler);
-	term->c_lflag &= ~ECHOCTL;
-	tcsetattr(STDOUT_FILENO, TCSANOW ,term);
-}
-
-void	mush_mode_executive(struct termios *term)
-{
-	signal(SIGINT, SIG_IGN);
-	term->c_lflag |= ECHOCTL;
-	tcsetattr(STDOUT_FILENO, TCSANOW ,term);
-}
-
-void	mush_signal(void)
-{
-	signal(SIGTSTP, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGWINCH, mush_sighandler);
-	return ;
-}
-
-void	mush_term_restored(struct termios *term)
-{
-	term->c_lflag |= ECHOCTL;
-	tcsetattr(STDOUT_FILENO, TCSANOW ,term);
-}
-
-
-//TEST variables
-t_file		files[] = { \
-	{"outfile", IO_OUT}, \
-	{"infile", IO_IN}, \
-	{"outfile2", IO_APPEND} \
-};
-
-t_proc		procs[] = { \
-	{"/bin/ls", (char *[]){"/bin/ls", NULL}, {0}, 0, 0, 0, 0, 1}, \
-	{"/bin/cat", (char *[]){"/bin/cat", NULL}, {0}, 0, 0, 0, 0, 1}, \
-	{"echo", (char *[]){"echo", "hello", NULL}, {0}, 0, 0, 0, 0, 1}, \
-	{"/bin/ps", (char *[]){"/bin/ps", NULL}, {0}, 0, 0, 0, 0, 1}, \
-	{"/usr/bin/grep", (char *[]){"/usr/bin/grep", "tty", NULL}, {0}, 0, 0, 0, 0, 1}, \
-	{"/usr/bin/wc", (char *[]){"/usr/bin/wc", "-l", NULL}, {0}, 0, 0, 0, 0, 1} \
-};
-//__
-
-int	mush_parser_pretokenize(t_parser *parser)
-{
-	t_array		*tokens;
-	t_buf		buffer;
-	char		*input;
-	char		ch;
-	size_t		i;
-	size_t		size;
-
-	input = parser->input;
-	tokens = &parser->tokens;
-	memset(&buffer, 0, sizeof(t_buf));
-	memset(tokens, 0, sizeof(t_array));
-	i = strspn(input, " \t\n");
-	while (input[i] != '\0')
-	{
-		ch = input[i];
-		if (ch == '\n' || ch == '\t' || ch == ' ' || ch == '|' || ch == '<' \
-			|| ch == '>' || ch == '"' || ch == '\'')
-		{
-			if (buffer.len > 0 && ch != '\'' && ch != '"')
-			{
-				hx_array_push(tokens, hx_buffer_withdraw(&buffer));
-				i += strspn(&input[i], " \t\n");
-			}
-			else if (ch == '|' || ch == '<' || ch == '>')
-			{
-				size = 1 + (ch == input[i + 1] && (ch == '<' || ch == '>'));
-				hx_buffer_putstr(&buffer, &input[i], size);
-				hx_array_push(tokens, hx_buffer_withdraw(&buffer));
-				i += size;
-			}
-			else if (input[i] == '"' || input[i] == '\'')
-			{
-				hx_buffer_putchar(&buffer, input[i++]);
-				while (input[i] != '\0' && input[i] != ch)
-					hx_buffer_putchar(&buffer, input[i++]);
-				if (input[i] == '\0')
-					return (-1);
-				hx_buffer_putchar(&buffer, input[i++]);
-			}
-			continue ;
-		}
-		hx_buffer_putchar(&buffer, input[i++]);
-	}
-	hx_array_push(tokens, hx_buffer_withdraw(&buffer));
-	hx_buffer_cleanup(&buffer);
-	return (1);
-}
-
-struct s_word {
-	int		word_type;
-	char	*str;
-}
 
 struct s_quoted_word {
 	int		word_type;
 	char	*str;
-}
+};
 
-union u_word {
-	char	*str;
-	t_array	*strv;
-}
-typedef struct s_word {
-	int		single_quoted;
-	union	u_word	words;
-}	t_word;
-
-typedef struct s_token {
-	int		type;
-	char	*str;
-}	t_token;
-
-int	mush_parser_lexical_analyze(t_parser *parser)
+void	mush_state_create(t_state *state, char **envp)
 {
-	t_array	*pretokens;
-	t_array	*procs;
+	tcgetattr(STDOUT_FILENO, &state->term);
+	state->job = NULL;
+	state->envp = envp;
+	state->exit = -1;
+	state->last_status = 0;
+}
+int	is_operator(char ch)
+{
+	return (ch == '>' || ch == '<' || ch == '|');
+}
+
+int	is_quoting(char ch)
+{
+	return (ch == '\'' || ch == '"');
+}
+
+int	is_blank(char ch)
+{
+	return (ch == '\n' || ch == ' ' || ch == '\t');
+}
+
+int	is_meta(char ch)
+{
+	return (is_blank(ch) || is_quoting(ch) || is_operator(ch));
+}
+
+size_t	get_operator_size(char *input)
+{
+	if (!is_operator(input[0]))
+		return (0);
+	if (input[0] == input[1] && (input[0] == '<' || input[0] == '>'))
+		return (2);
+	return (1);
+}
+
+int	parser_buffer_write_quoted(t_parser *parser, t_buf *buffer, char quoting)
+{
+	char	*cur;
+	char	*brk;
 	size_t	len;
+
+	cur = &parser->input[parser->pos];
+	brk = strchr(&cur[1], quoting);
+	if (!brk)
+	{
+		parser->syntax_error = 1;
+		return (-1);
+	}
+	len = brk - cur + 1;
+	hx_buffer_putstr(buffer, cur, len);
+	parser->pos += len;
+	return (0);
+}
+
+void	parser_buffer_write_operator(t_parser *parser, t_buf *buffer)
+{
+	char	*cur;
+	size_t	len;
+	int		ret;
+
+	cur = &parser->input[parser->pos];
+	len = get_operator_size(cur);
+	hx_buffer_putstr(buffer, cur, len);
+	parser->pos += len;
+	return ;
+}
+
+void	parser_peekchar(t_parser *parser, char *ch)
+{
+	*ch = parser->input[parser->pos];
+	return ;
+}
+
+char	*parser_get_next_token(t_parser *parser, t_buf *buffer)
+{
+	char	ch;
+
+	parser->pos += strspn(&parser->input[parser->pos], " \t\n");
+	parser_peekchar(parser, &ch);
+	while (ch != '\0')
+	{
+		if ((is_blank(ch) || is_operator(ch)) && buffer->len > 0)
+			break ;
+		if (is_operator(ch))
+		{
+			parser_buffer_write_operator(parser, buffer);
+			return (hx_buffer_withdraw(buffer));
+		}
+		if (is_quoting(ch))
+		{
+			if (parser_buffer_write_quoted(parser, buffer, ch) == -1)
+				return (NULL);
+			parser_peekchar(parser, &ch);
+			continue ;
+		}
+		hx_buffer_putchar(buffer, ch);
+		parser->pos += 1;
+		parser_peekchar(parser, &ch);
+	}
+	return (hx_buffer_withdraw(buffer));
+}
+
+enum e_mush_token {
+	TOKEN_WORD,
+	TOKEN_PIPE,
+	TOKEN_REDIR,
+	TOKEN_NEWLINE
+};
+
+t_token	*parser_create_token(char *token_string)
+{
+	t_token	*token;
+	char	ch;
+	int		type;
+
+	token = (t_token *)malloc(sizeof(t_token));
+	token->str = token_string;
+	ch = *token_string;
+	{
+		if (ch == '|')
+			type = TOKEN_PIPE;
+		else if (ch == '<' || ch == '>')
+			type = TOKEN_REDIR;
+		else if (ch == '\0')
+			type = TOKEN_NEWLINE;
+		else
+			type = TOKEN_WORD;
+	}
+	token->type = type;
+	return (token);
+}
+
+int	mush_syntax_error(t_parser *parser, char **unexpected)
+{
+	t_token	**tokens;
 	size_t	i;
 
-	if (mush_parser_pretokenize(parser) == -1)
-	{
-		printf("mush: unclosed quoting\n");
-		return(-1);
-	}
-	pretokens = parser->tokens.data;
-	len = parser->tokens.len;
+	*unexpected = NULL;
+	tokens = (t_token **)parser->token_list.data;
+	if (tokens[0]->type == TOKEN_PIPE)
+		*unexpected = "|";
 	i = 0;
-	while (i < len)
+	while (tokens[++i - 1]->type != TOKEN_NEWLINE && *unexpected == NULL)
 	{
-		//token->str = pretoken[i];
-		if (pretokens[i].type == TOKEN_OPERATOR)
-		{
-			//parser_token_enqueue
-			//operator token추가
-		}
-		//word를 쪼개서 넣음. TOKEN_WORD TOKEN_WORD_LIST 둘중하나욥!
-		//
-		++i;
+		if (tokens[i]->type == TOKEN_NEWLINE \
+			&& tokens[i - 1]->type != TOKEN_WORD)
+			*unexpected = "newline";
+		else if (tokens[i]->type == TOKEN_REDIR \
+			&& tokens[i - 1]->type == TOKEN_REDIR)
+			*unexpected = tokens[i]->str;
+		else if (tokens[i]->type == TOKEN_PIPE \
+			&& tokens[i - 1]->type != TOKEN_WORD)
+			*unexpected = "|";
 	}
-	return (0);
+	if (*unexpected != NULL)
+		parser->syntax_error = 1;
+	return (parser->syntax_error);
 }
-/*
-make_job_tree_expected
 
-simple command cmd_prefix cmd pre_suffix
-
-parser_ast_create
-
-token = dequeue(token)
-
-expected.
-command != NULL
-expected != NULLenqueue_cmd_prefix.
-cmd_suffix.
-
-심볼은 소비되고 word만이 남는다.peeklast token ==
-*/
-
-
-int	mush_job_create(t_state *state, t_parser *parser)
+int	mush_parser_tokenize(t_parser *parser)
 {
-	//syntax_checker.?
-	//후우...
-	//왼쪽 오른쪽
-	//
-	return (0);
+	t_buf		buffer;
+	t_token		*token;
+	char		*token_string;
+	char		*unexpected;
 
+	memset(&buffer, 0, sizeof(t_buf));
+	token_string = parser_get_next_token(parser, &buffer);
+	while (token_string != NULL && !parser->syntax_error)
+	{
+		token = parser_create_token(token_string);
+		hx_array_push(&parser->token_list, token);
+		if (token->type == TOKEN_NEWLINE)
+			break ;
+		token_string = parser_get_next_token(parser, &buffer);
+	}
+	hx_buffer_cleanup(&buffer);
+	if (parser->syntax_error != 0)
+		printf("mush: syntax error unclosed quoting\n");
+	else if (mush_syntax_error(parser, &unexpected) != 0)
+		printf("mush: syntax error near unexpected token `%s'\n", unexpected);
+	return (parser->syntax_error);
 }
+
+// t_proc	*mush_create_simple_command(void)
+// {
+// 	t_proc *proc;
+
+// 	proc = calloc(1, sizeof(t_proc));
+// 	proc->stdout = 1;
+// 	return (proc);
+// }
+
+// void	mush_parser_create_pipeline(t_array *pipeline, t_parser *parser)
+// {
+// 	t_token	**tokens;
+// 	t_proc	*process;
+// 	size_t	len;
+// 	size_t	i;
+
+// 	tokens = (t_token **)pipeline->data;
+// 	len = parser->token_list.len;
+// 	process = parser_create_simple_command();
+// 	i = 0;
+// 	while (i < len)
+// 	{
+// 		if (tokens[i]->type == TOKEN_WORD)
+// 			hx_array_push(process->argv, tokens[i]->str);
+// 		else if (tokens[i]->type == TOKEN_REDIR)
+// 		{
+// 			i += 1;
+// 			file = parser_create_io_file(tokens[i - 1]->str, tokens[i]->str);
+// 			hx_array_push(process->io_files, file);
+// 		}
+// 		else if (tokens[i]->type == TOKEN_PIPE)
+// 		{
+// 			hx_array_push(pipeline, process);
+// 			process = parser_create_simple_command();
+// 		}
+// 		else if (tokens[i]->type  == TOKEN_WORD)
+// 			hx_array_push(process->argv, tokens[i]->str);
+// 		++i;
+// 	}
+// }
+
 int	mush_parse(t_state *state, char *input)
 {
 	t_parser	parser;
+	char		*unexpected;
+	int			status;
 
-	if (input == NULL)
-	{
-		state->exit = 0;
+	if (!*input)
 		return (-1);
-	}
 	add_history(input);
+	memset(&parser, 0, sizeof(t_parser));
 	parser.input = input;
-	if (mush_parser_lexical_analyze(&parser) == -1)
+	if (mush_parser_tokenize(&parser) != 0)
 		return (-1);
-
 	return (-1);
-	// mush_job_create(&parser, state);
-	// mush_parser_destroy(&parser);
-	// if (mush_syntax_check(&state.job) == -1)
-	// {
-	// 	state->last_status = 258;
-	// 	mush_job_destory(&state.job);
-	// 	return (-1);
-	// }
-	// return (0);
 }
 
 void	mush_io_redirect(t_proc *proc)
@@ -315,7 +341,7 @@ void	mush_io_redirect(t_proc *proc)
 	{
 		if (io_files[i]->io_type == IO_OUT)
 		{
-			close(proc->io_write);
+			close(proc->stdout);
 			fd = open(io_files[i]->name, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 			if (fd < 0 || dup2(fd, 1) < 0)
 				break ;
@@ -349,7 +375,7 @@ void	mush_io_redirect(t_proc *proc)
 
 int	builtin_search(const char *name, int (**f)(char *p[]));
 
-int	mush_pipeline_status_update(t_job *job)
+int	mush_job_status_update(t_job *job)
 {
 	t_proc **procs;
 	int		status;
@@ -357,8 +383,8 @@ int	mush_pipeline_status_update(t_job *job)
 	size_t	len;
 	size_t	i;
 
-	procs = (t_proc **)job->procs.data;
-	len = job->procs.len;
+	procs = (t_proc **)job->pipeline.data;
+	len = job->pipeline.len;
 	while (1)
 	{
 		wpid = wait(&status);
@@ -375,7 +401,8 @@ int	mush_pipeline_status_update(t_job *job)
 			}
 		}
 	}
-	return (procs[len - 1]->status);
+	job->status = procs[len - 1]->status;
+	return (job->status);
 }
 
 int	mush_execute(t_state *state)
@@ -392,20 +419,16 @@ int	mush_execute(t_state *state)
 	int			(*fn)(char *[]) = 0;
 
 	job = state->job;
-	len = job->procs.len;
-	procs = (t_proc **)job->procs.data;
+	len = job->pipeline.len;
+	procs = (t_proc **)job->pipeline.data;
 	proc = procs[0];
-
-	//proc
-	//builtin search는 command expansion에서 할 예정...
-	// if (len == 1 && proc->fn)
 	if (len == 1 && builtin_search(proc->name, &fn))
 	{
 		io_files = &proc->io_files;
 		tmp[0] = dup(0);
 		tmp[1] = dup(1);
 		mush_io_redirect(proc);
-		proc->status = fn(proc->argv);
+		proc->status = fn((char **)proc->argv.data);
 		dup2(tmp[0], 0);
 		dup2(tmp[1], 1);
 		close(tmp[0]);
@@ -426,8 +449,8 @@ int	mush_execute(t_state *state)
 				int fd_pipe[2];
 
 				pipe(fd_pipe);
-				procs[i]->io_write = fd_pipe[1];
-				procs[i + 1]->io_read = fd_pipe[0];
+				procs[i]->stdin = fd_pipe[1];
+				procs[i + 1]->stdout = fd_pipe[0];
 			}
 			pid = fork();
 			if (pid < 0)
@@ -438,29 +461,28 @@ int	mush_execute(t_state *state)
 			if (pid == 0)
 			{
 				proc = procs[i];
-				if (proc->io_read != STDIN_FILENO)
+				if (proc->stdin != STDIN_FILENO)
 				{
-					dup2(proc->io_read, STDIN_FILENO);
-					close(proc->io_read);
+					dup2(proc->stdin, STDIN_FILENO);
+					close(proc->stdin);
 				}
-				if (proc->io_write != STDOUT_FILENO)
+				if (proc->stdout != STDOUT_FILENO)
 				{
-					dup2(proc->io_write, STDOUT_FILENO);
-					close(proc->io_write);
+					dup2(proc->stdout, STDOUT_FILENO);
+					close(proc->stdout);
 				}
 				mush_io_redirect(procs[i]);
 				if (builtin_search(proc->name, &proc->fp_builtin))
-					exit(proc->fp_builtin(proc->argv));
-				execve(proc->name, proc->argv, environ);
+					exit(proc->fp_builtin((char **)proc->argv.data));
+				execve(proc->name, (char **)proc->argv.data, environ);
 			}
 			proc->pid = pid;
-			if (procs[i]->io_write != STDOUT_FILENO)
-				close(procs[i]->io_write);
+			if (procs[i]->stdout != STDOUT_FILENO)
+				close(procs[i]->stdout);
 			++i;
 		}
-		close(procs[len - 1]->io_read);
-		job->status = mush_pipeline_status_update(job);
-		state->last_status = job->status;
+		close(procs[len - 1]->stdin);
+		state->last_status = mush_job_status_update(job);
 		return (state->last_status);
 	}
 }
@@ -473,10 +495,12 @@ int	main(int argc, char *argv[])
 
 	mush_state_create(&state, environ);
 	mush_signal();
-	while (state.exit == -1)
+	while (1)
 	{
 		mush_mode_interactive(&state.term);
 		input = readline("mush+> ");
+		if (!input)
+			break ;
 		if (mush_parse(&state, input) == -1)
 			continue ;
 		mush_mode_executive(&state.term);
