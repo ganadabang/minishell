@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:47:55 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/03 01:45:24 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/03 03:56:22 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_proc {
 typedef struct s_file {
 	char	*name;
 	int		io_type;
+	int		oflag;
 }	t_file;
 
 typedef struct s_job {
@@ -63,7 +64,7 @@ typedef struct s_job {
 
 typedef struct s_state {
 	struct termios	term;
-	t_job			*job;
+	t_job			job;
 	char			**envp;
 	char			*pwd;
 	char			*old_pwd;
@@ -87,7 +88,6 @@ struct s_quoted_word {
 void	mush_state_create(t_state *state, char **envp)
 {
 	tcgetattr(STDOUT_FILENO, &state->term);
-	state->job = NULL;
 	state->envp = envp;
 	state->exit = -1;
 	state->last_status = 0;
@@ -270,46 +270,155 @@ int	mush_parser_tokenize(t_parser *parser)
 	return (parser->syntax_error);
 }
 
-// t_proc	*mush_create_simple_command(void)
-// {
-// 	t_proc *proc;
+int	get_io_type(char *str)
+{
+	if (strcmp("<<", str) == 0)
+		return (IO_HERE);
+	if (strcmp(">>", str) == 0)
+		return (IO_APPEND);
+	if (strcmp("<", str) == 0)
+		return (IO_IN);
+	if (strcmp(">", str) == 0)
+		return (IO_OUT);
+	return (-1);
+}
 
-// 	proc = calloc(1, sizeof(t_proc));
-// 	proc->stdout = 1;
-// 	return (proc);
-// }
+int	get_oflag(int io_type)
+{
+	if (io_type == IO_HERE || io_type == IO_IN)
+		return (O_RDONLY);
+	if (io_type == IO_OUT)
+		return (O_CREAT | O_TRUNC | O_WRONLY);
+	if (io_type == IO_APPEND)
+		return (O_CREAT | O_APPEND | O_WRONLY);
+	return (-1);
+}
 
-// void	mush_parser_create_pipeline(t_array *pipeline, t_parser *parser)
-// {
-// 	t_token	**tokens;
-// 	t_proc	*process;
-// 	size_t	len;
-// 	size_t	i;
+char	*remove_quoting(char *str)
+{
+	t_buf	buffer;
+	char	*ret;
 
-// 	tokens = (t_token **)pipeline->data;
-// 	len = parser->token_list.len;
-// 	process = parser_create_simple_command();
-// 	i = 0;
-// 	while (i < len)
-// 	{
-// 		if (tokens[i]->type == TOKEN_WORD)
-// 			hx_array_push(process->argv, tokens[i]->str);
-// 		else if (tokens[i]->type == TOKEN_REDIR)
-// 		{
-// 			i += 1;
-// 			file = parser_create_io_file(tokens[i - 1]->str, tokens[i]->str);
-// 			hx_array_push(process->io_files, file);
-// 		}
-// 		else if (tokens[i]->type == TOKEN_PIPE)
-// 		{
-// 			hx_array_push(pipeline, process);
-// 			process = parser_create_simple_command();
-// 		}
-// 		else if (tokens[i]->type  == TOKEN_WORD)
-// 			hx_array_push(process->argv, tokens[i]->str);
-// 		++i;
-// 	}
-// }
+	ft_memset(&buffer, 0, sizeof(buffer));
+	while (*str)
+	{
+		if (*str != '\'' && *str != '"')
+			hx_buffer_putchar(&buffer, *str);
+		++str;
+	}
+	ret = hx_buffer_withdraw(&buffer);
+	hx_buffer_cleanup(&buffer);
+	return (ret);
+}
+
+t_file	*parser_create_io_file(char *redir, char *str)
+{
+	t_file	*file;
+	char	*filename;
+	char	*here_end;
+
+	file = (t_file *)calloc(1, sizeof(t_file));
+	file->io_type = get_io_type(redir);
+	file->oflag = get_oflag(file->io_type);
+	file->name = str;
+	if (file->io_type == IO_HERE)
+	{
+		int		fd;
+		int		tmp;
+		char	*input;
+
+		here_end = remove_quoting(str);
+		file->name = "./.here_tmp";
+		fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+		while (1)
+		{
+			input = readline(">");
+			if (strcmp(here_end, input) == 0)
+				break ;
+			ft_dputendl(fd, input);
+		}
+		close(fd);
+	}
+	return (file);
+}
+
+t_proc	*mush_create_simple_command(void)
+{
+	t_proc *proc;
+
+	proc = calloc(1, sizeof(t_proc));
+	proc->stdout = 1;
+	return (proc);
+}
+
+void	debug_pipeline(t_array *pipeline)
+{
+	size_t		i;
+	size_t		j;
+	char		**argv;
+	size_t		maxlen;
+	t_array		*io_files;
+
+	
+	printf("\npipeline->len: %zu\n", pipeline->len);
+	i = 0;
+	while (pipeline->len-- > 0)
+	{
+		printf("\nprocess:[%zu]\n", i);
+		
+		argv = (char **)((t_proc *)pipeline->data[i])->argv.data;
+		maxlen = ((t_proc *)pipeline->data[i])->argv.len;
+		j = 0;
+		while (j < maxlen)
+		{
+			printf("argv[%zu]: %s\n", j, (char *)argv[j]);
+			++j;
+		}
+
+		io_files = &((t_proc *)pipeline->data[i])->io_files;
+		maxlen = io_files->len;
+		j = 0;
+		while (j < maxlen)
+		{
+			printf("io_type: %d\tfilename: %s\n", ((t_file *)io_files->data[j])->io_type, ((t_file *)io_files->data[j])->name);
+			++j;
+		}
+		++i;
+	}
+	return ;
+}
+
+void	mush_job_create(t_array *pipeline, t_parser *parser)
+{
+	t_token	**tokens;
+	t_proc	*process;
+	t_file	*file;
+	size_t	i;
+
+	ft_memset(pipeline, 0, sizeof(t_array));
+	tokens = (t_token **)parser->token_list.data;
+	process = mush_create_simple_command();
+	i = 0;
+	while ((tokens[i])->type != TOKEN_NEWLINE)
+	{
+		if (tokens[i]->type == TOKEN_WORD)
+			hx_array_push(&process->argv, tokens[i]->str);
+		else if (tokens[i]->type == TOKEN_REDIR)
+		{
+			file = parser_create_io_file(tokens[i]->str, tokens[i + 1]->str);
+			hx_array_push(&process->io_files, file);
+			++i;
+		}
+		else if (tokens[i]->type == TOKEN_PIPE)
+		{
+			hx_array_push(pipeline, process);
+			process = mush_create_simple_command();
+		}
+		++i;
+	}
+	hx_array_push(pipeline, process);
+	debug_pipeline(pipeline);
+}
 
 int	mush_parse(t_state *state, char *input)
 {
@@ -323,7 +432,13 @@ int	mush_parse(t_state *state, char *input)
 	memset(&parser, 0, sizeof(t_parser));
 	parser.input = input;
 	if (mush_parser_tokenize(&parser) != 0)
+	{
+		state->last_status = 258;
+		//mush_parser_destroy()
 		return (-1);
+	}
+	free(input);
+	mush_job_create(&state->job.pipeline, &parser);
 	return (-1);
 }
 
@@ -418,7 +533,7 @@ int	mush_execute(t_state *state)
 	size_t		len = 0;
 	int			(*fn)(char *[]) = 0;
 
-	job = state->job;
+	job = &state->job;
 	len = job->pipeline.len;
 	procs = (t_proc **)job->pipeline.data;
 	proc = procs[0];
