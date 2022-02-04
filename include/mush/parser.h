@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 17:33:52 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/04 17:39:00 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 19:52:39 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@
 #include <string.h>
 
 #include "libftx.h"
+
+enum e_mush_token {
+	TOKEN_WORD,
+	TOKEN_PIPE,
+	TOKEN_REDIR,
+	TOKEN_NEWLINE
+};
 
 enum	e_iotype {
 	IO_IN,
@@ -39,17 +46,6 @@ typedef struct	s_token {
 	char	*str;
 	int		type;
 }	t_token;
-
-typedef struct s_proc {
-	char	*name;
-	t_array	argv;
-	t_array	io_files;
-	pid_t	pid;
-	int		status;
-	int		(*fp_builtin)(char *[]);
-	int		stdin;
-	int		stdout;
-}	t_proc;
 
 typedef struct s_file {
 	char	*name;
@@ -72,6 +68,17 @@ typedef struct s_state {
 	int				last_status;
 }	t_state;
 
+typedef struct s_proc {
+	char	*name;
+	t_array	argv;
+	t_array	io_files;
+	pid_t	pid;
+	int		status;
+	int		(*fp_builtin)(t_state *, int, char *[]);
+	int		stdin;
+	int		stdout;
+}	t_proc;
+
 typedef struct s_parser
 {
 	t_array	token_list;
@@ -84,5 +91,8 @@ struct s_quoted_word {
 	int		word_type;
 	char	*str;
 };
+
+int		mush_parse(t_state *state, char *input);
+void	mush_job_create(t_array *pipeline, t_parser *parser);
 
 #endif

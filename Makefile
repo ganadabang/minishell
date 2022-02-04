@@ -6,7 +6,7 @@
 #    By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/02/04 17:22:54 by hyeonsok         ###   ########.fr        #
+#    Updated: 2022/02/04 20:03:35 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,16 +30,26 @@ OBJS		=	$(addprefix $(OBJDIR)/, \
 				array.o					\
 				buffer.o)
 
+# ./src/builtin
+OBJS		+=	$(addprefix $(OBJDIR)/, \
+				builtin_cd.o		\
+				builtin_echo.o	\
+				builtin_env.o	\
+				builtin_exit.o	\
+				builtin_export.o	\
+				builtin_pwd.o	\
+				builtin_unset.o)
+
 # ./src/mush
 OBJS		+=	$(addprefix $(OBJDIR)/, \
-				exec_builtin.o \
-				mode.o )
-#				exec_expn.o				\
-				exec_pipe.o				\
-				exec_redir.o			\
-				exec_state.o			\
-				exec_builtin.o			\
-				exec.o)
+				mode.o \
+				parse.o \
+				exec.o \
+				exec_expn.o \
+				exec_pipe.o \
+				exec_redir.o \
+				exec_state.o \
+				exec_builtin.o)
 
 # ./src/utils
 OBJS		+=	$(addprefix $(OBJDIR)/, \
@@ -50,15 +60,7 @@ OBJS		+=	$(addprefix $(OBJDIR)/, \
 				ft_check_arg_form.o		\
 				ft_add_path.o)
 
-# ./src/builtin
-OBJS		+=	$(addprefix $(OBJDIR)/, \
-				builtin_cd.o		\
-				builtin_echo.o	\
-				builtin_env.o	\
-				builtin_exit.o	\
-				builtin_export.o	\
-				builtin_pwd.o	\
-				builtin_unset.o)
+
 
 SRC_DIR = ./src
 SRC_UTILS_DIR = ./src/utils

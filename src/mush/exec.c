@@ -1,72 +1,100 @@
-// // /* ************************************************************************** */
-// // /*                                                                            */
-// // /*                                                        :::      ::::::::   */
-// // /*   exec.c                                             :+:      :+:    :+:   */
-// // /*                                                    +:+ +:+         +:+     */
-// // /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
-// // /*                                                +#+#+#+#+#+   +#+           */
-// // /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-// // /*   Updated: 2022/01/27 12:30:07 by hyeonsok         ###   ########.fr       */
-// // /*                                                                            */
-// // /* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
+/*   Updated: 2022/02/04 19:53:26 by hyeonsok         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// // #include "mush/exec.h"
-// // #include "mush/builtin.h"
-// // #include "libft.h"
-// // #include <sys/wait.h>
-// // #include <sys/errno.h>
+#include "mush.h"
 
-// // void	exec_command_on_child(t_job *job, t_proc *proc, int pde[2][2], size_t i)
-// // {
-// // 	int		(*f)(char *[]);
-// // 	pid_t		pid;
-
-// // 	f = NULL;
-// // 	signal(SIGQUIT, SIG_DFL);
-// // 	signal(SIGINT, SIG_DFL);
-// // 	pipe_setup(pde, is_last_proc(i, job->pipeline.len));
-// // 	io_redirect((t_file **)proc->io_redirect.data, proc->io_redirect.len);
-// // 	//proc_expansioin
-// // 	//filename_expansion
-// // 	if(builtin_search(proc->name, &f))
-// // 		exit (f(proc->argv));
-// // 	execve(proc->name, proc->argv, job->envp);
-// // }
-
-// // inline	static int	_is_last_child(int d)
-// // {
-// // 	return (d);
-// // }
-
-// void	mush_exec_job(t_array *pipeline, size_t len)
-// {
-// 	t_proc		*proc;//2둘다 필요해
-
-// 	int			(*f)(char *[]);
-// 	f = NULL;
-// 	proc = (t_proc *)pipeline->data[0];
-// 	if (pipeline->len == 1 && builtin_search(proc->name, &f))
-// 		return (exec_builtin_on_parent(pipeline->data[0]));
+int	mush_execute(t_state *state)
+{
+	pid_t		pid;
+	t_job		*job = NULL;
+	t_proc		**procs;
+	t_proc		*proc = NULL;
+	t_array		*io_files;
+	int			status;
+	int			tmp[2];
 	
-// 		pid_t	pid;
-// 		int		pde[2][2];
-// 		pde[1][0] = -1;
-// 		for (size_t i = 0; i < len; ++i)
-// 		{
-// 			if (!_is_last_child(i + 1 < len))
-// 				exec_pipe_connect(pde[0]);
-// 			pid = fork();
-// 			if (pid < 0)
-// 			{
-// 				perror("fork");
-// 				exit(EXIT_FAILURE);
-// 			}
-// 			if (pid == 0)
-// 				exec_command_on_child(job, job->pipeline.data[i], pde, i);
-// 			proc->pid = pid;
-// 			exec_pipe_disconnect(pde);
-// 		}
-// 		close(pde[1][0]);
-// 		exec_process_status_update(job->pipeline.data, job->pipeline.len);
-// 	return (exec_pipeline());
-// }
+	size_t		len = 0;
+	int			(*fn)(t_state *, int, char *[]) = 0;
+
+	job = &state->job;
+	len = job->pipeline.len;
+	procs = (t_proc **)job->pipeline.data;
+	proc = procs[0];
+	proc->name = (char *)proc->argv.data[0];
+	if (len == 1 && builtin_search(proc->name, &fn))
+	{
+		io_files = &proc->io_files;
+		tmp[0] = dup(0);
+		tmp[1] = dup(1);
+		mush_io_redirect(proc);
+		proc->status = fn(state, proc->argv.len, (char **)proc->argv.data);
+		dup2(tmp[0], 0);
+		dup2(tmp[1], 1);
+		close(tmp[0]);
+		close(tmp[1]);
+		job->status = proc->status;
+		state->last_status = job->status;
+		return (state->last_status);
+	}
+	{
+		pid_t	pid;
+		size_t	i;
+
+		i = 0;
+		while (i < len)
+		{
+			if (i < len - 1)
+			{
+				int fd_pipe[2];
+
+				pipe(fd_pipe);
+				procs[i]->stdout = fd_pipe[1];
+				procs[i + 1]->stdin = fd_pipe[0];
+			}
+			pid = fork();
+			if (pid < 0)
+			{
+				
+				perror("fork");
+				exit(EXIT_FAILURE);
+			}
+			if (pid == 0)
+			{
+				proc = procs[i];
+				proc->name = (char *)proc->argv.data[0];
+				if (proc->stdin != STDIN_FILENO)
+				{
+					dup2(proc->stdin, STDIN_FILENO);
+					close(proc->stdin);
+				}
+				if (proc->stdout != STDOUT_FILENO)
+				{
+					dup2(proc->stdout, STDOUT_FILENO);
+					close(proc->stdout);
+				}
+				mush_io_redirect(procs[i]);
+				if (builtin_search(proc->name, &proc->fp_builtin))
+					exit(proc->fp_builtin(state, proc->argv.len, (char **)proc->argv.data));
+				execve(proc->name, (char **)proc->argv.data, state->envp);
+				exit(1);
+			}
+			proc->pid = pid;
+			if (procs[i]->stdout != STDOUT_FILENO)
+				close(procs[i]->stdout);
+			++i;
+		}
+		if (procs[len - 1]->stdin != STDIN_FILENO)
+			close(procs[len - 1]->stdin);
+		state->last_status = mush_job_status_update(job);
+		return (state->last_status);
+	}
+}
