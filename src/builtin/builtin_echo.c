@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:34:22 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/04 20:33:18 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/04 20:50:38 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_echo_print(char *argv[])
 {
 	while (*argv)
 	{
-		printf(">>>%s", *argv);
+		printf("%s", *argv);
 		if (*(argv + 1) != NULL)
 			printf(" ");
 		argv++;
