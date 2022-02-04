@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:34:22 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/04 16:22:34 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/04 17:24:25 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush/builtin.h"
+#include "mush.h"
 #include <stdio.h>
 
 int	ft_str_length(char *str)

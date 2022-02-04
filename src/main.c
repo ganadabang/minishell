@@ -3,87 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:47:55 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/04 16:00:46 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/04 17:35:36 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <termios.h>
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <errno.h>
-#include <string.h>
-
-#include "libftx.h"
-#include "mush/mode.h"
+#include "mush.h"
 
 extern char	**environ;
-
-enum	e_iotype {
-	IO_IN,
-	IO_OUT,
-	IO_APPEND,
-	IO_HERE
-};
-
-typedef struct	s_word {
-	char	*str;
-	int		word_type;
-}	t_word;
-
-typedef struct	s_token {
-	char	*str;
-	int		type;
-}	t_token;
-
-typedef struct s_proc {
-	char	*name;
-	t_array	argv;
-	t_array	io_files;
-	pid_t	pid;
-	int		status;
-	int		(*fp_builtin)(char *[]);
-	int		stdin;
-	int		stdout;
-}	t_proc;
-
-typedef struct s_file {
-	char	*name;
-	int		io_type;
-	int		oflag;
-}	t_file;
-
-typedef struct s_job {
-	t_array	pipeline;
-	int		status;
-}	t_job;
-
-typedef struct s_state {
-	struct termios	term;
-	t_job			job;
-	char			**envp;
-	char			*pwd;
-	char			*old_pwd;
-	int				exit;
-	int				last_status;
-}	t_state;
-
-typedef struct s_parser
-{
-	t_array	token_list;
-	char	*input;
-	int		syntax_error;
-	size_t	pos;
-}	t_parser;
-
-struct s_quoted_word {
-	int		word_type;
-	char	*str;
-};
 
 void	mush_state_create(t_state *state, char **envp)
 {

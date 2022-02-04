@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:15 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/27 12:22:13 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 17:31:03 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush/exec.h"
+#include "mush.h"
 
 void	exec_pipe_connect(int pde[2][2])
 {

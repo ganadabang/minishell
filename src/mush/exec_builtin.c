@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 20:54:27 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/04 15:55:30 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/04 17:32:22 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush/exec.h"
-#include "mush/builtin.h"
+#include "mush.h"
 
 static const struct s_builtin builtins[] = {
 	{"cd", builtin_cd},

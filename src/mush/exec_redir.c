@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:56:00 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/26 00:34:53 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 17:31:06 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include "mush/exec.h"
+#include "mush.h"
 
 void	io_redirect(t_file **io_files, size_t len)
 {

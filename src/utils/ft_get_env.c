@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 12:48:20 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/04 16:03:12 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/04 17:38:14 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush/builtin.h"
+#include "mush.h"
 
 int	ft_check_pathname(char *a, char *b)
 {
@@ -44,25 +44,25 @@ char	*ft_get_env(char *path_n)
 	int		i;
 	int		j;
 
-	i = 0;
-	while (jop.envp[i])
-	{
-		j = 0;
-		while (jop.envp[i][j] != '=')
-			j++;
-		path_name = (char *)ft_set_malloc(sizeof(char), j + 1);
-		path_value = (char *)ft_set_malloc(
-				sizeof(char), ft_strlen(jop.envp[i]) - j + 1);
-		ft_strlcpy(path_name, jop.envp[i], j + 1);
-		ft_strlcpy(path_value, jop.envp[i] + j + 1, ft_strlen(jop.envp[i]) - j);
-		if (ft_check_pathname(path_name, path_n))
-		{
-			free(path_name);
-			return (path_value);
-		}
-		free(path_name);
-		free(path_value);
-		i++;
-	}
-	return (0);
+	// i = 0;
+	// while (jop.envp[i])
+	// {
+	// 	j = 0;
+	// 	while (jop.envp[i][j] != '=')
+	// 		j++;
+	// 	path_name = (char *)ft_set_malloc(sizeof(char), j + 1);
+	// 	path_value = (char *)ft_set_malloc(
+	// 			sizeof(char), ft_strlen(jop.envp[i]) - j + 1);
+	// 	ft_strlcpy(path_name, jop.envp[i], j + 1);
+	// 	ft_strlcpy(path_value, jop.envp[i] + j + 1, ft_strlen(jop.envp[i]) - j);
+	// 	if (ft_check_pathname(path_name, path_n))
+	// 	{
+	// 		free(path_name);
+	// 		return (path_value);
+	// 	}
+	// 	free(path_name);
+	// 	free(path_value);
+	// 	i++;
+	// }
+	// return (0);
 }

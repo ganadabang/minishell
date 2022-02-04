@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_arr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 13:37:26 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/24 23:41:07 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 17:24:49 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush/builtin.h"
+#include "mush.h"
 
 void	ft_free_arr(char **arr)
 {

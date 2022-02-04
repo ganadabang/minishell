@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 16:49:34 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/04 16:53:01 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/04 17:38:47 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush/builtin.h"
+#include "mush.h"
 #include <stdio.h>
 
 int	ft_check_env(t_state *state, char *argv)
@@ -49,7 +49,7 @@ void	ft_remove_env(t_state *state, int env_line)
 		}
 		envp_i++;
 	}
-	ft_free_arr(state.envp); 
+	ft_free_arr(state->envp); 
 	state->envp = env;
 }
 

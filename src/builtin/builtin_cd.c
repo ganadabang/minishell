@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/04 16:22:03 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/04 17:38:42 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/stat.h>
 #include <stdio.h>
-#include "mush/builtin.h"
+#include "mush.h"
 
 void	ft_update_env(char *path_n, char *path_v)
 {
@@ -21,22 +21,22 @@ void	ft_update_env(char *path_n, char *path_v)
 	char	*path;
 	char	*path_name;
 
-	i = 0;
-	while (jop.envp[i])
-	{
-		j = 0;
-		while (jop.envp[i][j] != '=')
-			j++;
-		if (ft_strncmp(jop.envp[i], path_n, j) == 0)
-		{
-			path_name = (char *)ft_set_malloc(sizeof(char), j);
-			ft_strlcpy(path_name, jop.envp[i], j + 2);
-			path = ft_strjoin(path_name, path_v);
-			// free(jop.envp[i]);
-			jop.envp[i] = path;
-		}
-		i++;
-	}
+	// i = 0;
+	// while (jop.envp[i])
+	// {
+	// 	j = 0;
+	// 	while (jop.envp[i][j] != '=')
+	// 		j++;
+	// 	if (ft_strncmp(jop.envp[i], path_n, j) == 0)
+	// 	{
+	// 		path_name = (char *)ft_set_malloc(sizeof(char), j);
+	// 		ft_strlcpy(path_name, jop.envp[i], j + 2);
+	// 		path = ft_strjoin(path_name, path_v);
+	// 		// free(jop.envp[i]);
+	// 		jop.envp[i] = path;
+	// 	}
+	// 	i++;
+	// }
 }
 
 char	*ft_get_pwd(char *path_n)

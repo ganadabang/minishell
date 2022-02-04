@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mode.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 02:54:41 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/01 12:56:34 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 17:31:19 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include <termios.h>
-#include <signal.h>
-#include <readline/readline.h>
+#include "mush.h"
 
 void	mush_sighandler(int signum)
 {

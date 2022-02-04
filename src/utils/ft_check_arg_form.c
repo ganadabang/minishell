@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_arg_form.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:17:49 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/25 13:22:17 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 17:24:44 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush/builtin.h"
+#include "mush.h"
 #include <stdio.h>
 
 int	ft_str_digit_check(char *str)

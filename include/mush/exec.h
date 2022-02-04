@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:56:20 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/27 12:22:19 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 17:31:51 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,33 +18,6 @@
 # include <stdio.h>
 
 # include "libftx.h"
-
-typedef struct s_proc {
-	char *name;
-	char **argv;
-	t_array	io_redirect;
-	pid_t	pid;
-	int		status;
-	int		iscompleted;
-}	t_proc;
-
-typedef struct s_job {
-	t_array	pipeline;
-	char	**envp;
-	int		last_status;
-}	t_job;
-
-typedef struct s_file {
-	char	*name;
-	int		io_type;
-}	t_file;
-
-enum	e_iotype {
-	IO_IN,
-	IO_OUT,
-	IO_APPEND,
-	IO_HERE
-};
 
 int		is_last_proc(size_t idx, size_t size);
 void	exec_pipe_connect(int pde[2][2]);
