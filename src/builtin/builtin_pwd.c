@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:32:39 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/04 20:18:10 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/04 20:49:27 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	builtin_pwd(t_state *state, int argc, char *argv[])
 	(void)argv;
 	if (getcwd(buf, 4096) == NULL)
 	{
-		// pwd = ft_get_env("PWD");
 		pwd = state->pwd;
 		printf("%s\n", pwd);
 		free(pwd);
