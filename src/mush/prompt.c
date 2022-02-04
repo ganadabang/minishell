@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mode.c                                             :+:      :+:    :+:   */
+/*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 02:54:41 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/04 17:31:19 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 20:26:08 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mush.h"
 
-void	mush_sighandler(int signum)
+static void	sighandler(int signum)
 {
 	if (signum == SIGINT)
 	{
@@ -26,29 +26,29 @@ void	mush_sighandler(int signum)
 	return ;
 }
 
-void	mush_mode_interactive(struct termios *term)
+void	mush_prompt_interactive(struct termios *term)
 {
-	signal(SIGINT, mush_sighandler);
+	signal(SIGINT, sighandler);
 	term->c_lflag &= ~ECHOCTL;
 	tcsetattr(STDOUT_FILENO, TCSANOW ,term);
 }
 
-void	mush_mode_executive(struct termios *term)
+void	mush_prompt_executive(struct termios *term)
 {
 	signal(SIGINT, SIG_IGN);
 	term->c_lflag |= ECHOCTL;
 	tcsetattr(STDOUT_FILENO, TCSANOW ,term);
 }
 
-void	mush_signal(void)
+void	mush_prompt_signal(void)
 {
 	signal(SIGTSTP, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGWINCH, mush_sighandler);
+	signal(SIGWINCH, sighandler);
 	return ;
 }
 
-void	mush_term_restored(struct termios *term)
+void	mush_prompt_restored(struct termios *term)
 {
 	term->c_lflag |= ECHOCTL;
 	tcsetattr(STDOUT_FILENO, TCSANOW ,term);

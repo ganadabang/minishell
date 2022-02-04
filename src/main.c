@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:47:55 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/04 19:54:59 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 20:28:31 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,9 @@ void	debug_pipeline(t_array *pipeline)
 		j = 0;
 		while (j < maxlen)
 		{
-			printf("io_type: %d\tfilename: %s\n", ((t_file *)io_files->data[j])->io_type, ((t_file *)io_files->data[j])->name);
+			printf("io_type: %d\tfilename: %s\n", \
+				((t_file *)io_files->data[j])->io_type, \
+				((t_file *)io_files->data[j])->name);
 			++j;
 		}
 		++i;
@@ -54,35 +56,37 @@ void	debug_pipeline(t_array *pipeline)
 
 void	mush_state_create(t_state *state, char **envp)
 {
+	ft_memset(state, 0, sizeof(t_state));
 	tcgetattr(STDOUT_FILENO, &state->term);
 	state->envp = envp;
 	state->exit = -1;
 	state->last_status = 0;
+	state->pwd = getenv("PWD");
+	state->old_pwd = getenv("OLDPWD");
 }
 
-
-int	main(int argc, char *argv[])
+int	main(int argc, char *argv[], char *envp[])
 {
 	t_state	state;
 	int		status;
 	char	*input;
 
-	mush_state_create(&state, environ);
-	mush_signal();
+	mush_state_create(&state, envp);
+	mush_prompt_signal();
 	while (1)
 	{
-		mush_mode_interactive(&state.term);
+		mush_prompt_interactive(&state.term);
 		input = readline("mush+> ");
 		if (!input)
 			break ;
 		if (mush_parse(&state, input) == -1)
 			continue ;
-		mush_mode_executive(&state.term);
+		mush_prompt_executive(&state.term);
 		status = mush_execute(&state);
 		if (status > 128)
 			write(1, "\n", 1);
 	}
-	mush_term_restored(&state.term);
+	mush_prompt_restored(&state.term);
 	write(1, "exit\n", 5);
 	return (0);
 }

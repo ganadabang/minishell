@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mode.h                                             :+:      :+:    :+:   */
+/*   prompt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 03:01:39 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/30 03:02:57 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 20:28:57 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MODE_H
 # define MODE_H
 
-#include <termios.h>
+# include <termios.h>
+# include <signal.h>
 
-void	mush_mode_interactive(struct termios *term);
-void	mush_mode_executive(struct termios *term);
-void	mush_signal(void);
-void	mush_term_restored(struct termios *term);
-void	mush_sighandler(int signum);
+void	mush_prompt_signal(void);
+void	mush_prompt_interactive(struct termios *term);
+void	mush_prompt_executive(struct termios *term);
+void	mush_prompt_restored(struct termios *term);
 
 #endif

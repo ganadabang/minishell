@@ -6,7 +6,7 @@
 #    By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/02/04 20:03:35 by hyeonsok         ###   ########.fr        #
+#    Updated: 2022/02/04 20:22:37 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,7 @@ OBJDIR := ./obj
 
 # ./src
 OBJS		=	$(addprefix $(OBJDIR)/, \
-				main.o					\
-				array.o					\
-				buffer.o)
+				main.o)
 
 # ./src/builtin
 OBJS		+=	$(addprefix $(OBJDIR)/, \
@@ -42,7 +40,7 @@ OBJS		+=	$(addprefix $(OBJDIR)/, \
 
 # ./src/mush
 OBJS		+=	$(addprefix $(OBJDIR)/, \
-				mode.o \
+				prompt.o \
 				parse.o \
 				exec.o \
 				exec_expn.o \
@@ -53,6 +51,8 @@ OBJS		+=	$(addprefix $(OBJDIR)/, \
 
 # ./src/utils
 OBJS		+=	$(addprefix $(OBJDIR)/, \
+				array.o					\
+				buffer.o				\
 				ft_cnt_arg.o			\
 				ft_free_arr.o			\
 				ft_set_malloc.o			\
