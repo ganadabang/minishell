@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:47:55 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/03 03:56:22 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 15:40:39 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -358,11 +358,13 @@ void	debug_pipeline(t_array *pipeline)
 	char		**argv;
 	size_t		maxlen;
 	t_array		*io_files;
+	size_t		len;
 
 	
 	printf("\npipeline->len: %zu\n", pipeline->len);
 	i = 0;
-	while (pipeline->len-- > 0)
+	len = pipeline->len;
+	while (len-- > 0)
 	{
 		printf("\nprocess:[%zu]\n", i);
 		
@@ -374,7 +376,6 @@ void	debug_pipeline(t_array *pipeline)
 			printf("argv[%zu]: %s\n", j, (char *)argv[j]);
 			++j;
 		}
-
 		io_files = &((t_proc *)pipeline->data[i])->io_files;
 		maxlen = io_files->len;
 		j = 0;
@@ -439,7 +440,7 @@ int	mush_parse(t_state *state, char *input)
 	}
 	free(input);
 	mush_job_create(&state->job.pipeline, &parser);
-	return (-1);
+	return (0);
 }
 
 void	mush_io_redirect(t_proc *proc)
@@ -537,6 +538,7 @@ int	mush_execute(t_state *state)
 	len = job->pipeline.len;
 	procs = (t_proc **)job->pipeline.data;
 	proc = procs[0];
+	proc->name = (char *)proc->argv.data[0];
 	if (len == 1 && builtin_search(proc->name, &fn))
 	{
 		io_files = &proc->io_files;
@@ -564,18 +566,20 @@ int	mush_execute(t_state *state)
 				int fd_pipe[2];
 
 				pipe(fd_pipe);
-				procs[i]->stdin = fd_pipe[1];
-				procs[i + 1]->stdout = fd_pipe[0];
+				procs[i]->stdout = fd_pipe[1];
+				procs[i + 1]->stdin = fd_pipe[0];
 			}
 			pid = fork();
 			if (pid < 0)
 			{
+				
 				perror("fork");
 				exit(EXIT_FAILURE);
 			}
 			if (pid == 0)
 			{
 				proc = procs[i];
+				proc->name = (char *)proc->argv.data[0];
 				if (proc->stdin != STDIN_FILENO)
 				{
 					dup2(proc->stdin, STDIN_FILENO);
