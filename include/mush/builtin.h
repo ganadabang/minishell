@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:53 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/26 00:01:25 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 16:22:24 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,9 @@
 
 # include "libftx.h"
 
-struct	Jop {
-	char	**envp;
-}jop;
-
 struct s_builtin {
 	char	*name;
-	int	(*builtin)(char *[]);
+	int	(*builtin)(int, char *[], char *[]);
 };
 
 /*
@@ -35,13 +31,13 @@ int		ft_check_arg_form(char *args[]);
 void	ft_add_path(char **path_v, char *slash);
 
 
-int	builtin_cd(char *args[]);
-int	builtin_echo(char *args[]);
-int	builtin_env(char *args[]);
-int	builtin_exit(char *args[]);
-int	builtin_export(char *args[]);
-int	builtin_pwd(char *args[]);
-int	builtin_unset(char *args[]);
-int	builtin_search(const char *name, int (**f)(char *p[]));
+int	builtin_cd(t_state *state, int argc, char *argv[]);
+int	builtin_echo(t_state *state, int argc, char *argv[]);
+int	builtin_env(t_state *state, int argc, char *argv[]);
+int	builtin_exit(t_state *state, int argc, char *argv[]);
+int	builtin_export(t_state *state, int argc, char *argv[]);
+int	builtin_pwd(t_state *state, int argc, char *argv[]);
+int	builtin_unset(t_state *state, int argc, char *argv[]);
+int	builtin_search(const char *name, int (**fn)(int, char *av[], char *ep[]));
 
 #endif

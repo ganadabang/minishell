@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:34:22 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/26 00:00:32 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 16:22:34 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,29 +50,29 @@ int	ft_echo_option(char *str)
 	return (0);
 }
 
-void	ft_echo_print(char *args[])
+void	ft_echo_print(char *argv[])
 {
-	while (*args)
+	while (*argv)
 	{
-		printf("%s", *args);
-		if (*(args + 1) != NULL)
+		printf("%s", *argv);
+		if (*(argv + 1) != NULL)
 			printf(" ");
-		args++;
+		argv++;
 	}
 }
 
-int	builtin_echo(char *args[])
+int	builtin_echo(t_state *state, int argc, char *argv[])
 {
 	int	option;
 
 	option = 0;
-	args++;
-	if (ft_echo_option(*args))
+	argv++;
+	if (ft_echo_option(*argv))
 	{
-		args++;
+		argv++;
 		option = 1;
 	}
-	ft_echo_print(args);
+	ft_echo_print(argv);
 	if (!option)
 		printf("\n");
 	return (0);

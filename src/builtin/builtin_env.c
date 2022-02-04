@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:28:29 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/25 23:34:23 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 16:22:42 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mush/builtin.h"
 #include <stdio.h>
 
-int	builtin_env(char *args[])
+int	builtin_env(t_state *state, int argc, char *argv[])
 {
 	char	**env;
 	char	*str;
 
 	env = jop.envp;
-	if (ft_cnt_arg(args) >= 2)
+	if (ft_cnt_arg(argv) >= 2)
 	{
 		str = strerror(22);
 		write(2, "env: ", 4);

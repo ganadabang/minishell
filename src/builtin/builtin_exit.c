@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:32:50 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/25 23:23:51 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 16:22:48 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,16 @@ int	ft_str_alpha_check(char *str)
 	return (1);
 }
 
-int	builtin_exit(char *args[])
+int	builtin_exit(t_state *state, int argc, char *argv[])
 {
 	printf("exit\n");
-	if (ft_cnt_arg(args) > 1)
+	if (ft_cnt_arg(argv) > 1)
 	{
-		if (!ft_str_alpha_check(args[1]))
+		if (!ft_str_alpha_check(argv[1]))
 		{
-			printf("minishell: exit: %s: numberic argument required\n", args[1]);
+			printf("minishell: exit: %s: numberic argument required\n", argv[1]);
 		}
-		else if (ft_cnt_arg(args) > 2)
+		else if (ft_cnt_arg(argv) > 2)
 		{
 			printf(">minishell: exit: too many arguments\n");
 		}

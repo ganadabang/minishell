@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/25 23:21:45 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 16:22:03 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*ft_get_pwd(char *path_n)
 	return (pwd);
 }
 
-int	ft_do_chdir(char *path_v, char *oldpwd, char **args)
+int	ft_do_chdir(char *path_v, char *oldpwd, char **argv)
 {
 	struct stat	file_buffer;
 	char		*pwd;
@@ -62,9 +62,9 @@ int	ft_do_chdir(char *path_v, char *oldpwd, char **args)
 	if (chdir(path_v) == -1)
 	{
 		chdir(oldpwd);
-		file_status = stat(*args, &file_buffer);
-		if (file_status == -1 && ft_strncmp(args[0], "-", 1))
-			printf("minishell: cd: %s No such file or directory\n", args[0]);
+		file_status = stat(*argv, &file_buffer);
+		if (file_status == -1 && ft_strncmp(argv[0], "-", 1))
+			printf("minishell: cd: %s No such file or directory\n", argv[0]);
 		return (1);
 	}
 	pwd = ft_get_pwd("PWD");
@@ -74,23 +74,23 @@ int	ft_do_chdir(char *path_v, char *oldpwd, char **args)
 	return (0);
 }
 
-int	ft_check_args_cd(char *args[])
+int	ft_check_args_cd(char *argv[])
 {
 	char	*path_value;
 	char	*pwd;
 
-	if (ft_cnt_arg(args) > 1)
+	if (ft_cnt_arg(argv) > 1)
 	{
 		printf("minishell: cd: too many arguments\n");
 		return (0);
 	}
-	else if (ft_cnt_arg(args) == 1)
+	else if (ft_cnt_arg(argv) == 1)
 	{
 		pwd = ft_get_pwd("PWD");
-		if (ft_strncmp(args[0], "-", 1) == 0)
+		if (ft_strncmp(argv[0], "-", 1) == 0)
 		{
 			path_value = ft_get_env("OLDPWD");
-			ft_do_chdir(path_value, pwd, args);
+			ft_do_chdir(path_value, pwd, argv);
 			printf("%s\n", pwd);
 			return (0);
 		}
@@ -99,28 +99,28 @@ int	ft_check_args_cd(char *args[])
 	return (1);
 }
 
-int	builtin_cd(char *args[])
+int	builtin_cd(t_state *state, int argc, char *argv[])
 {
 	char	**splitted_path;
 	char	*pwd;
 	char	*path_value;
 	int		i;
 
-	args++;
+	argv++;
 	i = 0;
-	if (!ft_check_args_cd(args))
+	if (!ft_check_args_cd(argv))
 		return (1);
-	splitted_path = ft_split(*args, "/");
+	splitted_path = ft_split(*argv, "/");
 	pwd = ft_get_pwd("PWD");
-	if (!splitted_path || ft_cnt_arg(args) == 0)
+	if (!splitted_path || ft_cnt_arg(argv) == 0)
 	{
 		path_value = ft_get_env("HOME");
-		ft_do_chdir(path_value, pwd, args);
+		ft_do_chdir(path_value, pwd, argv);
 	}
 	while (splitted_path && splitted_path[i])
 	{
 		ft_add_path(&splitted_path[i], "/");
-		if (ft_do_chdir(splitted_path[i], pwd, args))
+		if (ft_do_chdir(splitted_path[i], pwd, argv))
 			break ;
 		i++;
 	}

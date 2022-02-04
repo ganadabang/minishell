@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:12 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/25 23:24:19 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 16:22:56 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ft_print_env_export(void)
 	}
 }
 
-void	ft_update_env_export(char *args[])
+void	ft_update_env_export(char *argv[])
 {
 	char	**env;
 	int		cnt_env_arr;
@@ -47,25 +47,25 @@ void	ft_update_env_export(char *args[])
 	cnt_env_arr = ft_cnt_arg(jop.envp);
 	env = (char **)ft_set_malloc(sizeof(char *), cnt_env_arr + 2);
 	i = 0;
-	if (ft_check_arg_form(args))
+	if (ft_check_arg_form(argv))
 	{
 		while (jop.envp[i] && i < cnt_env_arr)
 		{
 			env[i] = ft_strdup(jop.envp[i]);
 			i++;
 		}
-		env[i] = ft_strdup(args[1]);
+		env[i] = ft_strdup(argv[1]);
 		// ft_free_arr(jop.envp); //test할때는 주석처리 => 할당을 어떻게 하냐에 따라 달라집니다.
 		jop.envp = env;
 	}
 	return ;
 }
 
-int	builtin_export(char *args[])
+int	builtin_export(t_state *state, int argc, char *argv[])
 {
-	if (ft_cnt_arg(args) == 1)
+	if (ft_cnt_arg(argv) == 1)
 		ft_print_env_export();
-	else if (ft_cnt_arg(args) >= 2)
-		ft_update_env_export(args);
+	else if (ft_cnt_arg(argv) >= 2)
+		ft_update_env_export(argv);
 	return (0);
 }

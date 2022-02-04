@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 16:49:34 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/01/25 23:36:36 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 16:23:09 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mush/builtin.h"
 #include <stdio.h>
 
-int	ft_check_env(char *args)
+int	ft_check_env(char *argv)
 {
 	int	i;
 
 	i = 0;
 	while (jop.envp[i])
 	{
-		if (!(ft_strncmp(jop.envp[i], args, ft_strlen(args))))
+		if (!(ft_strncmp(jop.envp[i], argv, ft_strlen(argv))))
 		{
 			return (i);
 		}
@@ -60,20 +60,20 @@ int	ft_check_args_unset(char c)
 	return (0);
 }
 
-int	builtin_unset(char *args[])
+int	builtin_unset(t_state *state, int argc, char *argv[])
 {
 	int	i;
 	int	env_line;
 
 	i = 1;
 	env_line = 0;
-	// args++;
-	while (args[i])
+	// argv++;
+	while (argv[i])
 	{
-		env_line = ft_check_env(args[i]);
-		if (ft_check_args_unset(*args[i]))
+		env_line = ft_check_env(argv[i]);
+		if (ft_check_args_unset(*argv[i]))
 		{
-			printf("minishell: unset: %s not a valid identifier", args[i]);
+			printf("minishell: unset: %s not a valid identifier", argv[i]);
 			return (1);
 		}
 		if (env_line != -1)
