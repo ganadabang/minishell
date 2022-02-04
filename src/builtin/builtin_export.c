@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:12 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/04 17:24:31 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 20:43:16 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ void	ft_update_env_export(t_state *state, char *argv[])
 			i++;
 		}
 		env[i] = ft_strdup(argv[1]);
-		ft_free_arr(state->envp); //test할때는 주석처리 => 할당을 어떻게 하냐에 따라 달라집니다.
 		state->envp = env;
 	}
 	return ;
@@ -63,9 +62,9 @@ void	ft_update_env_export(t_state *state, char *argv[])
 
 int	builtin_export(t_state *state, int argc, char *argv[])
 {
-	if (ft_cnt_arg(argv) == 1)
+	if (argc == 1)
 		ft_print_env_export(state);
-	else if (ft_cnt_arg(argv) >= 2)
+	else if (argc >= 2)
 		ft_update_env_export(state, argv);
 	return (0);
 }

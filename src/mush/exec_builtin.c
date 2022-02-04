@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 20:54:27 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/04 19:41:18 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/04 20:36:49 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static const struct s_builtin builtins[] = {
 	{"echo", builtin_echo},
 	{"env", builtin_env},
 	{"exit", builtin_exit},
-	{"exit", builtin_export},
+	{"export", builtin_export},
 	{"pwd", builtin_pwd},
 	{"unset", builtin_unset}
 };
