@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:28:29 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/04 16:22:42 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/04 17:00:35 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	builtin_env(t_state *state, int argc, char *argv[])
 	char	**env;
 	char	*str;
 
-	env = jop.envp;
+	env = state->envp;
 	if (ft_cnt_arg(argv) >= 2)
 	{
 		str = strerror(22);
