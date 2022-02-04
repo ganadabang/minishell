@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 12:46:44 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/23 22:01:48 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 23:18:57 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_buf {
 }	t_buf;
 
 bool	hx_buffer_secure(t_buf *buf, size_t size);
-bool	hx_buffer_putstr(t_buf *buf, const char *data, size_t size);
+bool	hx_buffer_putstr(t_buf *buf, char *data, size_t size);
 bool	hx_buffer_putchar(t_buf *buf, char c);
 char	*hx_buffer_withdraw(t_buf *buf);
 void	hx_buffer_cleanup(t_buf *buf);
