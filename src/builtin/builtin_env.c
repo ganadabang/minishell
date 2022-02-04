@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:28:29 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/04 17:24:27 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 19:54:59 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	builtin_env(t_state *state, int argc, char *argv[])
 	char	*str;
 
 	env = state->envp;
-	if (ft_cnt_arg(argv) >= 2)
+	if (argc >= 2)
 	{
 		str = strerror(22);
 		write(2, "env: ", 4);

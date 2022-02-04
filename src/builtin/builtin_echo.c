@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:34:22 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/04 17:24:25 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 19:46:51 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_echo_print(char *argv[])
 {
 	while (*argv)
 	{
-		printf("%s", *argv);
+		printf(">>>%s", *argv);
 		if (*(argv + 1) != NULL)
 			printf(" ");
 		argv++;
@@ -72,7 +72,7 @@ int	builtin_echo(t_state *state, int argc, char *argv[])
 		argv++;
 		option = 1;
 	}
-	ft_echo_print(argv);
+	// ft_echo_print(argv);
 	if (!option)
 		printf("\n");
 	return (0);

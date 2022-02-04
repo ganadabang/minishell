@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 20:54:27 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/04 17:32:22 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 19:41:18 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static const struct s_builtin builtins[] = {
 	{"unset", builtin_unset}
 };
 
-int	builtin_search(const char *name, int (**f)(int, char *av[], char *ep[]))
+int	builtin_search(const char *name, int (**f)(t_state, int ac, char *av[]))
 {
 	size_t	i;
 

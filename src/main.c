@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:47:55 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/04 17:53:43 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 19:44:42 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -418,7 +418,7 @@ void	mush_io_redirect(t_proc *proc)
 	return ;
 }
 
-int	builtin_search(const char *name, int (**fn)(int, char *av[], char *ep[]));
+int	builtin_search(const char *name, int (**fn)(t_state, int ac, char *av[]));
 
 int	mush_job_status_update(t_job *job)
 {
@@ -461,7 +461,7 @@ int	mush_execute(t_state *state)
 	int			tmp[2];
 	
 	size_t		len = 0;
-	int			(*fn)(int, char *[], char *[]) = 0;
+	int			(*fn)(t_state, int, char *[]) = 0;
 
 	job = &state->job;
 	len = job->pipeline.len;
@@ -474,7 +474,7 @@ int	mush_execute(t_state *state)
 		tmp[0] = dup(0);
 		tmp[1] = dup(1);
 		mush_io_redirect(proc);
-		proc->status = fn(proc->argv.len, (char **)proc->argv.data, state->envp);
+		proc->status = fn(*state, proc->argv.len, (char **)proc->argv.data);
 		dup2(tmp[0], 0);
 		dup2(tmp[1], 1);
 		close(tmp[0]);
