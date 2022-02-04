@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+         #
+#    By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/02/01 23:01:46 by hyeonsok         ###   ########.fr        #
+#    Updated: 2022/02/03 16:19:44 by gpaeng           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,13 +16,11 @@ CFLAGS = -g3
 
 RM = rm -f
 
-INCLUDES	=	-I include/ -I /Users/$(USER)/local/opt/readline/include/ \
+INCLUDES	=	-I include/ -I$(shell brew --prefix readline)/include/ \
 				-I lib/libft/include/
-INCLUDES	+=	-I include/ -I /usr/local/opt/readline/include/ \
 
-LIBS		=	-L /Users/$(USER)/local/opt/readline/lib/ -lreadline \
+LIBS		=	-L $(shell brew --prefix readline)/lib/ -lreadline \
 				-L lib/libft -lft
-LIBS		+=	-L /usr/local/opt/readline/lib/ -lreadline \
 
 OBJDIR := ./obj
 
