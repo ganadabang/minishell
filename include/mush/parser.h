@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 17:33:52 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/04 20:25:12 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/05 13:41:50 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 #include <readline/history.h>
 #include <errno.h>
 #include <string.h>
-
+#include "buffer.h"
+#include "array.h"
 #include "libftx.h"
 
 enum e_mush_token {
@@ -82,6 +83,7 @@ typedef struct s_proc {
 typedef struct s_parser
 {
 	t_array	token_list;
+	t_buf	buffer;
 	char	*input;
 	int		syntax_error;
 	size_t	pos;
@@ -92,7 +94,14 @@ struct s_quoted_word {
 	char	*str;
 };
 
-int		mush_parse(t_state *state, char *input);
-void	mush_job_create(t_array *pipeline, t_parser *parser);
+int		mush_parse(t_state *state);
+int		parser_buffer_write_quoted(t_parser *ref_parser, char quoting);
+char	*parser_buffer_withdraw_operator(t_parser *ref_parser);
+void	parser_buffer_write_char(t_parser *ref_parser, char ch);
+char	*parser_buffer_withdraw_word(t_parser *ref_parser);
+int		mush_parser_tokenize(t_parser *ref_parser);
+int		mush_syntax_error(t_parser *parser, char **unexpected);
+t_file	*parser_create_io_file(char *redir, char *str);
+int		mush_parser_init_job(t_array *pipeline, t_parser *parser);
 
 #endif
