@@ -6,21 +6,21 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 16:49:34 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/04 16:23:09 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/04 16:53:01 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mush/builtin.h"
 #include <stdio.h>
 
-int	ft_check_env(char *argv)
+int	ft_check_env(t_state *state, char *argv)
 {
 	int	i;
 
 	i = 0;
-	while (jop.envp[i])
+	while (state->envp[i])
 	{
-		if (!(ft_strncmp(jop.envp[i], argv, ft_strlen(argv))))
+		if (!(ft_strncmp(state->envp[i], argv, ft_strlen(argv))))
 		{
 			return (i);
 		}
@@ -29,14 +29,14 @@ int	ft_check_env(char *argv)
 	return (-1);
 }
 
-void	ft_remove_env(int env_line)
+void	ft_remove_env(t_state *state, int env_line)
 {
 	char	**env;
 	int		cnt_env_arr;
 	int		envp_i;
 	int		i;
 
-	cnt_env_arr = ft_cnt_arg(jop.envp);
+	cnt_env_arr = ft_cnt_arg(state->envp);
 	env = (char **)ft_set_malloc(sizeof(char *), cnt_env_arr);
 	i = 0;
 	envp_i = 0;
@@ -44,13 +44,13 @@ void	ft_remove_env(int env_line)
 	{
 		if (envp_i != env_line)
 		{
-			env[i] = ft_strdup(jop.envp[envp_i]);
+			env[i] = ft_strdup(state->envp[envp_i]);
 			i++;
 		}
 		envp_i++;
 	}
-	// ft_free_arr(jop.envp);
-	jop.envp = env;
+	ft_free_arr(state.envp); 
+	state->envp = env;
 }
 
 int	ft_check_args_unset(char c)
@@ -70,14 +70,14 @@ int	builtin_unset(t_state *state, int argc, char *argv[])
 	// argv++;
 	while (argv[i])
 	{
-		env_line = ft_check_env(argv[i]);
+		env_line = ft_check_env(state, argv[i]);
 		if (ft_check_args_unset(*argv[i]))
 		{
-			printf("minishell: unset: %s not a valid identifier", argv[i]);
+			printf("mush: unset: %s not a valid identifier", argv[i]);
 			return (1);
 		}
 		if (env_line != -1)
-			ft_remove_env(env_line);
+			ft_remove_env(state, env_line);
 		i++;
 	}
 	return (0);
