@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:47:55 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/04 17:35:36 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 17:53:43 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -523,13 +523,15 @@ int	mush_execute(t_state *state)
 				if (builtin_search(proc->name, &proc->fp_builtin))
 					exit(proc->fp_builtin((char **)proc->argv.data));
 				execve(proc->name, (char **)proc->argv.data, environ);
+				exit(1);
 			}
 			proc->pid = pid;
 			if (procs[i]->stdout != STDOUT_FILENO)
 				close(procs[i]->stdout);
 			++i;
 		}
-		close(procs[len - 1]->stdin);
+		if (procs[len - 1]->stdin != STDIN_FILENO)
+			close(procs[len - 1]->stdin);
 		state->last_status = mush_job_status_update(job);
 		return (state->last_status);
 	}
