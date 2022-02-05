@@ -6,13 +6,11 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:47:55 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/04 20:28:31 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 21:46:58 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mush.h"
-
-extern char	**environ;
 
 void	debug_pipeline(t_array *pipeline)
 {
@@ -54,32 +52,28 @@ void	debug_pipeline(t_array *pipeline)
 	return ;
 }
 
-void	mush_state_create(t_state *state, char **envp)
+void	mush_state_create(t_state *ref_state, char **envp)
 {
-	ft_memset(state, 0, sizeof(t_state));
-	tcgetattr(STDOUT_FILENO, &state->term);
-	state->envp = envp;
-	state->exit = -1;
-	state->last_status = 0;
-	state->pwd = getenv("PWD");
-	state->old_pwd = getenv("OLDPWD");
+	ft_memset(ref_state, 0, sizeof(t_state));
+	tcgetattr(STDOUT_FILENO, &ref_state->term);
+	ref_state->envp = envp;
+	ref_state->exit = -1;
+	ref_state->last_status = 0;
+	ref_state->pwd = getenv("PWD");
+	ref_state->old_pwd = getenv("OLDPWD");
 }
 
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_state	state;
 	int		status;
-	char	*input;
 
 	mush_state_create(&state, envp);
 	mush_prompt_signal();
-	while (1)
+	while (state.exit == -1)
 	{
 		mush_prompt_interactive(&state.term);
-		input = readline("mush+> ");
-		if (!input)
-			break ;
-		if (mush_parse(&state, input) == -1)
+		if (mush_parser_readline(&state) < 0)
 			continue ;
 		mush_prompt_executive(&state.term);
 		status = mush_execute(&state);
