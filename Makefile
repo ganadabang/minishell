@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+         #
+#    By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/02/04 17:22:54 by hyeonsok         ###   ########.fr        #
+#    Updated: 2022/02/05 12:34:14 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,29 +26,7 @@ OBJDIR := ./obj
 
 # ./src
 OBJS		=	$(addprefix $(OBJDIR)/, \
-				main.o					\
-				array.o					\
-				buffer.o)
-
-# ./src/mush
-OBJS		+=	$(addprefix $(OBJDIR)/, \
-				exec_builtin.o \
-				mode.o )
-#				exec_expn.o				\
-				exec_pipe.o				\
-				exec_redir.o			\
-				exec_state.o			\
-				exec_builtin.o			\
-				exec.o)
-
-# ./src/utils
-OBJS		+=	$(addprefix $(OBJDIR)/, \
-				ft_cnt_arg.o			\
-				ft_free_arr.o			\
-				ft_set_malloc.o			\
-				ft_get_env.o			\
-				ft_check_arg_form.o		\
-				ft_add_path.o)
+				main.o)
 
 # ./src/builtin
 OBJS		+=	$(addprefix $(OBJDIR)/, \
@@ -59,6 +37,37 @@ OBJS		+=	$(addprefix $(OBJDIR)/, \
 				builtin_export.o	\
 				builtin_pwd.o	\
 				builtin_unset.o)
+
+# ./src/utils
+OBJS		+=	$(addprefix $(OBJDIR)/, \
+				array.o					\
+				buffer.o				\
+				ft_cnt_arg.o			\
+				ft_free_arr.o			\
+				ft_set_malloc.o			\
+				ft_get_env.o			\
+				ft_check_arg_form.o		\
+				ft_add_path.o)
+
+# ./src/mush
+OBJS		+=	$(addprefix $(OBJDIR)/, \
+				prompt.o \
+				parser.o \
+				parser_buffer.o \
+				parser_error.o \
+				parser_iofile.o \
+				parser_job.o \
+				parser_token.o \
+				exec.o \
+				exec_expn.o \
+				exec_pipe.o \
+				exec_redir.o \
+				exec_state.o \
+				exec_builtin.o)
+
+
+
+
 
 SRC_DIR = ./src
 SRC_UTILS_DIR = ./src/utils

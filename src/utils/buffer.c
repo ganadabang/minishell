@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 16:15:48 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/29 14:05:40 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 23:19:29 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ bool	hx_buffer_secure(t_buf *buf, size_t size)
 	return (true);
 }
 
-bool	hx_buffer_putstr(t_buf *buf, const char *data, size_t size)
+bool	hx_buffer_putstr(t_buf *buf, char *data, size_t size)
 {
 	if (!hx_buffer_secure(buf, size))
 		return (false);
