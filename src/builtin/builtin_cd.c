@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/05 17:10:26 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/05 17:13:31 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	ft_update_env(t_state *state, char *path_n, char *path_v)
 		i++;
 	}
 }
-
 
 char	*ft_get_pwd(char *path_n)
 {

@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:34:22 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/04 20:50:38 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/05 17:14:36 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int	ft_strlength(char *str)
 {
 	int	cnt;
-	int idx;
+	int	idx;
 
 	cnt = 0;
 	idx = 0;
@@ -43,7 +43,8 @@ int	ft_check_option(int str_length, char *str)
 }
 
 int	ft_echo_option(char *str)
-{	int str_length;
+{	
+	int	str_length;
 
 	str_length = ft_strlength(str);
 	if (ft_check_option(str_length, str))

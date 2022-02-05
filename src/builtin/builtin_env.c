@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:28:29 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/04 20:20:09 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/05 17:14:34 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ int	builtin_env(t_state *state, int argc, char *argv[])
 		write(2, str, ft_strlen(str));
 		write(2, "\n", 1);
 	}
-	else {
+	else
+	{
 		while (*env)
 		{
 			printf("%s\n", *env);

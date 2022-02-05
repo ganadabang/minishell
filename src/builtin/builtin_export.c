@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:12 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/04 20:43:16 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/05 17:15:02 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	ft_print_env_export(t_state *state)
 		path_value = (char *)ft_set_malloc(
 				sizeof(char), ft_strlen(state->envp[i]) - j + 1);
 		ft_strlcpy(path_name, state->envp[i], j + 1);
-		ft_strlcpy(path_value, state->envp[i] + j + 1, ft_strlen(state->envp[i]) - j);
+		ft_strlcpy(path_value, state->envp[i] + j + 1,
+			ft_strlen(state->envp[i]) - j);
 		printf("declare -x %s=\"%s\"\n", path_name, path_value);
 		free(path_name);
 		free(path_value);
