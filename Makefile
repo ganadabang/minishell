@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+         #
+#    By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/02/05 12:34:14 by hyeonsok         ###   ########.fr        #
+#    Updated: 2022/02/07 13:25:00 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,8 @@ INCLUDES	=	-I include/ -I$(shell brew --prefix readline)/include/ \
 
 LIBS		=	-L $(shell brew --prefix readline)/lib/ -lreadline \
 				-L lib/libft -lft
+
+LIBFT		=	lib/libft/libft.a
 
 OBJDIR := ./obj
 
@@ -47,7 +49,8 @@ OBJS		+=	$(addprefix $(OBJDIR)/, \
 				ft_set_malloc.o			\
 				ft_get_env.o			\
 				ft_check_arg_form.o		\
-				ft_add_path.o)
+				ft_add_path.o			\
+				ft_fatal.o)
 
 # ./src/mush
 OBJS		+=	$(addprefix $(OBJDIR)/, \
@@ -68,7 +71,6 @@ OBJS		+=	$(addprefix $(OBJDIR)/, \
 
 
 
-
 SRC_DIR = ./src
 SRC_UTILS_DIR = ./src/utils
 SRC_BUILTIN_DIR = ./src/builtin
@@ -79,7 +81,9 @@ NAME = minishell
 .PHONY:		all
 all:		libft $(NAME)
 
-libft:
+libft:		$(LIBFT)
+
+$(LIBFT):
 			make -C lib/libft/
 
 $(NAME):	$(OBJDIR) $(OBJS)

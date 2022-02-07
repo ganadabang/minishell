@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:53 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/05 15:36:55 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/07 13:06:58 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ int	builtin_exit(t_state *state, int argc, char *argv[]);
 int	builtin_export(t_state *state, int argc, char *argv[]);
 int	builtin_pwd(t_state *state, int argc, char *argv[]);
 int	builtin_unset(t_state *state, int argc, char *argv[]);
-int	builtin_search(const char *name, int (**fn)(t_state *, int, char *[]));
+int	builtin_search(t_proc *proc);
 
 #endif

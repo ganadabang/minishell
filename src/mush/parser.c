@@ -3,36 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 19:42:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/05 02:10:32 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/07 12:01:15 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mush.h"
 
-static int	mush_parser_with_input(t_parser *ref_parser, char *input)
+static int	mush_parser_with_input(t_parser *parser_ref, char *input)
 {
 	if (!input)
 		return (-1);
 	add_history(input);
-	ft_memset(ref_parser, 0, sizeof(t_parser));
-	ref_parser->input = input;
+	ft_memset(parser_ref, 0, sizeof(t_parser));
+	parser_ref->input = input;
 	return (0);
 }
 
-static void	mush_parser_destroy(t_parser *ref_parser)
+static void	mush_parser_destroy(t_parser *parser_ref)
 {
 	// TODO Be sure nodes of token_list are freed
-	hx_array_cleanup(&ref_parser->token_list);
-	hx_buffer_cleanup(&ref_parser->buffer);
-	free(ref_parser->input);
+	hx_array_cleanup(&parser_ref->token_list);
+	hx_buffer_cleanup(&parser_ref->buffer);
+	free(parser_ref->input);
 }
 
-static void	mush_parser_drop_input(t_parser *ref_parser, char **pref_input)
+static void	mush_parser_drop_input(t_parser *parser_ref, char **pref_input)
 {
-	ref_parser->input = NULL;
+	parser_ref->input = NULL;
 	free(*pref_input);
 	*pref_input = NULL;
 }

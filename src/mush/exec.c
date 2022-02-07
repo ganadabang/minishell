@@ -6,95 +6,96 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/04 19:53:26 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/07 14:25:00 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mush.h"
+ 
+int mush_exec_builtin(t_state *state_ref)
+{
+	t_proc	*proc;
+	t_array	*io_files_ref;
+	int		(*fn)(t_state *, int, char *[]);
+	int		fd_backup[2];
+
+
+	proc = (t_proc *)state_ref->job.pipeline.data[0];
+	io_files_ref = &proc->io_files;
+	fd_backup[0] = dup(0);
+	fd_backup[1] = dup(1);
+	exec_io_redirect(proc);
+	state_ref->last_status = fn(state_ref, proc->argv.len, (char **)proc->argv.data);
+	dup2(fd_backup[0], 0);
+	dup2(fd_backup[1], 1);
+	close(fd_backup[0]);
+	close(fd_backup[1]);
+	return (state_ref->last_status);
+}
+
+void	exec_pipe_init(t_proc **procs)
+{
+	int fd_pipe[2];
+
+	pipe(fd_pipe);
+	procs[0]->stdout = fd_pipe[1];
+	procs[1]->stdin = fd_pipe[0];
+}
+
+void	exec_pipe_connect(t_proc *proc)
+{
+	if (proc->stdin != STDIN_FILENO)
+	{
+		dup2(proc->stdin, STDIN_FILENO);
+		close(proc->stdin);
+	}
+	if (proc->stdout != STDOUT_FILENO)
+	{
+		dup2(proc->stdout, STDOUT_FILENO);
+		close(proc->stdout);
+	}
+}
+
+void	mush_exec_simple_command(t_state *state, t_proc *proc)
+{
+	exec_pipe_connect(proc);
+	exec_io_redirect(proc);
+	proc->name = (char *)proc->argv.data[0];
+	if (builtin_search(proc) == 0)
+		exit(proc->fn_builtin(state, proc->argv.len, (char **)proc->argv.data));
+	execve(proc->name, (char **)proc->argv.data, state->envp);
+	exit(1);
+}
 
 int	mush_execute(t_state *state)
 {
-	pid_t		pid;
-	t_job		*job = NULL;
 	t_proc		**procs;
-	t_proc		*proc = NULL;
-	t_array		*io_files;
-	int			status;
-	int			tmp[2];
-	
-	size_t		len = 0;
-	int			(*fn)(t_state *, int, char *[]) = 0;
+	int			(*fn)(t_state *, int, char *[]);
+	pid_t		pid;
+	size_t		i;
+	size_t		len;
 
-	job = &state->job;
-	len = job->pipeline.len;
-	procs = (t_proc **)job->pipeline.data;
-	proc = procs[0];
-	proc->name = (char *)proc->argv.data[0];
-	if (len == 1 && builtin_search(proc->name, &fn))
+	i = 0;
+	len = state->job.pipeline.len;
+	procs = (t_proc **)state->job.pipeline.data;
+	procs[i]->name = (char *)procs[i]->argv.data[0];
+	if (len == 1 && builtin_search(procs[i]))
+		return (mush_exec_builtin(state));
+	while (i < len - 1)
 	{
-		io_files = &proc->io_files;
-		tmp[0] = dup(0);
-		tmp[1] = dup(1);
-		mush_io_redirect(proc);
-		proc->status = fn(state, proc->argv.len, (char **)proc->argv.data);
-		dup2(tmp[0], 0);
-		dup2(tmp[1], 1);
-		close(tmp[0]);
-		close(tmp[1]);
-		job->status = proc->status;
-		state->last_status = job->status;
-		return (state->last_status);
+		if (i + 1 < len - 1)
+			exec_pipe_init(&procs[i]);
+		pid = fork();
+		if (pid < 0)
+			ft_fatal("fork");
+		if (pid == 0)
+			mush_exec_simple_command(state, procs[i]);
+		procs[i]->pid = pid;
+		if (++i != len)
+			close(procs[i]->stdout);
 	}
-	{
-		pid_t	pid;
-		size_t	i;
-
-		i = 0;
-		while (i < len)
-		{
-			if (i < len - 1)
-			{
-				int fd_pipe[2];
-
-				pipe(fd_pipe);
-				procs[i]->stdout = fd_pipe[1];
-				procs[i + 1]->stdin = fd_pipe[0];
-			}
-			pid = fork();
-			if (pid < 0)
-			{
-				
-				perror("fork");
-				exit(EXIT_FAILURE);
-			}
-			if (pid == 0)
-			{
-				proc = procs[i];
-				proc->name = (char *)proc->argv.data[0];
-				if (proc->stdin != STDIN_FILENO)
-				{
-					dup2(proc->stdin, STDIN_FILENO);
-					close(proc->stdin);
-				}
-				if (proc->stdout != STDOUT_FILENO)
-				{
-					dup2(proc->stdout, STDOUT_FILENO);
-					close(proc->stdout);
-				}
-				mush_io_redirect(procs[i]);
-				if (builtin_search(proc->name, &proc->fp_builtin))
-					exit(proc->fp_builtin(state, proc->argv.len, (char **)proc->argv.data));
-				execve(proc->name, (char **)proc->argv.data, state->envp);
-				exit(1);
-			}
-			proc->pid = pid;
-			if (procs[i]->stdout != STDOUT_FILENO)
-				close(procs[i]->stdout);
-			++i;
-		}
-		if (procs[len - 1]->stdin != STDIN_FILENO)
-			close(procs[len - 1]->stdin);
-		state->last_status = mush_job_status_update(job);
-		return (state->last_status);
-	}
+	if (len != 1)
+		close(procs[len - 1]->stdin);
+	state->job.status = mush_job_status_update(&state->job.pipeline);
+	return (state->last_status);
 }

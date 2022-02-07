@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 20:54:27 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/05 15:51:59 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/07 13:37:53 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,24 @@ static const struct s_builtin builtins[] = {
 	{"unset", builtin_unset}
 };
 
-int	builtin_search(const char *name, int (**fn)(t_state *, int, char *[]))
+int	builtin_search(t_proc *proc)
 {
+	char	*name;
+	int		(**fn_ref)(t_state *, int, char *[]);
 	size_t	i;
-
-	i = -1;
-	while (++i < 7)
+	
+	name = proc->name;
+	fn_ref = &proc->fn_builtin;
+	i = 0;
+	while (i < 7)
 	{
-		if (!strcmp(builtins[i].name, name ))
+		// TODO: strcmp -> ft_strcmp
+		if (!strcmp(builtins[i].name, name))
 		{
-			*fn = builtins[i].builtin;
+			*fn_ref = builtins[i].builtin;
 			return (1);
 		}
+		++i;
 	}
 	return (0);
 }
