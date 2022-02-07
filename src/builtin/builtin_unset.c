@@ -3,24 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 16:49:34 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/04 17:38:47 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/05 14:14:02 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mush.h"
-#include <stdio.h>
 
-int	ft_check_env(t_state *state, char *argv)
+int	ft_check_env(t_state *state, char *str)
 {
 	int	i;
 
 	i = 0;
 	while (state->envp[i])
 	{
-		if (!(ft_strncmp(state->envp[i], argv, ft_strlen(argv))))
+		if (!(ft_strncmp(state->envp[i], str, ft_strlen(str))))
 		{
 			return (i);
 		}
@@ -49,7 +48,6 @@ void	ft_remove_env(t_state *state, int env_line)
 		}
 		envp_i++;
 	}
-	ft_free_arr(state->envp); 
 	state->envp = env;
 }
 
@@ -67,13 +65,12 @@ int	builtin_unset(t_state *state, int argc, char *argv[])
 
 	i = 1;
 	env_line = 0;
-	// argv++;
 	while (argv[i])
 	{
 		env_line = ft_check_env(state, argv[i]);
-		if (ft_check_args_unset(*argv[i]))
+		if (!ft_check_args_unset(*argv[i]))
 		{
-			printf("mush: unset: %s not a valid identifier", argv[i]);
+			printf("mush: unset: %s not a valid identifier\n", argv[i]);
 			return (1);
 		}
 		if (env_line != -1)

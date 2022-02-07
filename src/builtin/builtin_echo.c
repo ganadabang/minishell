@@ -3,25 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:34:22 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/04 17:24:25 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/05 17:14:36 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mush.h"
 #include <stdio.h>
 
-int	ft_str_length(char *str)
+int	ft_strlength(char *str)
 {
 	int	cnt;
+	int	idx;
 
 	cnt = 0;
-	while (*str)
+	idx = 0;
+	while (str[idx])
 	{
 		cnt++;
-		str++;
+		idx++;
 	}
 	return (cnt);
 }
@@ -41,10 +43,10 @@ int	ft_check_option(int str_length, char *str)
 }
 
 int	ft_echo_option(char *str)
-{
+{	
 	int	str_length;
 
-	str_length = ft_str_length(str);
+	str_length = ft_strlength(str);
 	if (ft_check_option(str_length, str))
 		return (1);
 	return (0);
@@ -67,7 +69,7 @@ int	builtin_echo(t_state *state, int argc, char *argv[])
 
 	option = 0;
 	argv++;
-	if (ft_echo_option(*argv))
+	if (*argv && ft_echo_option(*argv))
 	{
 		argv++;
 		option = 1;

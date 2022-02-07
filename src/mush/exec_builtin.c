@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 20:54:27 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/04 20:04:00 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/05 15:51:59 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static const struct s_builtin builtins[] = {
 	{"echo", builtin_echo},
 	{"env", builtin_env},
 	{"exit", builtin_exit},
-	{"exit", builtin_export},
+	{"export", builtin_export},
 	{"pwd", builtin_pwd},
 	{"unset", builtin_unset}
 };

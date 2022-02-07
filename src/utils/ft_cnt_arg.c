@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cnt_arg.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 13:38:55 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/04 17:24:47 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/04 19:49:34 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mush.h"
 
-int	ft_cnt_arg(char *args[])
+int	ft_cnt_arg(char *argv[])
 {
 	int	i;
 
 	i = 0;
-	while (args[i])
+	while (argv[i])
 	{
 		i++;
 	}
