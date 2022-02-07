@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   buffer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 16:15:48 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/04 23:19:29 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/07 16:18:10 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <string.h>
-#include "libftx.h"
+#include "buffer.h"
+// #include "libftx.h"
 
 bool	hx_buffer_secure(t_buf *buf, size_t size)
 {
@@ -57,7 +58,7 @@ char	*hx_buffer_withdraw(t_buf *buf)
 	char	*data;
 
 	data = strndup((char *)buf->data, buf->len);
-	ft_memset(buf->data, 0, buf->cap);
+	memset(buf->data, 0, buf->cap);
 	buf->len = 0;
 	return (data);
 }
