@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:47:55 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/10 10:16:30 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:57:35 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	mush_state_create(t_state *state_ref, char **envp)
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_state	state;
-
+	
 	mush_state_create(&state, envp);
 	mush_prompt_signal();
 	while (state.exit == -1)

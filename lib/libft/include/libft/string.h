@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 21:18:39 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/10 13:14:27 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/10 16:14:56 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ char			*ft_strnstr(const char *haystack, const char *needle, \
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 int				ft_strcmp(char *str1, char *str2);
 char			*ft_strdup(const char *s1);
+char			*ft_strndup(char *str, size_t idx);
 
 #endif

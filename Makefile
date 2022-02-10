@@ -6,7 +6,7 @@
 #    By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/02/10 15:26:47 by gpaeng           ###   ########.fr        #
+#    Updated: 2022/02/10 16:15:47 by gpaeng           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,10 +48,8 @@ OBJS		+=	$(addprefix $(OBJDIR)/, \
 				ft_cnt_arg.o			\
 				ft_free_arr.o			\
 				ft_set_malloc.o			\
-				ft_get_env.o			\
 				ft_check_arg_form.o		\
 				ft_add_path.o			\
-				ft_strndup.o			\
 				ft_fatal.o)
 
 # ./src/mush

@@ -6,27 +6,24 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 13:05:46 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/10 13:15:01 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/10 16:14:13 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush.h"
+#include "libft/string.h"
 
-char *ft_strndup(char *str, int idx)
+char *ft_strndup(char *str, size_t idx)
 {
 	char *tmp;
 	size_t i;
 
 	i = 0;
-	if (!str)
-		return (0);
-	tmp = (char *)ft_set_malloc(sizeof(char), idx + 1);
-	while (idx)
-	{
-		tmp[i] = str[i];
+	while (i < idx && str[i])
 		i++;
-		idx--;
-	}
+	tmp = malloc(i + 1);
+	if (tmp == NULL)
+		return (NULL);
+	ft_memcpy(tmp, str, i);
 	tmp[i] = '\0';
 	return tmp;
 }
