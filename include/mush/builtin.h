@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:53 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/10 16:15:07 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/10 20:02:01 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	ft_free_arr(char **arr);
 int		ft_cnt_arg(char *args[]);
 int		ft_check_arg_form(char *args[]);
 void	ft_add_path(char **path_v, char *slash);
+void	ft_strswap(char **str1, char **str2);
+int	bubble_sort_envp(char **str);
 
 int	builtin_cd(t_state *state, int argc, char *argv[]);
 int	builtin_echo(t_state *state, int argc, char *argv[]);

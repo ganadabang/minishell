@@ -1,27 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlchr.c                                       :+:      :+:    :+:   */
+/*   bubble_sort_envp.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/10 13:03:56 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/10 19:07:29 by gpaeng           ###   ########.fr       */
+/*   Created: 2022/02/10 16:52:33 by gpaeng            #+#    #+#             */
+/*   Updated: 2022/02/10 20:18:16 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/string.h"
+#include "mush.h"
 
-int 	ft_strlchr(char *str, int c) 
+int	bubble_sort_envp(char **str)
 {
-	int idx;
+	int	i;
+	int	j;
+	int	n;
+	int m;
 
-	idx = 0;
-	if (!str)
-		return(0);
-	while (str[idx] && str[idx] != (char)c)
+	j = ft_cnt_arg(str);
+	while (--j)
 	{
-		idx++;
+		i = 0;
+		while (i < j)
+		{
+			n = strcspn(str[i], "=");
+			m = strcspn(str[i + 1], "=");
+			if (n < m)
+				n = m;
+			if (ft_memcmp(str[i], str[i + 1], n) > 0)
+				ft_strswap(&str[i], &str[i+1]);
+			i++;
+		}
 	}
-	return (idx);
+	return (0);
 }

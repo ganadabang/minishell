@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlchr.c                                       :+:      :+:    :+:   */
+/*   ft_strswap.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/10 13:03:56 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/10 19:07:29 by gpaeng           ###   ########.fr       */
+/*   Created: 2022/02/10 18:31:07 by gpaeng            #+#    #+#             */
+/*   Updated: 2022/02/10 19:48:08 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/string.h"
+#include "mush.h"
 
-int 	ft_strlchr(char *str, int c) 
+void	ft_strswap(char **str1, char **str2)
 {
-	int idx;
+	char *tmp;
 
-	idx = 0;
-	if (!str)
-		return(0);
-	while (str[idx] && str[idx] != (char)c)
-	{
-		idx++;
-	}
-	return (idx);
+	if (!str1 || !str2)
+		return ;
+	tmp = *str1;
+	*str1 = *str2;
+	*str2 = tmp;
 }
