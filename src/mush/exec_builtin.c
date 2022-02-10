@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 20:54:27 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/05 15:51:59 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/10 15:19:13 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,15 @@ int	builtin_search(const char *name, int (**fn)(t_state *, int, char *[]))
 {
 	size_t	i;
 
-	i = -1;
-	while (++i < 7)
+	i = 0;
+	while (i < 7)
 	{
-		if (!strcmp(builtins[i].name, name ))
+		if (!strcmp(builtins[i].name, name))
 		{
 			*fn = builtins[i].builtin;
 			return (1);
 		}
+		++i;
 	}
 	return (0);
 }

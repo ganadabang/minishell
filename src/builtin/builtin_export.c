@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:12 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/10 13:47:13 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/10 14:03:52 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,12 @@ int	bubble_sort_envp(t_state *state, int i, int j)
 			a = ft_strndup(state->envp[j], idx);
 			idx = ft_strlchr(state->envp[j+1], '=');
 			b = ft_strndup(state->envp[j+1], idx);
+			printf("before: %s  %s\n", state->envp[j], state->envp[j+1]);
 			if (ft_strcmp(a, b) > 0)
 				ft_strswap(&state->envp[j], &state->envp[j+1]);
 			free(a);
 			free(b);
+			printf("after: %s  %s\n", state->envp[j], state->envp[j+1]);
 			j++;
 		}
 		i--;
@@ -88,6 +90,7 @@ void	ft_update_env_export(t_state *state, char *argv[])
 			i++;
 		}
 		env[i] = ft_strdup(argv[1]);
+		// free(state->envp);
 		state->envp = env;
 	}
 	return ;

@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:53 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/10 13:15:36 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/10 14:32:56 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ struct s_builtin {
 /*
 **utils
 */
-void	*ft_set_malloc(size_t nmemb, int size);
+void	**ft_set_malloc(size_t nmemb, int size);
 void	ft_free_arr(char **arr);
 int		ft_cnt_arg(char *args[]);
 char	*ft_get_env(char *path_n);
