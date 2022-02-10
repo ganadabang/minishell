@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:12 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/10 13:09:44 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/10 13:47:13 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	ft_strswap(char **str1, char **str2)
 {
 	char *tmp;
 
-	printf(">>> %s , %s\n", *str1, *str2);
 	if (!str1 || !str2)
 		return ;
 	tmp = ft_strdup(*str1);
@@ -25,7 +24,7 @@ void	ft_strswap(char **str1, char **str2)
 	*str2 = tmp;
 }
 
-int		bubble_sort_envp(t_state *state, int i, int j)
+int	bubble_sort_envp(t_state *state, int i, int j)
 {
 	char *a;
 	char *b;
@@ -42,9 +41,9 @@ int		bubble_sort_envp(t_state *state, int i, int j)
 			b = ft_strndup(state->envp[j+1], idx);
 			if (ft_strcmp(a, b) > 0)
 				ft_strswap(&state->envp[j], &state->envp[j+1]);
-			j++;
 			free(a);
 			free(b);
+			j++;
 		}
 		i--;
 	}
