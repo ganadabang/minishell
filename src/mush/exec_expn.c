@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:13 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/08 00:46:42 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/09 17:03:12 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,15 @@ size_t	exec_expn_buffer_putenv(t_state *state_ref, t_buf *buffer, char *word)
 
 	key_len = strcspn(word, "'\"$ \t\n");
 	key = strndup(word, key_len);
-	value = getenv(key);
-	value = getenv(key);
+	// value = getvar(state_ref, key);
+	// if (value == NULL)
+	// 	value = mush_getenv(state_ref, key);
+	value =  getenv(key);
 	free(key);
 	value_len = 0;
 	if (value != NULL)
 		value_len = strlen(value);
 	hx_buffer_putstr(buffer, value, value_len);
-	// free(value);
 	return (key_len);
 }
 
@@ -87,54 +88,26 @@ char	*exec_expn_word(t_state *state_ref, t_buf *buffer, char *word)
 		{
 			single_quoted = !single_quoted;
 			++i;
-			continue ;
 		}
-		if (word[i] == '\"' && !single_quoted)
+		else if (word[i] == '\"' && !single_quoted)
 		{
 			double_quoted = !double_quoted;
 			++i;
-			continue ;
 		}
-		if (word[i] == '$' && !single_quoted)
+		else if (word[i] == '$' && !single_quoted)
 		{
 			++i;
 			i += exec_expn_buffer_putenv(state_ref, buffer, &word[i]);
-			continue ;
 		}
-		hx_buffer_putchar(buffer, word[i++]);
+		else
+			hx_buffer_putchar(buffer, word[i++]);
 	}
 	free(word);
 	return (hx_buffer_withdraw(buffer));
 }
 
-
-void	exec_expn_filename(t_state *state_ref, t_array *filenames_ref)
-{
-	t_buf		buffer = {};
-	t_file		**old_data;
-	t_file		**data;
-	size_t		len;
-	size_t		i;
-
-	old_data = (t_file **)filenames_ref->data;
-	len = filenames_ref->len;
-	data = (t_file **)realloc(old_data, len + 1);
-	i = 0;
-	while (i < len)
-	{
-		data[i]->name = exec_expn_word(state_ref, &buffer, old_data[i]->name);
-		// printf("filename:%s\n", data[i]->name);
-		free(old_data[i]->name);
-		free(old_data[i]);
-		++i;
-	}
-	filenames_ref->data = (void **)data;
-	hx_buffer_cleanup(&buffer);
-}
-
 void	exec_expn_argv(t_state *state_ref, t_array *exec_argv)
 {
-	state_ref = 0;
 	t_buf	buffer = {};
 	char	**data;
 	size_t	len;

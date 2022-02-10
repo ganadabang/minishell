@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:47:55 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/07 17:48:50 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/10 10:16:30 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,20 @@ void	debug_pipeline(t_array *pipeline)
 	return ;
 }
 
-void	mush_state_create(t_state *ref_state, char **envp)
+void	mush_state_create(t_state *state_ref, char **envp)
 {
-	ft_memset(ref_state, 0, sizeof(t_state));
-	tcgetattr(STDOUT_FILENO, &ref_state->term);
-	ref_state->envp = envp;
-	ref_state->exit = -1;
-	ref_state->last_status = 0;
-	ref_state->pwd = getenv("PWD");
-	ref_state->old_pwd = getenv("OLDPWD");
+	ft_memset(state_ref, 0, sizeof(t_state));
+	tcgetattr(STDOUT_FILENO, &state_ref->term);
+	state_ref->envp = envp;
+	state_ref->exit = -1;
+	state_ref->last_status = 0;
+	state_ref->pwd = getenv("PWD");
+	state_ref->old_pwd = getenv("OLDPWD");
 }
 
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_state	state;
-	int		status;
 
 	mush_state_create(&state, envp);
 	mush_prompt_signal();
@@ -76,9 +75,7 @@ int	main(int argc, char *argv[], char *envp[])
 		if (mush_parser_readline(&state) < 0)
 			continue ;
 		mush_prompt_executive(&state.term);
-		status = mush_execute(&state);
-		if (status > 128)
-			write(1, "\n", 1);
+		mush_execute(&state);
 	}
 	mush_prompt_restored(&state.term);
 	write(1, "exit\n", 5);
