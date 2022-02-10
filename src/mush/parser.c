@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 19:42:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/10 10:11:06 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/10 16:12:11 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ static int	mush_parser_with_input(t_state *state_ref, t_parser *parser_ref, char
 		state_ref->exit = 0;
 		return (-1);
 	}
-	// if (!*input)
-	// {
-	// 	free(input);
-	// 	return (-1);
-	// }
+	if (!*input)
+	{
+		free(input);
+		return (-1);
+	}
 	add_history(input);
 	ft_memset(parser_ref, 0, sizeof(t_parser));
 	parser_ref->input = input;
