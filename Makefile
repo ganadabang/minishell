@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+         #
+#    By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/02/10 15:26:47 by gpaeng           ###   ########.fr        #
+#    Updated: 2022/02/11 14:48:14 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ INCLUDES	=	-I include/ -I$(shell brew --prefix readline)/include/ \
 LIBS		=	-L $(shell brew --prefix readline)/lib/ -lreadline \
 				-L lib/libft -lft
 
-LIBFT		=	lib/libft/libft.a
+LIBFTHX		=	lib/libft/libfthx.a
 
 OBJDIR := ./obj
 
@@ -43,8 +43,6 @@ OBJS		+=	$(addprefix $(OBJDIR)/, \
 
 # ./src/utils
 OBJS		+=	$(addprefix $(OBJDIR)/, \
-				array.o					\
-				buffer.o				\
 				ft_cnt_arg.o			\
 				ft_free_arr.o			\
 				ft_set_malloc.o			\
@@ -118,6 +116,4 @@ fclean:		clean
 			$(RM) -r $(NAME)
 
 .PHONY:		re
-re:
-			$(MAKE) fclean
-			$(MAKE)
+re: fclean all

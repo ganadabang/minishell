@@ -3,23 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/24 23:10:08 by SSONG             #+#    #+#             */
-/*   Updated: 2022/01/25 13:50:33 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/10 21:45:33 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/string.h"
+#include <stddef.h>
 
 size_t	ft_strlen(const char *str)
 {
 	const char	*s;
 
 	s = str;
-	while (*str)
-	{
+	while (*str != '\0')
 		++str;
-	}
 	return (str - s);
 }

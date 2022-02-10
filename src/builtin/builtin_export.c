@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:12 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/10 14:03:52 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/10 21:08:48 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ int	bubble_sort_envp(t_state *state, int i, int j)
 	{
 		while (state->envp[j + 1])
 		{
-			idx = ft_strlchr(state->envp[j], '=');
+			idx = ft_strchrspn(state->envp[j], '=');
 			a = ft_strndup(state->envp[j], idx);
-			idx = ft_strlchr(state->envp[j+1], '=');
+			idx = ft_strchrspn(state->envp[j+1], '=');
 			b = ft_strndup(state->envp[j+1], idx);
 			printf("before: %s  %s\n", state->envp[j], state->envp[j+1]);
 			if (ft_strcmp(a, b) > 0)
@@ -63,7 +63,7 @@ void	ft_print_env_export(t_state *state)
 	bubble_sort_envp(state, 0, 0);
 	while (state->envp[i])
 	{
-		j = ft_strlchr(state->envp[i], '=');
+		j = ft_strchrspn(state->envp[i], '=');
 		path_name = ft_strndup(state->envp[i], j);
 		path_value = ft_strndup(state->envp[i]+j+1, ft_strlen(state->envp[i]) - j);
 		printf("declare -x %s=\"%s\"\n", path_name, path_value);

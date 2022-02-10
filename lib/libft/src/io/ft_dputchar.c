@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dputchar.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 21:22:31 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/25 01:17:00 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/10 18:06:33 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/io.h"
+#include <unistd.h>
 
 int	ft_dputchar(int fd, int c)
 {
