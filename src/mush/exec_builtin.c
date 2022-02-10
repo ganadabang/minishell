@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 20:54:27 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/10 15:19:13 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/10 15:23:23 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,21 @@ static const struct s_builtin builtins[] = {
 	{"unset", builtin_unset}
 };
 
-int	builtin_search(const char *name, int (**fn)(t_state *, int, char *[]))
+int	builtin_search(t_proc *proc)
 {
+	char	*name;
+	int		(**fn_ref)(t_state *, int, char *[]);
 	size_t	i;
-
+	
+	name = proc->name;
+	fn_ref = &proc->fn_builtin;
 	i = 0;
 	while (i < 7)
 	{
+		// TODO: strcmp -> ft_strcmp
 		if (!strcmp(builtins[i].name, name))
 		{
-			*fn = builtins[i].builtin;
+			*fn_ref = builtins[i].builtin;
 			return (1);
 		}
 		++i;

@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 02:54:41 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/04 20:26:08 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/10 10:14:41 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mush.h"
+#include <sys/wait.h>
+#include <sys/ioctl.h>
 
-static void	sighandler(int signum)
+
+static void	sig_handler_int(int signum)
 {
 	if (signum == SIGINT)
 	{
@@ -21,30 +24,39 @@ static void	sighandler(int signum)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	else if (signum == SIGWINCH)
+	return ;
+}
+
+static void	sig_handler_winch(int signum)
+{
+	if (signum == SIGWINCH)
 		rl_on_new_line();
 	return ;
 }
 
 void	mush_prompt_interactive(struct termios *term)
 {
-	signal(SIGINT, sighandler);
 	term->c_lflag &= ~ECHOCTL;
 	tcsetattr(STDOUT_FILENO, TCSANOW ,term);
 }
 
 void	mush_prompt_executive(struct termios *term)
 {
-	signal(SIGINT, SIG_IGN);
 	term->c_lflag |= ECHOCTL;
 	tcsetattr(STDOUT_FILENO, TCSANOW ,term);
 }
 
 void	mush_prompt_signal(void)
 {
-	signal(SIGTSTP, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGWINCH, sighandler);
+	signal(SIGTSTP, SIG_IGN);
+	signal(SIGCONT, SIG_IGN);
+	signal(SIGTTIN, SIG_IGN);
+	signal(SIGTTOU, SIG_IGN);
+	signal(SIGCHLD, SIG_DFL);
+	signal(SIGTERM, SIG_IGN);
+	signal(SIGWINCH, sig_handler_winch);
+	signal(SIGINT, sig_handler_int);
 	return ;
 }
 
@@ -53,3 +65,5 @@ void	mush_prompt_restored(struct termios *term)
 	term->c_lflag |= ECHOCTL;
 	tcsetattr(STDOUT_FILENO, TCSANOW ,term);
 }
+
+

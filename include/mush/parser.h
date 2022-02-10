@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 17:33:52 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/05 12:33:36 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/07 18:58:14 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef struct s_proc {
 	t_array	io_files;
 	pid_t	pid;
 	int		status;
-	int		(*fp_builtin)(t_state *, int, char *[]);
+	int		(*fn_builtin)(t_state *, int, char *[]);
 	int		stdin;
 	int		stdout;
 }	t_proc;
@@ -95,11 +95,11 @@ struct s_quoted_word {
 };
 
 int		mush_parser_readline(t_state *state);
-int		parser_buffer_write_quoted(t_parser *ref_parser, char quoting);
-char	*parser_buffer_withdraw_operator(t_parser *ref_parser);
-void	parser_buffer_write_char(t_parser *ref_parser, char ch);
-char	*parser_buffer_withdraw_word(t_parser *ref_parser);
-int		mush_parser_tokenize(t_parser *ref_parser);
+int		parser_buffer_write_quoted(t_parser *parser_ref, char quoting);
+char	*parser_buffer_withdraw_operator(t_parser *parser_ref);
+void	parser_buffer_write_char(t_parser *parser_ref, char ch);
+char	*parser_buffer_withdraw_word(t_parser *parser_ref);
+int		mush_parser_tokenize(t_parser *parser_ref);
 int		mush_syntax_error(t_parser *parser, char **unexpected);
 t_file	*parser_create_io_file(char *redir, char *str);
 int		mush_parser_init_job(t_array *pipeline, t_parser *parser);

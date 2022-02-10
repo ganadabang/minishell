@@ -6,13 +6,14 @@
 #    By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/02/10 13:16:03 by gpaeng           ###   ########.fr        #
+#    Updated: 2022/02/10 15:26:47 by gpaeng           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 # CFLAGS = -Wall -Werror -Wextra -g3 
-CFLAGS = -g3
+CFLAGS = -g3 
+# CFLAGS = -g3 -fsanitize=address
 
 RM = rm -f
 
@@ -21,6 +22,8 @@ INCLUDES	=	-I include/ -I$(shell brew --prefix readline)/include/ \
 
 LIBS		=	-L $(shell brew --prefix readline)/lib/ -lreadline \
 				-L lib/libft -lft
+
+LIBFT		=	lib/libft/libft.a
 
 OBJDIR := ./obj
 
@@ -47,8 +50,9 @@ OBJS		+=	$(addprefix $(OBJDIR)/, \
 				ft_set_malloc.o			\
 				ft_get_env.o			\
 				ft_check_arg_form.o		\
+				ft_add_path.o			\
 				ft_strndup.o			\
-				ft_add_path.o)
+				ft_fatal.o)
 
 # ./src/mush
 OBJS		+=	$(addprefix $(OBJDIR)/, \
@@ -69,7 +73,6 @@ OBJS		+=	$(addprefix $(OBJDIR)/, \
 
 
 
-
 SRC_DIR = ./src
 SRC_UTILS_DIR = ./src/utils
 SRC_BUILTIN_DIR = ./src/builtin
@@ -80,7 +83,9 @@ NAME = minishell
 .PHONY:		all
 all:		libft $(NAME)
 
-libft:
+libft:		$(LIBFT)
+
+$(LIBFT):
 			make -C lib/libft/
 
 $(NAME):	$(OBJDIR) $(OBJS)

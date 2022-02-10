@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_job.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 01:54:44 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/05 12:36:29 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/07 13:26:12 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,5 @@ int	mush_parser_init_job(t_array *pipeline, t_parser *parser)
 		++i;
 	}
 	hx_array_push(pipeline, process);
+	return (0);
 }

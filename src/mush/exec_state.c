@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_state.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:39 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/04 19:43:16 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/10 00:06:50 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mush.h"
 
-int	mush_job_status_update(t_job *job)
+int	mush_job_status_update(t_array	*pipeline_ref)
 {
 	t_proc **procs;
 	int		status;
@@ -20,8 +20,9 @@ int	mush_job_status_update(t_job *job)
 	size_t	len;
 	size_t	i;
 
-	procs = (t_proc **)job->pipeline.data;
-	len = job->pipeline.len;
+	procs = (t_proc **)pipeline_ref->data;
+	len = pipeline_ref->len;
+	status = 0;
 	while (1)
 	{
 		wpid = wait(&status);
@@ -30,7 +31,7 @@ int	mush_job_status_update(t_job *job)
 		for (size_t i = 0; i < len; ++i)
 		{
 			if (wpid == procs[i]->pid)
-			{
+			{	
 				status = WIFSIGNALED(status);
 				status *= (128 + WTERMSIG(status));
 				status += WEXITSTATUS(status);
@@ -38,6 +39,5 @@ int	mush_job_status_update(t_job *job)
 			}
 		}
 	}
-	job->status = procs[len - 1]->status;
-	return (job->status);
+	return (procs[len - 1]->status);
 }

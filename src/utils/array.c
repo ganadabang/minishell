@@ -6,10 +6,11 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 21:16:00 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/04 17:24:58 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/07 16:17:31 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "array.h"
 
 bool	hx_array_secure(t_array *array, size_t new_cap)

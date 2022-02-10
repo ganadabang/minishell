@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:53 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/10 14:32:56 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/10 15:23:27 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,6 @@ int	builtin_exit(t_state *state, int argc, char *argv[]);
 int	builtin_export(t_state *state, int argc, char *argv[]);
 int	builtin_pwd(t_state *state, int argc, char *argv[]);
 int	builtin_unset(t_state *state, int argc, char *argv[]);
-int	builtin_search(const char *name, int (**fn)(t_state *, int, char *[]));
+int	builtin_search(t_proc *proc);
 
 #endif
