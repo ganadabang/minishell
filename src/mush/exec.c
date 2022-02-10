@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/10 01:49:05 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/10 17:20:29 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,6 @@ void	mush_exec_simple_command(t_state *state_ref, t_proc *proc)
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 	signal(SIGTSTP, SIG_DFL);
-	signal(SIGCONT, SIG_DFL);
-	signal(SIGTTIN, SIG_DFL);
-	signal(SIGTTOU, SIG_DFL);
 	signal(SIGTTIN, SIG_DFL);
 	signal(SIGTTOU, SIG_DFL);
 	signal(SIGCHLD, SIG_DFL);
@@ -135,6 +132,3 @@ int	mush_execute(t_state *state)
 	hx_array_cleanup(&state->job.pipeline);
 	return (state->last_status);
 }
-
-// 파이프라인이 인터럽트 될 때 개행이 출력되고 있지 않은 문제가 발생하고 있는데
-// 이걸 어떻게 처리하징...

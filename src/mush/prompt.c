@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 02:54:41 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/10 10:14:41 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/10 17:14:40 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	mush_prompt_interactive(struct termios *term)
 void	mush_prompt_executive(struct termios *term)
 {
 	term->c_lflag |= ECHOCTL;
+	signal(SIGINT, SIG_IGN);
 	tcsetattr(STDOUT_FILENO, TCSANOW ,term);
 }
 
