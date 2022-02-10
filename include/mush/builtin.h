@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:53 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/07 13:06:58 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/10 15:23:27 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ struct s_builtin {
 /*
 **utils
 */
-void	*ft_set_malloc(size_t nmemb, int size);
+void	**ft_set_malloc(size_t nmemb, int size);
 void	ft_free_arr(char **arr);
 int		ft_cnt_arg(char *args[]);
 char	*ft_get_env(char *path_n);
 int		ft_check_arg_form(char *args[]);
 void	ft_add_path(char **path_v, char *slash);
-
+char	*ft_strndup(char *str, int idx);
 
 int	builtin_cd(t_state *state, int argc, char *argv[]);
 int	builtin_echo(t_state *state, int argc, char *argv[]);

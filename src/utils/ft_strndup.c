@@ -1,36 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_set_malloc.c                                    :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/13 13:35:54 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/10 14:34:11 by gpaeng           ###   ########.fr       */
+/*   Created: 2022/02/10 13:05:46 by gpaeng            #+#    #+#             */
+/*   Updated: 2022/02/10 13:15:01 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mush.h"
 
-void	*ft_memset(void *dest, int c, size_t n)
+char *ft_strndup(char *str, int idx)
 {
-	char	*tmp;
+	char *tmp;
+	size_t i;
 
-	tmp = dest;
-	while (n-- > 0)
-	{
-		*tmp++ = c;
-	}
-	return (dest);
-}
-
-void	**ft_set_malloc(size_t nmemb, int size)
-{
-	void	**arr;
-
-	arr = (void **)malloc(nmemb * size);
-	if (!(arr))
+	i = 0;
+	if (!str)
 		return (0);
-	ft_memset(arr, 0, nmemb * size);
-	return (arr);
+	tmp = (char *)ft_set_malloc(sizeof(char), idx + 1);
+	while (idx)
+	{
+		tmp[i] = str[i];
+		i++;
+		idx--;
+	}
+	tmp[i] = '\0';
+	return tmp;
 }

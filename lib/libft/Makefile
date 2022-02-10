@@ -6,7 +6,7 @@
 #    By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/26 11:13:05 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/02/05 16:56:40 by gpaeng           ###   ########.fr        #
+#    Updated: 2022/02/10 13:14:36 by gpaeng           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,12 +57,14 @@ SRCS	+=	$(addprefix src/string/,	ft_bzero.c \
 										ft_memmove.c \
 										ft_memset.c \
 										ft_strchr.c \
+										ft_strlchr.c\
 										ft_strdup.c \
 										ft_strjoin.c\
 										ft_strlcat.c \
 										ft_strlcpy.c \
 										ft_strlen.c \
 										ft_strncmp.c \
+										ft_strcmp.c	\
 										ft_strnstr.c \
 										ft_strrchr.c)
 
