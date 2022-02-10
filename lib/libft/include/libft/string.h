@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 21:18:39 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/25 13:50:58 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/10 13:14:27 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void			*ft_memccpy(void *dst, const void *src, int c, size_t n);
 void			*ft_memmove(void *dst, const void *src, size_t n);
 void			*ft_memchr(const void *s, int c, size_t n);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
+int 			ft_strlchr(char *str, int c);
 size_t			ft_strlen(const char *s);
 size_t			ft_strlcpy(char *dst, const char *src, size_t dstsize);
 size_t			ft_strlcat(char *dst, const char *src, size_t dstsize);
@@ -31,6 +32,7 @@ char			*ft_strrchr(const char *s, int c);
 char			*ft_strnstr(const char *haystack, const char *needle, \
 				size_t len);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
+int				ft_strcmp(char *str1, char *str2);
 char			*ft_strdup(const char *s1);
 
 #endif

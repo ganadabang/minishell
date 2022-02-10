@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+         #
+#    By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/02/05 12:34:14 by hyeonsok         ###   ########.fr        #
+#    Updated: 2022/02/10 13:16:03 by gpaeng           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ OBJS		+=	$(addprefix $(OBJDIR)/, \
 				ft_set_malloc.o			\
 				ft_get_env.o			\
 				ft_check_arg_form.o		\
+				ft_strndup.o			\
 				ft_add_path.o)
 
 # ./src/mush

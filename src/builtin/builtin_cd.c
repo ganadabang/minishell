@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/05 17:13:31 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/10 13:17:25 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,10 @@ void	ft_update_env(t_state *state, char *path_n, char *path_v)
 	i = 0;
 	while (state->envp[i])
 	{
-		j = 0;
-		while (state->envp[i][j] != '=')
-			j++;
+		j = ft_strlchr(state->envp[i], '=');
 		if (ft_strncmp(state->envp[i], path_n, j) == 0)
 		{
-			path_name = (char *)ft_set_malloc(sizeof(char), j);
-			ft_strlcpy(path_name, state->envp[i], j + 2);
+			path_name = ft_strndup(state->envp[i], j+1);
 			path = ft_strjoin(path_name, path_v);
 			state->envp[i] = path;
 		}

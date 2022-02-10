@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:53 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/05 15:36:55 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/10 13:15:36 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		ft_cnt_arg(char *args[]);
 char	*ft_get_env(char *path_n);
 int		ft_check_arg_form(char *args[]);
 void	ft_add_path(char **path_v, char *slash);
-
+char	*ft_strndup(char *str, int idx);
 
 int	builtin_cd(t_state *state, int argc, char *argv[]);
 int	builtin_echo(t_state *state, int argc, char *argv[]);
