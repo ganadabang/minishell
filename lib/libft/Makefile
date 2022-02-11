@@ -6,7 +6,11 @@
 #    By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/26 11:13:05 by hyeonsok          #+#    #+#              #
+<<<<<<< HEAD
+#    Updated: 2022/02/10 16:13:30 by gpaeng           ###   ########.fr        #
+=======
 #    Updated: 2022/02/11 14:37:32 by hyeonsok         ###   ########.fr        #
+>>>>>>> d0c4100a9a1f68d99e757a09b883160ad82f1c32
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +61,7 @@ SRCS	+=	$(addprefix src/string/,	ft_bzero.c \
 										ft_strchr.c \
 										ft_strchrspn.c\
 										ft_strdup.c \
+										ft_strndup.c\
 										ft_strjoin.c\
 										ft_strlcat.c \
 										ft_strlcpy.c \

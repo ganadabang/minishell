@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 16:49:34 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/10 14:56:41 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/10 15:45:46 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	ft_remove_env(t_state *state, int env_line)
 		}
 		envp_i++;
 	}
-	// free(state->envp);
 	state->envp = env;
 }
 
@@ -69,11 +68,11 @@ int	builtin_unset(t_state *state, int argc, char *argv[])
 	while (argv[i])
 	{
 		env_line = ft_check_env(state, argv[i]);
-		// if (!ft_check_args_unset(*argv[i]))
-		// {
-		// 	printf("mush: unset: %s not a valid identifier\n", argv[i]);
-		// 	return (1);
-		// }
+		if (!ft_check_args_unset(*argv[i]))
+		{
+			printf("mush: unset: %s not a valid identifier\n", argv[i]);
+			return (1);
+		}
 		if (env_line != -1)
 			ft_remove_env(state, env_line);
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_arg_form.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:17:49 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/04 17:24:44 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/10 20:09:28 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,7 @@ int	ft_check_arg_form(char *args[])
 	i = 1;
 	while (args[i])
 	{
-		j = 0;
-		while (args[i][j] != '=')
-			j++;
+		j = ft_strlchr(args[i], '=');
 		if (ft_check_key_value_form(i, j, args))
 			return (0);
 		if (ft_check_key_form(i, j, args))

@@ -6,7 +6,11 @@
 #    By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
+<<<<<<< HEAD
+#    Updated: 2022/02/10 19:09:54 by gpaeng           ###   ########.fr        #
+=======
 #    Updated: 2022/02/11 14:48:14 by hyeonsok         ###   ########.fr        #
+>>>>>>> d0c4100a9a1f68d99e757a09b883160ad82f1c32
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,10 +50,10 @@ OBJS		+=	$(addprefix $(OBJDIR)/, \
 				ft_cnt_arg.o			\
 				ft_free_arr.o			\
 				ft_set_malloc.o			\
-				ft_get_env.o			\
 				ft_check_arg_form.o		\
 				ft_add_path.o			\
-				ft_strndup.o			\
+				ft_strswap.o			\
+				bubble_sort_envp.o		\
 				ft_fatal.o)
 
 # ./src/mush
