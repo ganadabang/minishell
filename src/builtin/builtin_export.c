@@ -6,12 +6,13 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:12 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/10 21:08:48 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 15:07:37 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush.h"
+#include <stdlib.h>
 #include <stdio.h>
+#include "mush.h"
 
 void	ft_strswap(char **str1, char **str2)
 {

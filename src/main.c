@@ -3,13 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:47:55 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/10 10:16:30 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 15:06:30 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
+#include "libfthx.h"
 #include "mush.h"
 
 void	debug_pipeline(t_array *pipeline)
@@ -78,6 +80,6 @@ int	main(int argc, char *argv[], char *envp[])
 		mush_execute(&state);
 	}
 	mush_prompt_restored(&state.term);
-	write(1, "exit\n", 5);
+	ft_puts("exit\n");
 	return (0);
 }

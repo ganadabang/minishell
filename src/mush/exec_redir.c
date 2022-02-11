@@ -6,11 +6,14 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:56:00 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/07 20:49:05 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 15:59:15 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush.h"
+#include <unistd.h>
+#include <fcntl.h>
+#include "mush/parser.h"
+#include "mush/exec.h"
 
 void	exec_io_redirect(t_state *state_ref, t_array *io_files_ref)
 {
@@ -27,7 +30,6 @@ void	exec_io_redirect(t_state *state_ref, t_array *io_files_ref)
 	{
 		file = (t_file *)io_files_ref->data[i];
 		file->name = exec_expn_word(state_ref, &buffer, file->name);
-		// printf("filename:%s\n", file->name);
 		if (file->io_type == IO_OUT || file->io_type == IO_APPEND)
 		{
 			fd = open(file->name, file->oflag, 0644);
@@ -38,7 +40,7 @@ void	exec_io_redirect(t_state *state_ref, t_array *io_files_ref)
 		else if (file->io_type == IO_HERE || file->io_type == IO_IN)
 		{
 			fd = open(file->name, O_RDONLY, 0644);
-			//fatal error()
+			//TODO: fatal error()
 			if (fd < 0 || dup2(fd, 0) < 0)
 				break ;
 			close(fd);

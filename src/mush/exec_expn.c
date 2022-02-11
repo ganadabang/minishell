@@ -3,29 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   exec_expn.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:13 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/09 17:03:12 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 15:54:44 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "libfthx.h"
+#include "mush/parser.h"
 
-#include "mush.h"
-
+// To be removed
+#include <string.h>
 char	*exec_expn_cmd(t_state *state_ref, char *name)
 {
 	char	*slash_name;
 	char	*path_cmd;
-	char	*path;
+	char	*path_abs;
 	char	**pathv;
 	size_t	i;
 
-	if (strchr(name, '/') != NULL)
+	if (ft_strchr(name, '/') != NULL)
 		return (name);
+	// TODO: getenv => mush_getenv
 	path = getenv("PATH");
 	if (path == NULL)
 	{

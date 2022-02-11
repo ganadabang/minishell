@@ -3,21 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:56:20 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/08 00:47:09 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 16:05:13 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXEC_H
 # define EXEC_H
-
-# include <unistd.h>
-# include <stdio.h>
-# include <stdio.h>
-
-# include "libftx.h"
 
 int		is_last_proc(size_t idx, size_t size);
 void	exec_pipe_connect(t_proc *proc);
@@ -34,4 +28,4 @@ void	exec_expn_argv(t_state *state_ref, t_array *args_ref);
 
 char	*exec_expn_cmd(t_state *state_ref, char *name);
 
-#endif
+#endif /* EXEC_H */

@@ -6,13 +6,13 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 01:54:46 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/07 12:01:31 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 15:14:00 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush.h"
+#include "libfthx.h"
+#include "mush/parser.h"
 
-// TODO: strspn -> ft_strspn
 static void	parser_skip_blanks(t_parser *parser_ref)
 {
 	char	*input;

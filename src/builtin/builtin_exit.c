@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:32:50 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/10 13:17:42 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/11 15:07:12 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mush.h"
+#include <stdlib.h>
 #include <stdio.h>
 
 int	ft_str_alpha_check(char *str)

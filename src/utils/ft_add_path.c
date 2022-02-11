@@ -6,11 +6,12 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:24:06 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/04 17:24:40 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 15:08:54 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush.h"
+#include <stdlib.h>
+#include "libfthx.h"
 
 void	ft_add_path(char **path_v, char *slash)
 {

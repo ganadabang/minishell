@@ -6,13 +6,16 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/10 21:08:48 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 16:04:13 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/stat.h>
+#include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "mush.h"
+#include "libfthx.h"
 
 void	ft_update_env(t_state *state, char *path_n, char *path_v)
 {

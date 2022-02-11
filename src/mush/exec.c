@@ -6,13 +6,16 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/10 17:20:29 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 16:02:44 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <signal.h>
-#include "mush.h"
+#include <stdlib.h>
+#include "libfthx.h"
+#include "mush/parser.h"
+#include "mush/exec.h"
 
 int mush_exec_builtin(t_state *state_ref)
 {
@@ -117,7 +120,7 @@ int	mush_execute(t_state *state)
 			exec_pipe_init(&procs[i]);
 		pid = fork();
 		if (pid < 0)
-			ft_fatal("fork");
+			mush_fatal("fork");
 		if (pid == 0)
 			mush_exec_simple_command(state, procs[i]);
 		procs[i]->pid = pid;
