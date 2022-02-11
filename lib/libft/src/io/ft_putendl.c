@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putendl.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/05 01:10:22 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/25 23:44:15 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/10 18:13:15 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/io.h"
+#include <unistd.h>
+#include "libft/string.h"
 
 int	ft_putendl(const char *s)
 {
-	return (ft_puts(s) + ft_putchar('\n'));
+	return (write(1, s, ft_strlen(s)) + write(1, "\n", 1));
 }

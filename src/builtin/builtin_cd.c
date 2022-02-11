@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/10 13:17:25 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/11 16:04:13 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/stat.h>
+#include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "mush.h"
+#include "libfthx.h"
 
 void	ft_update_env(t_state *state, char *path_n, char *path_v)
 {
@@ -24,7 +27,7 @@ void	ft_update_env(t_state *state, char *path_n, char *path_v)
 	i = 0;
 	while (state->envp[i])
 	{
-		j = ft_strlchr(state->envp[i], '=');
+		j = ft_strchrspn(state->envp[i], '=');
 		if (ft_strncmp(state->envp[i], path_n, j) == 0)
 		{
 			path_name = ft_strndup(state->envp[i], j+1);

@@ -6,11 +6,12 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 01:58:30 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/07 12:01:15 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 16:02:05 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush.h"
+#include "libfthx.h"
+#include "mush/parser.h"
 
 static size_t	get_operator_size(char *input)
 {
@@ -23,33 +24,33 @@ static size_t	get_operator_size(char *input)
 
 int	parser_buffer_write_quoted(t_parser *parser_ref, char quoting)
 {
-	char	*ref_pos;
+	char	*pos_ref;
 	char	*brk;
 	size_t	len;
 
-	ref_pos = &parser_ref->input[parser_ref->pos];
+	pos_ref = &parser_ref->input[parser_ref->pos];
 	// TODO strchr -> ft_strchr
-	brk = strchr(&ref_pos[1], quoting);
+	brk = ft_strchr(&pos_ref[1], quoting);
 	if (!brk)
 	{
 		parser_ref->syntax_error = 1;
 		return (-1);
 	}
-	len = brk - ref_pos + 1;
-	hx_buffer_putstr(&parser_ref->buffer, ref_pos, len);
+	len = brk - pos_ref + 1;
+	hx_buffer_putstr(&parser_ref->buffer, pos_ref, len);
 	parser_ref->pos += len;
 	return (0);
 }
 
 char	*parser_buffer_withdraw_operator(t_parser *parser_ref)
 {
-	char	*ref_pos;
+	char	*pos_ref;
 	size_t	len;
 	int		ret;
 
-	ref_pos = &parser_ref->input[parser_ref->pos];
-	len = get_operator_size(ref_pos);
-	hx_buffer_putstr(&parser_ref->buffer, ref_pos, len);
+	pos_ref = &parser_ref->input[parser_ref->pos];
+	len = get_operator_size(pos_ref);
+	hx_buffer_putstr(&parser_ref->buffer, pos_ref, len);
 	parser_ref->pos += len;
 	return (hx_buffer_withdraw(&parser_ref->buffer));
 }

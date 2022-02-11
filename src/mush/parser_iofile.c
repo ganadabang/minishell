@@ -3,25 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   parser_iofile.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 02:02:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/05 02:06:02 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 15:21:52 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "mush.h"
+#include <stdlib.h>
+#include <unistd.h>
+#include <fcntl.h>
 
-// TODO strcmp -> ft_strcmp
+// TODO ft_memcmp -> ft_ft_memcmp
 static int	get_io_type(char *str)
 {
-	if (strcmp("<<", str) == 0)
+	if (ft_memcmp("<<", str, 3) == 0)
 		return (IO_HERE);
-	if (strcmp(">>", str) == 0)
+	if (ft_memcmp(">>", str, 3) == 0)
 		return (IO_APPEND);
-	if (strcmp("<", str) == 0)
+	if (ft_memcmp("<", str, 2) == 0)
 		return (IO_IN);
-	if (strcmp(">", str) == 0)
+	if (ft_memcmp(">", str, 2) == 0)
 		return (IO_OUT);
 	return (-1);
 }
@@ -59,6 +62,7 @@ t_file	*parser_create_io_file(char *redir, char *str)
 	t_file	*file;
 	char	*here_end;
 	char	*input;
+	size_t	here_len;
 	int		fd;
 
 	file = (t_file *)calloc(1, sizeof(t_file));
@@ -67,14 +71,14 @@ t_file	*parser_create_io_file(char *redir, char *str)
 	file->name = str;
 	if (file->io_type == IO_HERE)
 	{
-
 		here_end = remove_quoting(str);
+		here_len = ft_strlen(here_end);
 		file->name = "./.here_tmp";
 		fd = open(file->name, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 		while (1)
 		{
 			input = readline(">");
-			if (strcmp(here_end, input) == 0)
+			if (ft_memcmp(here_end, input, here_len) == 0)
 				break ;
 			ft_dputendl(fd, input);
 		}

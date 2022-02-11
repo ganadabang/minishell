@@ -3,26 +3,29 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+         #
+#    By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/26 11:13:05 by hyeonsok          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2022/02/10 16:13:30 by gpaeng           ###   ########.fr        #
+=======
+#    Updated: 2022/02/11 14:37:32 by hyeonsok         ###   ########.fr        #
+>>>>>>> d0c4100a9a1f68d99e757a09b883160ad82f1c32
 #                                                                              #
 # **************************************************************************** #
 
-.PHONY : all bonus clean fclean re
-
-NAME = libft.a
+NAME = libfthx.a
 
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra
+INCLUDE_PATH = -I include
 
 AR = ar
 RM = rm -f
 
-INCLUDES = -I./include
+LIBFT = libft.a
 
-SRCS	=	$(addprefix src/ctype/,		ft_isalnum.c \
+SRCS	=	$(addprefix src/is/,		ft_isalnum.c \
 										ft_isalpha.c \
 										ft_isascii.c \
 										ft_isblank.c \
@@ -46,8 +49,7 @@ SRCS	+=	$(addprefix src/io/,		ft_dputchar.c \
 										ft_putchar.c \
 										ft_putendl.c \
 										ft_putnbr.c \
-										ft_puts.c \
-										get_next_line.c)
+										ft_puts.c)
 
 SRCS	+=	$(addprefix src/string/,	ft_bzero.c \
 										ft_memccpy.c \
@@ -57,7 +59,7 @@ SRCS	+=	$(addprefix src/string/,	ft_bzero.c \
 										ft_memmove.c \
 										ft_memset.c \
 										ft_strchr.c \
-										ft_strlchr.c\
+										ft_strchrspn.c\
 										ft_strdup.c \
 										ft_strndup.c\
 										ft_strjoin.c\
@@ -69,7 +71,7 @@ SRCS	+=	$(addprefix src/string/,	ft_bzero.c \
 										ft_strnstr.c \
 										ft_strrchr.c)
 
-SRCS	+=	$(addprefix src/util/,		ft_itoa.c \
+SRCS	+=	$(addprefix src/ft/,		ft_itoa.c \
 										ft_split.c \
 										ft_strjoin.c \
 										ft_strmapi.c \
@@ -80,20 +82,27 @@ SRCS	+=	$(addprefix src/,			ft_atoi.c \
 										ft_atoll.c \
 										ft_calloc.c)
 
+SRCS	+=	$(addprefix src/hx/,		array.c \
+										buffer.c)
+
 OBJS = $(SRCS:.c=.o)
 
-all : $(NAME)
-
-$(NAME) : $(OBJS)
-	$(AR) -rcs $@ $^
-
 .c.o :
-	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
+			$(CC) $(CFLAGS) $(INCLUDE_PATH) -c -o $@ $<
 
-clean :
-	$(RM) -r $(OBJS)
+.PHONY:		all
+all:		$(NAME)
 
-fclean : clean
-	$(RM) -r $(NAME)
+$(NAME): 	$(OBJS)
+			$(AR) -rcs $@ $^
 
-re : fclean all
+.PHONY: 	clean
+clean:
+			$(RM) -r $(OBJS)
+
+.PHONY :	fclean
+fclean :	clean
+			$(RM) -r $(NAME)
+
+.PHONY:		re
+re: 		fclean all

@@ -6,11 +6,11 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 13:37:26 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/04 17:24:49 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 15:08:12 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush.h"
+#include <stdlib.h>
 
 void	ft_free_arr(char **arr)
 {

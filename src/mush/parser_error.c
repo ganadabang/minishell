@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parser_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 01:54:41 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/05 02:08:15 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 16:01:18 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush.h"
+#include "libfthx.h"
+#include "mush/parser.h"
 
 int	mush_syntax_error(t_parser *parser, char **unexpected)
 {

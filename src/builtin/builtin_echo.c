@@ -3,32 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:34:22 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/05 17:14:36 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/11 16:03:23 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush.h"
 #include <stdio.h>
+#include "libfthx.h"
 
-int	ft_strlength(char *str)
-{
-	int	cnt;
-	int	idx;
-
-	cnt = 0;
-	idx = 0;
-	while (str[idx])
-	{
-		cnt++;
-		idx++;
-	}
-	return (cnt);
-}
-
-int	ft_check_option(int str_length, char *str)
+static int	ft_check_option(int str_length, char *str)
 {
 	int	idx;
 
@@ -42,11 +27,11 @@ int	ft_check_option(int str_length, char *str)
 	return (1);
 }
 
-int	ft_echo_option(char *str)
+static int	ft_echo_option(char *str)
 {	
-	int	str_length;
+	size_t	str_length;
 
-	str_length = ft_strlength(str);
+	str_length = ft_strlen(str);
 	if (ft_check_option(str_length, str))
 		return (1);
 	return (0);
@@ -54,13 +39,19 @@ int	ft_echo_option(char *str)
 
 void	ft_echo_print(char *argv[])
 {
-	while (*argv)
+	size_t	i;
+
+	i = 0;
+	while (1)
 	{
-		printf("%s", *argv);
-		if (*(argv + 1) != NULL)
+		if (argv[i] == NULL)
+			return ;
+		printf("%s", argv[i]);
+		if (argv != NULL)
 			printf(" ");
 		argv++;
 	}
+	return ;
 }
 
 int	builtin_echo(t_state *state, int argc, char *argv[])

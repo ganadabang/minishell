@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:53 by gpaeng            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/02/10 20:02:01 by gpaeng           ###   ########.fr       */
+=======
+/*   Updated: 2022/02/11 16:05:44 by hyeonsok         ###   ########.fr       */
+>>>>>>> d0c4100a9a1f68d99e757a09b883160ad82f1c32
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTIN_H
 # define BUILTIN_H
-
-# include "libftx.h"
 
 struct s_builtin {
 	char	*name;

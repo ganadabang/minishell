@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dputs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 21:24:44 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/01/25 01:23:23 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/10 18:07:53 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/io.h"
+#include <unistd.h>
+#include "libft/string.h"
 
 int	ft_dputs(int fd, const char *s)
 {

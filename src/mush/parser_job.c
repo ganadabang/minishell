@@ -6,17 +6,19 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 01:54:44 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/07 13:26:12 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 15:18:05 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush.h"
+#include <stdlib.h>
+#include "libfthx.h"
+#include "mush/parser.h"
 
 t_proc	*mush_create_simple_command(void)
 {
 	t_proc *proc;
 
-	proc = calloc(1, sizeof(t_proc));
+	proc = ft_calloc(1, sizeof(t_proc));
 	proc->stdout = 1;
 	return (proc);
 }

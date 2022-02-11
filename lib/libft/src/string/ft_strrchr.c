@@ -3,29 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/25 14:00:47 by SSONG             #+#    #+#             */
-/*   Updated: 2022/01/25 13:50:33 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/10 21:20:17 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/string.h"
 
-/*
- * TODO: TEST
- */
-
-char	*ft_strrchr(const char *s1, int ch)
+char	*ft_strrchr(const char *s, int c)
 {
-	char	*s;
+	size_t	i;
 
-	s = (char *)s1 + ft_strlen(s1);
-	while (*s != ch)
+	i = ft_strlen(s);
+	while (i > 0)
 	{
-		if (s == s1)
-			return (NULL);
-		--s;
+		if (s[i] == (char)c)
+			return ((char *)&s[i]);
+		--i;
 	}
-	return (s);
+	return (NULL);
 }

@@ -6,23 +6,12 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 17:33:52 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/07 18:58:14 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 16:06:07 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
-
-#include <unistd.h>
-#include <termios.h>
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <errno.h>
-#include <string.h>
-#include "buffer.h"
-#include "array.h"
-#include "libftx.h"
 
 enum e_mush_token {
 	TOKEN_WORD,

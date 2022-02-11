@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:12 by gpaeng            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/02/10 20:07:04 by gpaeng           ###   ########.fr       */
+=======
+/*   Updated: 2022/02/11 15:07:37 by hyeonsok         ###   ########.fr       */
+>>>>>>> d0c4100a9a1f68d99e757a09b883160ad82f1c32
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush.h"
+#include <stdlib.h>
 #include <stdio.h>
+#include "mush.h"
 
 char	**env_deepcpy(t_state *state)
 {
@@ -24,8 +29,26 @@ char	**env_deepcpy(t_state *state)
 	i = 0;
 	while (cnt_env_arr-- > 0 && state->envp[cnt_env_arr])
 	{
+<<<<<<< HEAD
 		env[i] = ft_strdup(state->envp[i]);
 		i++;
+=======
+		while (state->envp[j + 1])
+		{
+			idx = ft_strchrspn(state->envp[j], '=');
+			a = ft_strndup(state->envp[j], idx);
+			idx = ft_strchrspn(state->envp[j+1], '=');
+			b = ft_strndup(state->envp[j+1], idx);
+			printf("before: %s  %s\n", state->envp[j], state->envp[j+1]);
+			if (ft_strcmp(a, b) > 0)
+				ft_strswap(&state->envp[j], &state->envp[j+1]);
+			free(a);
+			free(b);
+			printf("after: %s  %s\n", state->envp[j], state->envp[j+1]);
+			j++;
+		}
+		i--;
+>>>>>>> d0c4100a9a1f68d99e757a09b883160ad82f1c32
 	}
 	return (env);
 }
@@ -44,12 +67,18 @@ void	ft_print_env_export(t_state *state)
 	bubble_sort_envp(state_cpy);
 	while (state_cpy[i])
 	{
+<<<<<<< HEAD
 		j = ft_strlchr(state_cpy[i], '=');
 		path_name = ft_strndup(state_cpy[i], j);
 		path_value = ft_strndup(state_cpy[i]+j+1, ft_strlen(state_cpy[i]) - j);
 		// ptr = state_cpy[i];
 		// path_name = strsep(&ptr, "=");
 		// path_value = ptr;
+=======
+		j = ft_strchrspn(state->envp[i], '=');
+		path_name = ft_strndup(state->envp[i], j);
+		path_value = ft_strndup(state->envp[i]+j+1, ft_strlen(state->envp[i]) - j);
+>>>>>>> d0c4100a9a1f68d99e757a09b883160ad82f1c32
 		printf("declare -x %s=\"%s\"\n", path_name, path_value);
 		free(path_name);
 		free(path_value);
