@@ -6,11 +6,7 @@
 #    By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2022/02/10 19:09:54 by gpaeng           ###   ########.fr        #
-=======
-#    Updated: 2022/02/11 14:48:14 by hyeonsok         ###   ########.fr        #
->>>>>>> d0c4100a9a1f68d99e757a09b883160ad82f1c32
+#    Updated: 2022/02/11 20:14:57 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +21,7 @@ INCLUDES	=	-I include/ -I$(shell brew --prefix readline)/include/ \
 				-I lib/libft/include/
 
 LIBS		=	-L $(shell brew --prefix readline)/lib/ -lreadline \
-				-L lib/libft -lft
+				-L lib/libft -lfthx
 
 LIBFTHX		=	lib/libft/libfthx.a
 
@@ -34,6 +30,21 @@ OBJDIR := ./obj
 # ./src
 OBJS		=	$(addprefix $(OBJDIR)/, \
 				main.o)
+
+# ./src/mush
+OBJS		+=	$(addprefix $(OBJDIR)/, \
+				signal.o \
+				prompt.o \
+				parser.o \
+				parser_buffer.o \
+				parser_iofile.o \
+				parser_pipeline.o \
+				parser_token.o \
+				exec.o \
+				exec_expn.o \
+				exec_redir.o \
+				exec_state.o \
+				exec_builtin.o)
 
 # ./src/builtin
 OBJS		+=	$(addprefix $(OBJDIR)/, \
@@ -54,27 +65,11 @@ OBJS		+=	$(addprefix $(OBJDIR)/, \
 				ft_add_path.o			\
 				ft_strswap.o			\
 				bubble_sort_envp.o		\
-				ft_fatal.o)
+				mush_fatal.o)
 
-# ./src/mush
-OBJS		+=	$(addprefix $(OBJDIR)/, \
-				prompt.o \
-				parser.o \
-				parser_buffer.o \
-				parser_error.o \
-				parser_iofile.o \
-				parser_job.o \
-				parser_token.o \
-				exec.o \
-				exec_expn.o \
-				exec_pipe.o \
-				exec_redir.o \
-				exec_state.o \
-				exec_builtin.o)
-
-
-
-
+DEBUG		+=	$(addprefix lib/libft/src/hx/, \
+				array.o \
+				buffer.o)
 SRC_DIR = ./src
 SRC_UTILS_DIR = ./src/utils
 SRC_BUILTIN_DIR = ./src/builtin
@@ -83,26 +78,26 @@ SRC_MUSH_DIR = ./src/mush
 NAME = minishell
 
 .PHONY:		all
-all:		libft $(NAME)
+all:		libfthx $(NAME)
 
-libft:		$(LIBFT)
+libfthx:		$(LIBFTHX)
 
-$(LIBFT):
+$(LIBFTHX):
 			make -C lib/libft/
 
 $(NAME):	$(OBJDIR) $(OBJS)
-			$(CC) $(INCLUDES) $(OBJS) -o $(NAME) $(LIBS)
-
-$(OBJDIR)/%.o : $(SRC_DIR)/%.c
-			$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
-
-$(OBJDIR)/%.o : $(SRC_UTILS_DIR)/%.c
-			$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
+			$(CC) $(INCLUDES) $(OBJS) $(DEBUG) -o $(NAME) $(LIBS)
 
 $(OBJDIR)/%.o : $(SRC_MUSH_DIR)/%.c
 			$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
 
+$(OBJDIR)/%.o : $(SRC_DIR)/%.c
+			$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
+
 $(OBJDIR)/%.o : $(SRC_BUILTIN_DIR)/%.c
+			$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
+
+$(OBJDIR)/%.o : $(SRC_UTILS_DIR)/%.c
 			$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
 
 $(OBJS): | $(OBJDIR)

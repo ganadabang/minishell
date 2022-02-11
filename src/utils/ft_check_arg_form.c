@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_arg_form.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:17:49 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/10 20:09:28 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/11 17:30:03 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush.h"
 #include <stdio.h>
+#include "mush/builtin.h"
+#include "libfthx.h"
 
 int	ft_str_digit_check(char *str)
 {
@@ -62,7 +63,7 @@ int	ft_check_arg_form(char *args[])
 	i = 1;
 	while (args[i])
 	{
-		j = ft_strlchr(args[i], '=');
+		j = ft_strchrspn(args[i], '=');
 		if (ft_check_key_value_form(i, j, args))
 			return (0);
 		if (ft_check_key_form(i, j, args))

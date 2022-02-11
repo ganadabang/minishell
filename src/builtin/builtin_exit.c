@@ -6,13 +6,14 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:32:50 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/11 15:07:12 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 16:21:28 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "libfthx.h"
+#include "mush.h"
 
 int	ft_str_alpha_check(char *str)
 {

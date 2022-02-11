@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:28:29 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/05 17:14:34 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/11 16:27:44 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush.h"
+#include <unistd.h>
 #include <stdio.h>
+#include <string.h>
+#include "libfthx.h"
+#include "mush/parser.h"
+#include "mush.h"
 
 int	builtin_env(t_state *state, int argc, char *argv[])
 {

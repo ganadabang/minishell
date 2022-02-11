@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:56:00 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/11 15:59:15 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 21:56:18 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,12 @@ void	exec_io_redirect(t_state *state_ref, t_array *io_files_ref)
 		else if (file->io_type == IO_HERE || file->io_type == IO_IN)
 		{
 			fd = open(file->name, O_RDONLY, 0644);
-			//TODO: fatal error()
-			if (fd < 0 || dup2(fd, 0) < 0)
-				break ;
+			if (fd < 0)
+				mush_fatal("open");
+			if (dup2(fd, 0) < 0)
+				mush_fatal("dup2");
 			close(fd);
 		}
-		if (file->io_type == IO_HERE)
-			unlink("./.herdoc.tmp");
 		++i;
 	}
 	return ;

@@ -6,14 +6,14 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 01:58:30 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/11 16:02:05 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 18:35:02 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libfthx.h"
 #include "mush/parser.h"
 
-static size_t	get_operator_size(char *input)
+static size_t	get_opsize(char *input)
 {
 	if (ft_strchr("<|>", *input) == NULL)
 		return (0);
@@ -29,13 +29,9 @@ int	parser_buffer_write_quoted(t_parser *parser_ref, char quoting)
 	size_t	len;
 
 	pos_ref = &parser_ref->input[parser_ref->pos];
-	// TODO strchr -> ft_strchr
 	brk = ft_strchr(&pos_ref[1], quoting);
-	if (!brk)
-	{
-		parser_ref->syntax_error = 1;
+	if (brk == NULL)
 		return (-1);
-	}
 	len = brk - pos_ref + 1;
 	hx_buffer_putstr(&parser_ref->buffer, pos_ref, len);
 	parser_ref->pos += len;
@@ -44,15 +40,18 @@ int	parser_buffer_write_quoted(t_parser *parser_ref, char quoting)
 
 char	*parser_buffer_withdraw_operator(t_parser *parser_ref)
 {
+	char	*op;
 	char	*pos_ref;
 	size_t	len;
-	int		ret;
 
 	pos_ref = &parser_ref->input[parser_ref->pos];
-	len = get_operator_size(pos_ref);
+	len = get_opsize(pos_ref);
 	hx_buffer_putstr(&parser_ref->buffer, pos_ref, len);
 	parser_ref->pos += len;
-	return (hx_buffer_withdraw(&parser_ref->buffer));
+	op = hx_buffer_withdraw(&parser_ref->buffer);
+	if (op == NULL)
+		mush_fatal("malloc");
+	return (op);
 }
 
 void	parser_buffer_write_char(t_parser *parser_ref, char ch)
@@ -64,5 +63,10 @@ void	parser_buffer_write_char(t_parser *parser_ref, char ch)
 
 char	*parser_buffer_withdraw_word(t_parser *parser_ref)
 {
-	return (hx_buffer_withdraw(&parser_ref->buffer));
+	char	*word;
+
+	word = hx_buffer_withdraw(&parser_ref->buffer);
+	if (word == NULL)
+		mush_fatal("malloc");
+	return (word);
 }

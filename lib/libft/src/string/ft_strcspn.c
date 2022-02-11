@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchrspn.c                                       :+:      :+:    :+:   */
+/*   ft_strcspn.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/10 13:03:56 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/10 21:02:21 by hyeonsok         ###   ########.fr       */
+/*   Created: 2022/02/11 17:48:28 by hyeonsok          #+#    #+#             */
+/*   Updated: 2022/02/11 17:50:30 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libft/string.h"
 
-size_t	ft_strchrspn(const char *str, int c) 
+size_t	ft_strcspn(const char *s, const char *charset)
 {
-	size_t i;
+	char	*p;
 
-	i = 0;
-	while (str[i] != '\0')
+	p = (char *)s;
+	while (*p)
 	{
-		if (str[i] == (char)c)
+		if (ft_strchr(charset, *p))
 			break ;
-		++i;
+		p++;
 	}
-	return (i);
+	return (p - s);
 }

@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/11 16:04:13 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 17:24:46 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
-#include "mush.h"
+#include "mush/builtin.h"
 #include "libfthx.h"
+
+//To be removed
+#include <string.h>
 
 void	ft_update_env(t_state *state, char *path_n, char *path_v)
 {
@@ -30,7 +33,7 @@ void	ft_update_env(t_state *state, char *path_n, char *path_v)
 		j = ft_strchrspn(state->envp[i], '=');
 		if (ft_strncmp(state->envp[i], path_n, j) == 0)
 		{
-			path_name = ft_strndup(state->envp[i], j+1);
+			path_name = strndup(state->envp[i], j+1);
 			path = ft_strjoin(path_name, path_v);
 			state->envp[i] = path;
 		}

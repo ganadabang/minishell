@@ -6,11 +6,7 @@
 #    By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/26 11:13:05 by hyeonsok          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2022/02/10 16:13:30 by gpaeng           ###   ########.fr        #
-=======
-#    Updated: 2022/02/11 14:37:32 by hyeonsok         ###   ########.fr        #
->>>>>>> d0c4100a9a1f68d99e757a09b883160ad82f1c32
+#    Updated: 2022/02/11 17:54:44 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,65 +21,75 @@ RM = rm -f
 
 LIBFT = libft.a
 
-SRCS	=	$(addprefix src/is/,		ft_isalnum.c \
-										ft_isalpha.c \
-										ft_isascii.c \
-										ft_isblank.c \
-										ft_iscntrl.c \
-										ft_isdigit.c \
-										ft_isgraph.c \
-										ft_islower.c \
-										ft_isprint.c \
-										ft_ispunct.c \
-										ft_issign.c \
-										ft_isspace.c \
-										ft_isupper.c \
-										ft_isxdigit.c \
-										ft_tolower.c \
-										ft_toupper.c)
+SRCS	=	$(addprefix src/is/, \
+ft_isalnum.c \
+ft_isalpha.c \
+ft_isascii.c \
+ft_isblank.c \
+ft_iscntrl.c \
+ft_isdigit.c \
+ft_isgraph.c \
+ft_islower.c \
+ft_isprint.c \
+ft_ispunct.c \
+ft_issign.c \
+ft_isspace.c \
+ft_isupper.c \
+ft_isxdigit.c \
+ft_tolower.c \
+ft_toupper.c)
 
-SRCS	+=	$(addprefix src/io/,		ft_dputchar.c \
-										ft_dputendl.c \
-										ft_dputnbr.c \
-										ft_dputs.c \
-										ft_putchar.c \
-										ft_putendl.c \
-										ft_putnbr.c \
-										ft_puts.c)
+SRCS	+=	$(addprefix src/io/, \
+ft_dputchar.c \
+ft_dputendl.c \
+ft_dputnbr.c \
+ft_dputs.c \
+ft_putchar.c \
+ft_putendl.c \
+ft_putnbr.c \
+ft_puts.c)
 
-SRCS	+=	$(addprefix src/string/,	ft_bzero.c \
-										ft_memccpy.c \
-										ft_memchr.c \
-										ft_memcmp.c \
-										ft_memcpy.c \
-										ft_memmove.c \
-										ft_memset.c \
-										ft_strchr.c \
-										ft_strchrspn.c\
-										ft_strdup.c \
-										ft_strndup.c\
-										ft_strjoin.c\
-										ft_strlcat.c \
-										ft_strlcpy.c \
-										ft_strlen.c \
-										ft_strncmp.c \
-										ft_strcmp.c	\
-										ft_strnstr.c \
-										ft_strrchr.c)
+SRCS	+=	$(addprefix src/string/, \
+ft_bzero.c \
+ft_memccpy.c \
+ft_memchr.c \
+ft_memcmp.c \
+ft_memcpy.c \
+ft_memmove.c \
+ft_memset.c \
+ft_strchr.c \
+ft_strchrspn.c\
+ft_strdup.c \
+ft_strndup.c\
+ft_strjoin.c\
+ft_strlcat.c \
+ft_strlcpy.c \
+ft_strlen.c \
+ft_strncmp.c \
+ft_strcmp.c	\
+ft_strnstr.c \
+ft_strrchr.c \
+ft_strspn.c \
+ft_strcspn.c \
+ft_strpbrk.c \
+ft_strtok.c)
 
-SRCS	+=	$(addprefix src/ft/,		ft_itoa.c \
-										ft_split.c \
-										ft_strjoin.c \
-										ft_strmapi.c \
-										ft_strtrim.c \
-										ft_substr.c)
+SRCS	+=	$(addprefix src/ft/, \
+ft_itoa.c \
+ft_split.c \
+ft_strjoin.c \
+ft_strmapi.c \
+ft_strtrim.c \
+ft_substr.c)
 
-SRCS	+=	$(addprefix src/,			ft_atoi.c \
-										ft_atoll.c \
-										ft_calloc.c)
+SRCS	+=	$(addprefix src/, \
+ft_atoi.c \
+ft_atoll.c \
+ft_calloc.c)
 
-SRCS	+=	$(addprefix src/hx/,		array.c \
-										buffer.c)
+SRCS	+=	$(addprefix src/hx/, \
+array.c \
+buffer.c)
 
 OBJS = $(SRCS:.c=.o)
 

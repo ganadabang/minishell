@@ -6,14 +6,16 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:13 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/11 15:54:44 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 16:41:41 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include "libfthx.h"
 #include "mush/parser.h"
+#include "mush/builtin.h"
 
 // To be removed
 #include <string.h>
@@ -21,7 +23,7 @@ char	*exec_expn_cmd(t_state *state_ref, char *name)
 {
 	char	*slash_name;
 	char	*path_cmd;
-	char	*path_abs;
+	char	*path;
 	char	**pathv;
 	size_t	i;
 

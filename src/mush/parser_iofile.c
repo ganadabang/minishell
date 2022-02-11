@@ -6,17 +6,19 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 02:02:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/11 15:21:52 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 21:51:30 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush.h"
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <stdio.h>
+#include <readline/readline.h>
+#include "libfthx.h"
+#include "mush.h"
 
-// TODO ft_memcmp -> ft_ft_memcmp
-static int	get_io_type(char *str)
+static int	get_type(char *str)
 {
 	if (ft_memcmp("<<", str, 3) == 0)
 		return (IO_HERE);
@@ -31,7 +33,7 @@ static int	get_io_type(char *str)
 
 static int	get_oflag(int io_type)
 {
-	if (io_type == IO_HERE || io_type == IO_IN)
+	if (io_type & IO_HERE || io_type & IO_IN)
 		return (O_RDONLY);
 	if (io_type == IO_OUT)
 		return (O_CREAT | O_TRUNC | O_WRONLY);
@@ -53,7 +55,6 @@ static char	*remove_quoting(char *here_end)
 		++here_end;
 	}
 	ret = hx_buffer_withdraw(&buffer);
-	hx_buffer_cleanup(&buffer);
 	return (ret);
 }
 
@@ -65,16 +66,22 @@ t_file	*parser_create_io_file(char *redir, char *str)
 	size_t	here_len;
 	int		fd;
 
-	file = (t_file *)calloc(1, sizeof(t_file));
-	file->io_type = get_io_type(redir);
+	file = (t_file *)ft_calloc(1, sizeof(t_file));
+	if (file == NULL)
+		mush_fatal("malloc");
+	file->io_type = get_type(redir);
 	file->oflag = get_oflag(file->io_type);
 	file->name = str;
 	if (file->io_type == IO_HERE)
 	{
 		here_end = remove_quoting(str);
+		free(str);
 		here_len = ft_strlen(here_end);
 		file->name = "./.here_tmp";
 		fd = open(file->name, O_CREAT | O_TRUNC | O_WRONLY, 0644);
+		free(here_end);
+		if (fd < 0)
+			mush_fatal("open");
 		while (1)
 		{
 			input = readline(">");

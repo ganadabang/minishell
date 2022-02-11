@@ -6,16 +6,21 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/11 16:02:44 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 17:12:38 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <signal.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <sys/errno.h>
 #include "libfthx.h"
 #include "mush/parser.h"
 #include "mush/exec.h"
+#include "mush/builtin.h"
+#include "mush/signal.h"
+#include "mush.h"
 
 int mush_exec_builtin(t_state *state_ref)
 {
@@ -81,13 +86,7 @@ void	exec_check_cmd(char *name, char *argv[])
 
 void	mush_exec_simple_command(t_state *state_ref, t_proc *proc)
 {
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	signal(SIGTSTP, SIG_DFL);
-	signal(SIGTTIN, SIG_DFL);
-	signal(SIGTTOU, SIG_DFL);
-	signal(SIGCHLD, SIG_DFL);
-	signal(SIGTERM, SIG_DFL);
+	mush_signal_restored();
 	exec_pipe_connect(proc);
 	exec_io_redirect(state_ref, &proc->io_files);
 	exec_expn_argv(state_ref, &proc->argv);

@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 13:05:46 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/10 16:14:13 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/11 16:43:44 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "libft/string.h"
 
 char *ft_strndup(char *str, size_t idx)

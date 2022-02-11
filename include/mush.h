@@ -3,21 +3,77 @@
 /*                                                        :::      ::::::::   */
 /*   mush.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 17:25:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/04 23:57:30 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 18:55:23 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MUSH_H
 # define MUSH_H
 
-#include "mush/parser.h"
-#include "mush/builtin.h"
-#include "mush/exec.h"
-#include "mush/prompt.h"
+#include <termios.h>
+#include "libhx/array.h"
+#include "libhx/buffer.h"
+
+enum e_mush_token {
+	TOKEN_WORD,
+	TOKEN_PIPE,
+	TOKEN_REDIR,
+	TOKEN_NEWLINE
+};
+
+enum	e_iotype {
+	IO_IN,
+	IO_OUT,
+	IO_APPEND,
+	IO_HERE
+};
+
+typedef struct	s_word {
+	char	*str;
+	int		word_type;
+}	t_word;
+
+typedef struct	s_token {
+	char	*str;
+	int		type;
+}	t_token;
+
+typedef struct s_file {
+	char	*name;
+	int		io_type;
+	int		oflag;
+}	t_file;
+
+typedef struct s_job {
+	t_array	pipeline;
+	int		status;
+}	t_job;
+
+typedef struct s_state {
+	struct termios	term;
+	t_job			job;
+	char			**envp;
+	char			*pwd;
+	char			*old_pwd;
+	int				exit;
+	int				last_status;
+}	t_state;
+
+typedef struct s_proc {
+	char	*name;
+	t_array	argv;
+	t_array	io_files;
+	pid_t	pid;
+	int		status;
+	int		(*fn_builtin)(t_state *, int, char *[]);
+	int		stdin;
+	int		stdout;
+}	t_proc;
 
 void	debug_pipeline(t_array *pipeline);
+void	mush_fatal(const char *str);
 
 #endif

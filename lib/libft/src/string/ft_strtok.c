@@ -1,27 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchrspn.c                                       :+:      :+:    :+:   */
+/*   ft_strtok.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/10 13:03:56 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/10 21:02:21 by hyeonsok         ###   ########.fr       */
+/*   Created: 2022/02/11 17:48:47 by hyeonsok          #+#    #+#             */
+/*   Updated: 2022/02/11 17:51:06 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libft/string.h"
 
-size_t	ft_strchrspn(const char *str, int c) 
+char	*ft_strtok(const char *str, const char *sep)
 {
-	size_t i;
+	static char	*save;
+	char		*tok;
+	char		*brk;
 
-	i = 0;
-	while (str[i] != '\0')
+	if (str)
+		save = (char *)str;
+	if (!save)
+		return (NULL);
+	tok = save + ft_strspn(save, sep);
+	if (!*tok)
 	{
-		if (str[i] == (char)c)
-			break ;
-		++i;
+		save = NULL;
+		return (NULL);
 	}
-	return (i);
+	brk = ft_strpbrk(tok, sep);
+	if (brk)
+	{
+		*brk = '\0';
+		save = ++brk;
+	}
+	else
+		save = NULL;
+	return (tok);
 }

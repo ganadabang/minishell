@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 20:54:27 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/11 15:52:43 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 16:41:47 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	builtin_search(t_proc *proc)
 	i = 0;
 	while (i < 7)
 	{
-		if (!ft_memcmp(builtins[i].name, name, cmp_len))
+		if (!ft_memcmp(g_builtins[i].name, name, cmp_len))
 		{
 			*fn_ref = g_builtins[i].builtin;
 			return (1);

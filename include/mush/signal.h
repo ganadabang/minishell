@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strchrspn.c                                       :+:      :+:    :+:   */
+/*   signal.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/10 13:03:56 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/10 21:02:21 by hyeonsok         ###   ########.fr       */
+/*   Created: 2022/01/30 03:01:39 by hyeonsok          #+#    #+#             */
+/*   Updated: 2022/02/11 17:14:29 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#ifndef SIGNAL_H
+# define SIGNAL_H
 
-size_t	ft_strchrspn(const char *str, int c) 
-{
-	size_t i;
+#include <signal.h>
 
-	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == (char)c)
-			break ;
-		++i;
-	}
-	return (i);
-}
+void	mush_signal_set(void);
+void	mush_signal_restored(void);
+
+#endif /* SIGNAL_H */

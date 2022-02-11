@@ -6,12 +6,13 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:34:22 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/11 16:03:23 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 16:19:57 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "libfthx.h"
+#include "mush/parser.h"
 
 static int	ft_check_option(int str_length, char *str)
 {

@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 16:15:48 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/11 14:47:17 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/11 20:51:40 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	hx_buffer_secure(t_buf *buf, size_t size)
 	return (1);
 }
 
-int	hx_buffer_putstr(t_buf *buf, char *data, size_t size)
+int	hx_buffer_putstr(t_buf *buf, const char *data, size_t size)
 {
 	if (!hx_buffer_secure(buf, size))
 		return (0);
@@ -57,9 +57,8 @@ char	*hx_buffer_withdraw(t_buf *buf)
 {
 	char	*data;
 
-	data = strndup((char *)buf->data, buf->len);
-	memset(buf->data, 0, buf->cap);
-	buf->len = 0;
+	data = buf->data;
+	ft_memset(buf, 0, sizeof(t_buf));
 	return (data);
 }
 

@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   bubble_sort_envp.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 16:52:33 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/10 20:18:16 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/11 17:30:38 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush.h"
+#include "libft.h"
+#include "mush/builtin.h"
+
+//To be removed
+#include <string.h>
 
 int	bubble_sort_envp(char **str)
 {
