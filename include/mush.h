@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 17:25:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/11 18:55:23 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/12 15:56:50 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_file {
 	char	*name;
 	int		io_type;
 	int		oflag;
+	int		fd;
 }	t_file;
 
 typedef struct s_job {

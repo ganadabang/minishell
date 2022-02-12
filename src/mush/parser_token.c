@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 01:54:46 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/11 21:27:48 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/12 16:43:48 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,8 @@ static int	parser_get_next_tokenstr(t_parser *parser_ref, char **tokstr_ref)
 			if (parser_buffer_write_quoted(parser_ref, ch) < 0)
 			{
 				hx_buffer_cleanup(&parser_ref->buffer);
-				if (!hx_buffer_putstr(&parser_ref->buffer, \
-					"mush: syntax error unclosed quotation mark\n" ,45))
-					mush_fatal("malloc");
+				hx_buffer_putstr(&parser_ref->buffer, \
+					"mush: syntax error unclosed quotation mark\n" ,45);
 				return (-1);
 			}
 		}

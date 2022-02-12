@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:47:55 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/11 17:22:37 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/15 19:21:26 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,105 @@
 #include "mush/parser.h"
 #include "mush/exec.h"
 
+void	debug_pipeline(t_array *pipeline)
+{
+	size_t		i;
+	size_t		j;
+	char		**argv;
+	size_t		maxlen;
+	t_array		*io_files;
+	size_t		len;
+	
+	printf("\npipeline->len: %zu\n", pipeline->len);
+	i = 0;
+	len = pipeline->len;
+	while (len-- > 0)
+	{
+		printf("\nprocess:[%zu]\n", i);
+		
+		argv = (char **)((t_proc *)pipeline->data[i])->argv.data;
+		maxlen = ((t_proc *)pipeline->data[i])->argv.len;
+		j = 0;
+		while (j < maxlen)
+		{
+			printf("argv[%zu]: %s\n", j, (char *)argv[j]);
+			++j;
+		}
+		io_files = &((t_proc *)pipeline->data[i])->io_files;
+		maxlen = io_files->len;
+		j = 0;
+		while (j < maxlen)
+		{
+			printf("io_type: %d\tfilename: %s\n", \
+				((t_file *)io_files->data[j])->io_type, \
+				((t_file *)io_files->data[j])->name);
+			++j;
+		}
+		++i;
+	}
+	return ;
+}
+
 static void	mush_init(t_state *state_ref, char **envp);
+
+void	cleanup_argv(t_array *exec_argv)
+{
+	char	**data;
+	size_t	len;
+	size_t	i;
+
+	data = (char **)exec_argv->data;
+	len = exec_argv->len;
+	i = 0;
+	while (i < len)
+		free(data[i++]);
+	free(data);
+	data = NULL;
+}
+
+void	cleanup_io_files(t_array *io_files)
+{
+	t_file	**data;
+	size_t	len;
+	size_t	i;
+
+	data = (t_file **)io_files->data;
+	if (data == NULL)
+		return ;
+	len = io_files->len;
+	i = 0;
+	while (i < len)
+	{
+		if (data[i]->io_type == IO_HERE)
+		{
+			unlink("./here_tmp");
+			data[i]->name = NULL;
+		}
+		free(data[i]->name);
+		free(data[i++]);
+	}
+	free(data);
+	data = NULL;
+}
+
+void	mush_cleanup_pipeline(t_array *pipeline)
+{
+	t_proc	**procs;
+	size_t	len;
+	size_t	i;
+
+	procs = (t_proc **)pipeline->data;
+	len = pipeline->len;
+	i = 0;
+	while (i < len)
+	{
+		free(procs[i]->name);
+		cleanup_argv(&procs[i]->argv);
+		cleanup_io_files(&procs[i]->io_files);
+		free(procs[i++]);
+	}
+	hx_array_cleanup(pipeline);
+}
 
 int	main(int argc, char *argv[], char *envp[])
 {
@@ -32,8 +130,10 @@ int	main(int argc, char *argv[], char *envp[])
 		mush_prompt_interactive(&state.term);
 		if (mush_parser_readline(&state) < 0)
 			continue ;
-		mush_prompt_executive(&state.term);
-		mush_execute(&state);
+		// mush_prompt_executive(&state.term);
+		// mush_execute(&state);
+		debug_pipeline(&state.job.pipeline);
+		mush_cleanup_pipeline(&state.job.pipeline);
 	}
 	mush_prompt_restored(&state.term);
 	printf("exit\n");

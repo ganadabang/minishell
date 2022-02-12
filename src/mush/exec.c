@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/11 17:12:38 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/12 21:47:50 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,13 @@ void	exec_pipe_connect(t_proc *proc)
 	}
 }
 
+#include <stdio.h>
+
 void	exec_check_cmd(char *name, char *argv[])
 {
+	access("", X_OK);
+	perror("");
+	exit(1);
 	if (!name)
 	{
 		ft_dputs(2, argv[0]);
@@ -81,6 +86,7 @@ void	exec_check_cmd(char *name, char *argv[])
 		perror(argv[0]);
 		exit(errno);
 	}
+	ft_putendl(name);
 	return ;
 }
 
@@ -90,11 +96,11 @@ void	mush_exec_simple_command(t_state *state_ref, t_proc *proc)
 	exec_pipe_connect(proc);
 	exec_io_redirect(state_ref, &proc->io_files);
 	exec_expn_argv(state_ref, &proc->argv);
-	proc->name = (char *)proc->argv.data[0];
+	proc->argv.data[0] = exec_expn_cmd(state_ref, proc->argv.data[0]);
+	proc->name = proc->argv.data[0];
+	exec_check_cmd(proc->name, (char **)proc->argv.data);
 	if (builtin_search(proc) == 1)
 		exit(proc->fn_builtin(state_ref, proc->argv.len, (char **)proc->argv.data));
-	proc->name = exec_expn_cmd(state_ref, proc->name);
-	exec_check_cmd(proc->name, (char **)proc->argv.data);
 	execve(proc->name, (char **)proc->argv.data, state_ref->envp);
 	exit(errno);
 }
@@ -110,7 +116,7 @@ int	mush_execute(t_state *state)
 	i = 0;
 	len = state->job.pipeline.len;
 	procs = (t_proc **)state->job.pipeline.data;
-	procs[0]->name = (char *)procs[i]->argv.data[0];
+	procs[i]->name = (char *)(procs[i]->argv.data[0]);
 	if (len == 1 && builtin_search(procs[i]))
 		return (mush_exec_builtin(state));
 	while (i < len)

@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 17:33:52 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/11 19:12:36 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/12 16:43:29 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,10 @@ typedef struct s_parser
 	size_t	pos;
 }	t_parser;
 
-struct s_quoted_word {
-	int		word_type;
-	char	*str;
-};
-
 /** src/mush/parser.c */
 int		mush_parser_readline(t_state *state);
 int		mush_parser_tokenize(t_parser *parser_ref);
-int		mush_parser_init_pipeline(t_array *pipeline, t_parser *parser);
+void	mush_parser_init_pipeline(t_array *pipeline, t_parser *parser);
 
 /** src/mush/parser_buffer.c */
 int		parser_buffer_write_quoted(t_parser *parser_ref, char quoting);
@@ -42,6 +37,6 @@ void	parser_buffer_write_char(t_parser *parser_ref, char ch);
 char	*parser_buffer_withdraw_word(t_parser *parser_ref);
 
 /** src/mush/parser_iofile.c */
-t_file	*parser_create_io_file(char *redir, char *str);
+t_file	*parser_create_io_file(char **redir, char *str);
 
 #endif

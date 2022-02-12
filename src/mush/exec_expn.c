@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:13 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/11 16:41:41 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/12 21:41:41 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "mush/parser.h"
 #include "mush/builtin.h"
 
-// To be removed
+// tok be removed
 #include <string.h>
 char	*exec_expn_cmd(t_state *state_ref, char *name)
 {
@@ -29,22 +29,24 @@ char	*exec_expn_cmd(t_state *state_ref, char *name)
 
 	if (ft_strchr(name, '/') != NULL)
 		return (name);
-	// TODO: getenv => mush_getenv
+	// tokDO: getenv => mush_getenv
 	path = getenv("PATH");
 	if (path == NULL)
-	{
-		free(name);
-		return (NULL);
-	}
+		return (name);
+	dprintf(2, "%p: `%s'\n", name, name);
 	slash_name = ft_strjoin("/", name);
 	free(name);
 	if (slash_name == NULL)
-		return (NULL);
+		mush_fatal("malloc");
 	pathv = ft_split(path, ":");
+	if (pathv == NULL)
+		mush_fatal("malloc");
+	path_cmd = NULL;
 	i = 0;
 	while (pathv[i] != NULL)
 	{
 		path_cmd = ft_strjoin(pathv[i], slash_name);
+		free(pathv[i]);
 		if (access(path_cmd, F_OK) == 0)
 			break ;
 		free(path_cmd);
@@ -52,6 +54,8 @@ char	*exec_expn_cmd(t_state *state_ref, char *name)
 		++i;
 	}
 	free(slash_name);
+	while (pathv[i] != NULL)
+		free(pathv[i++]);
 	ft_free_arr(pathv);
 	return (path_cmd);
 }
@@ -63,7 +67,7 @@ size_t	exec_expn_buffer_putenv(t_state *state_ref, t_buf *buffer, char *word)
 	size_t	key_len;
 	size_t	value_len;
 
-	key_len = strcspn(word, "'\"$ \t\n");
+	key_len = ft_strcspn(word, "'\"$ \t\n");
 	key = strndup(word, key_len);
 	// value = getvar(state_ref, key);
 	// if (value == NULL)
@@ -106,23 +110,24 @@ char	*exec_expn_word(t_state *state_ref, t_buf *buffer, char *word)
 		else
 			hx_buffer_putchar(buffer, word[i++]);
 	}
-	free(word);
 	return (hx_buffer_withdraw(buffer));
 }
 
 void	exec_expn_argv(t_state *state_ref, t_array *exec_argv)
 {
-	t_buf	buffer = {};
-	char	**data;
-	size_t	len;
+	t_buf	buffer;
+	char	**argv;
+	char	*tokfree;
 	size_t	i;
 
-	data = (char **)exec_argv->data;
-	len = exec_argv->len;
+	ft_memset(&buffer, 0, sizeof(t_buf));
+	argv = (char **)exec_argv->data;
 	i = 0;
-	while (i < len)
+	while (argv[i] != NULL)
 	{
-		data[i] = exec_expn_word(state_ref, &buffer, data[i]);
+		tokfree = argv[i];
+		argv[i] = exec_expn_word(state_ref, &buffer, argv[i]);
+		free(tokfree);
 		++i;
 	}
 	hx_buffer_cleanup(&buffer);

@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 02:02:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/11 21:51:30 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/15 17:35:45 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,78 +18,95 @@
 #include "libfthx.h"
 #include "mush.h"
 
-static int	get_type(char *str)
+static void	infile_init(t_file *file, char *redir_op)
 {
-	if (ft_memcmp("<<", str, 3) == 0)
-		return (IO_HERE);
-	if (ft_memcmp(">>", str, 3) == 0)
-		return (IO_APPEND);
-	if (ft_memcmp("<", str, 2) == 0)
-		return (IO_IN);
-	if (ft_memcmp(">", str, 2) == 0)
-		return (IO_OUT);
-	return (-1);
+	file->fd = STDIN_FILENO;
+	file->oflag = O_RDONLY;
+	printf("ret: %d\n", ft_memcmp("<", redir_op, 2));
+	if (ft_memcmp("<", redir_op, 2) == 0)
+	{
+		file->io_type = IO_IN;
+		return ;
+	}
+	file->io_type = IO_HERE;
+	return ;
+}
+static void	outfile_init(t_file *file, char *redir_op)
+{
+	file->fd = STDOUT_FILENO;
+	if (ft_memcmp(">", redir_op, 2) == 0)
+	{
+		file->io_type = IO_OUT;
+		file->oflag = O_CREAT | O_TRUNC | O_WRONLY;
+		return ;
+	}
+	file->io_type = IO_APPEND;
+	file->oflag = O_CREAT | O_APPEND | O_WRONLY;
+	return ;
 }
 
-static int	get_oflag(int io_type)
-{
-	if (io_type & IO_HERE || io_type & IO_IN)
-		return (O_RDONLY);
-	if (io_type == IO_OUT)
-		return (O_CREAT | O_TRUNC | O_WRONLY);
-	if (io_type == IO_APPEND)
-		return (O_CREAT | O_APPEND | O_WRONLY);
-	return (-1);
-}
-
-static char	*remove_quoting(char *here_end)
+static char	*here_remove_quoting(char *word)
 {
 	t_buf	buffer;
-	char	*ret;
+	char	*here_end;
+	size_t	i;
 
+	i = 0;
 	ft_memset(&buffer, 0, sizeof(buffer));
-	while (here_end)
+	while (word[i] != '\0')
 	{
-		if (*here_end != '\'' && *here_end != '"')
-			hx_buffer_putchar(&buffer, *here_end);
-		++here_end;
+		if (word[i] != '\'' && word[i] != '"')
+			hx_buffer_putchar(&buffer, word[i]);
+		++i;
 	}
-	ret = hx_buffer_withdraw(&buffer);
-	return (ret);
+	here_end = hx_buffer_withdraw(&buffer);
+	return (here_end);
 }
 
-t_file	*parser_create_io_file(char *redir, char *str)
+static void	heredoc_init(t_file *file)
 {
-	t_file	*file;
-	char	*here_end;
 	char	*input;
+	char	*here_end;
 	size_t	here_len;
 	int		fd;
 
+	here_end = here_remove_quoting(file->name);
+	free(file->name);
+	file->name = "./.here_tmp";
+	here_len = 1 + ft_strlen(here_end);
+	fd = open("./.here_tmp", O_CREAT | O_TRUNC | O_WRONLY, 0644);
+	if (fd < 0)
+		mush_fatal("open");
+	while (1)
+	{
+		input = readline("heredoc> ");
+		if (ft_memcmp(here_end, input, here_len) == 0)
+			break ;
+		ft_dputendl(fd, input);
+		free(input);
+	}
+	free(input);
+	close(fd);
+	return ;
+}
+
+t_file	*parser_create_io_file(char **redir_ref, char *str)
+{
+	t_file *file;
+	char	*redir_op;
+
+	redir_op = *redir_ref;
 	file = (t_file *)ft_calloc(1, sizeof(t_file));
 	if (file == NULL)
 		mush_fatal("malloc");
-	file->io_type = get_type(redir);
-	file->oflag = get_oflag(file->io_type);
+	if ('<' == *redir_op)
+		infile_init(file, redir_op);
+	else if ('>' == *redir_op)
+		outfile_init(file, redir_op);
+	free(redir_op);
+	*redir_ref = NULL;
 	file->name = str;
 	if (file->io_type == IO_HERE)
-	{
-		here_end = remove_quoting(str);
-		free(str);
-		here_len = ft_strlen(here_end);
-		file->name = "./.here_tmp";
-		fd = open(file->name, O_CREAT | O_TRUNC | O_WRONLY, 0644);
-		free(here_end);
-		if (fd < 0)
-			mush_fatal("open");
-		while (1)
-		{
-			input = readline(">");
-			if (ft_memcmp(here_end, input, here_len) == 0)
-				break ;
-			ft_dputendl(fd, input);
-		}
-		close(fd);
-	}
+		heredoc_init(file);
 	return (file);
 }

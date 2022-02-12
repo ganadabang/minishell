@@ -6,20 +6,19 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 21:16:00 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/11 14:46:58 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/15 17:50:50 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <string.h>
-#include <stddef.h>
 #include "libhx/array.h"
 
 int	hx_array_secure(t_array *array, size_t new_cap)
 {
 	if (array->cap >= new_cap)
 		return (1);
-	array->data = (void **)realloc(array->data, new_cap *sizeof(void *));
+	array->data = (void **)realloc(array->data, new_cap * sizeof(void *));
 	if (!array->data)
 		return (0);
 	array->cap = new_cap;
