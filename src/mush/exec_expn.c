@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:13 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/12 21:41:41 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/15 19:58:55 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,16 @@ char	*exec_expn_cmd(t_state *state_ref, char *name)
 	while (pathv[i] != NULL)
 	{
 		path_cmd = ft_strjoin(pathv[i], slash_name);
-		free(pathv[i]);
+		free(pathv[i++]);
 		if (access(path_cmd, F_OK) == 0)
 			break ;
 		free(path_cmd);
 		path_cmd = NULL;
-		++i;
 	}
 	free(slash_name);
 	while (pathv[i] != NULL)
 		free(pathv[i++]);
-	ft_free_arr(pathv);
+	free(pathv);
 	return (path_cmd);
 }
 
@@ -118,12 +117,14 @@ void	exec_expn_argv(t_state *state_ref, t_array *exec_argv)
 	t_buf	buffer;
 	char	**argv;
 	char	*tokfree;
+	size_t	len;
 	size_t	i;
 
 	ft_memset(&buffer, 0, sizeof(t_buf));
 	argv = (char **)exec_argv->data;
 	i = 0;
-	while (argv[i] != NULL)
+	len = exec_argv->len;
+	while (i < len)
 	{
 		tokfree = argv[i];
 		argv[i] = exec_expn_word(state_ref, &buffer, argv[i]);

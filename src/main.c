@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:47:55 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/15 19:21:26 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/15 20:05:11 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #include "mush/prompt.h"
 #include "mush/parser.h"
 #include "mush/exec.h"
+
+static void	mush_init(t_state *state_ref, char **envp);
 
 void	debug_pipeline(t_array *pipeline)
 {
@@ -58,67 +60,6 @@ void	debug_pipeline(t_array *pipeline)
 	return ;
 }
 
-static void	mush_init(t_state *state_ref, char **envp);
-
-void	cleanup_argv(t_array *exec_argv)
-{
-	char	**data;
-	size_t	len;
-	size_t	i;
-
-	data = (char **)exec_argv->data;
-	len = exec_argv->len;
-	i = 0;
-	while (i < len)
-		free(data[i++]);
-	free(data);
-	data = NULL;
-}
-
-void	cleanup_io_files(t_array *io_files)
-{
-	t_file	**data;
-	size_t	len;
-	size_t	i;
-
-	data = (t_file **)io_files->data;
-	if (data == NULL)
-		return ;
-	len = io_files->len;
-	i = 0;
-	while (i < len)
-	{
-		if (data[i]->io_type == IO_HERE)
-		{
-			unlink("./here_tmp");
-			data[i]->name = NULL;
-		}
-		free(data[i]->name);
-		free(data[i++]);
-	}
-	free(data);
-	data = NULL;
-}
-
-void	mush_cleanup_pipeline(t_array *pipeline)
-{
-	t_proc	**procs;
-	size_t	len;
-	size_t	i;
-
-	procs = (t_proc **)pipeline->data;
-	len = pipeline->len;
-	i = 0;
-	while (i < len)
-	{
-		free(procs[i]->name);
-		cleanup_argv(&procs[i]->argv);
-		cleanup_io_files(&procs[i]->io_files);
-		free(procs[i++]);
-	}
-	hx_array_cleanup(pipeline);
-}
-
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_state	state;
@@ -130,9 +71,8 @@ int	main(int argc, char *argv[], char *envp[])
 		mush_prompt_interactive(&state.term);
 		if (mush_parser_readline(&state) < 0)
 			continue ;
-		// mush_prompt_executive(&state.term);
-		// mush_execute(&state);
-		debug_pipeline(&state.job.pipeline);
+		mush_prompt_executive(&state.term);
+		mush_execute(&state);
 		mush_cleanup_pipeline(&state.job.pipeline);
 	}
 	mush_prompt_restored(&state.term);

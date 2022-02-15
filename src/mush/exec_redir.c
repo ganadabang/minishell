@@ -6,13 +6,14 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:56:00 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/12 17:02:10 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/15 20:10:05 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdlib.h>
+#include "libft.h"
 #include "mush/parser.h"
 #include "mush/exec.h"
 
@@ -25,6 +26,7 @@ void	exec_io_redirect(t_state *state_ref, t_array *io_files_ref)
 	int		fd;
 	size_t	i;
 	
+	ft_memset(&buffer, 0, sizeof(t_buf));
 	files = (t_file **)io_files_ref->data;
 	if (files == NULL)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:56:20 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/11 16:55:37 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/15 19:29:42 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	exec_expn_filename(t_state *state_ref, t_array *filenames_ref);
 void	exec_expn_argv(t_state *state_ref, t_array *args_ref);
 
 char	*exec_expn_cmd(t_state *state_ref, char *name);
+void	mush_cleanup_pipeline(t_array *pipeline);
 void	mush_signal_retored();
 
 #endif /* EXEC_H */
