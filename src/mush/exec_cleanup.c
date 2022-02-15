@@ -6,14 +6,14 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 19:24:30 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/15 20:02:01 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/15 20:55:42 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
 #include "libfthx.h"
-#include "mush/exec.h"
+#include "mush.h"
 
 static void	cleanup_argv(t_array *exec_argv)
 {
@@ -66,7 +66,6 @@ void	mush_cleanup_pipeline(t_array *pipeline)
 	i = 0;
 	while (i < len)
 	{
-		// free(procs[i]->name);
 		cleanup_argv(&procs[i]->argv);
 		cleanup_io_files(&procs[i]->io_files);
 		free(procs[i++]);

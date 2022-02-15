@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_iofile.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 02:02:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/15 17:35:45 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/16 00:54:42 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static void	heredoc_init(t_file *file)
 
 t_file	*parser_create_io_file(char **redir_ref, char *str)
 {
-	t_file *file;
+	t_file	*file;
 	char	*redir_op;
 
 	redir_op = *redir_ref;

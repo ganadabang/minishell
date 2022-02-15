@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 02:54:41 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/15 16:38:39 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/16 00:53:55 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <signal.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <signal.h>
 #include <readline/readline.h>
 
 static void	sig_handler_int(int signum)

@@ -6,11 +6,10 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 20:54:27 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/11 16:41:47 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/15 20:56:05 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mush/parser.h"
 #include "mush/builtin.h"
 #include "libfthx.h"
 

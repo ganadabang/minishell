@@ -6,14 +6,14 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:32:39 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/11 16:31:12 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/15 20:59:43 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "mush/parser.h"
+#include "mush.h"
 
 int	builtin_pwd(t_state *state, int argc, char *argv[])
 {

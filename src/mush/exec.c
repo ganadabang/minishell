@@ -6,21 +6,18 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/15 19:56:35 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/15 20:52:27 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <signal.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/errno.h>
 #include "libfthx.h"
-#include "mush/parser.h"
 #include "mush/exec.h"
 #include "mush/builtin.h"
 #include "mush/signal.h"
-#include "mush.h"
 
 int mush_exec_builtin(t_state *state_ref)
 {
@@ -66,8 +63,6 @@ void	exec_pipe_connect(t_proc *proc)
 		close(proc->stdout);
 	}
 }
-
-#include <stdio.h>
 
 void	exec_check_cmd(char *name, char *argv[])
 {

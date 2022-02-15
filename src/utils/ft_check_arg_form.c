@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_arg_form.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:17:49 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/11 17:30:03 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/16 12:23:47 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "mush/builtin.h"
-#include "libfthx.h"
+#include "libft.h"
 
 int	ft_str_digit_check(char *str)
 {
@@ -52,6 +53,7 @@ int	ft_check_key_form(int i, int j, char *args[])
 		printf("minishell: export: \'%s\': not a valid identifier\n", args[i]);
 		return (1);
 	}
+	free(path_name);
 	return (0);
 }
 

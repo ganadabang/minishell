@@ -6,15 +6,14 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:28:29 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/11 16:27:44 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/15 21:02:25 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
-#include "libfthx.h"
-#include "mush/parser.h"
+#include "libft.h"
 #include "mush.h"
 
 int	builtin_env(t_state *state, int argc, char *argv[])

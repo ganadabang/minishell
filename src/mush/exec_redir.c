@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:56:00 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/15 20:10:05 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/15 20:53:08 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include "libft.h"
-#include "mush/parser.h"
 #include "mush/exec.h"
 
 void	exec_io_redirect(t_state *state_ref, t_array *io_files_ref)

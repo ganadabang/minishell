@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/11 17:24:46 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/15 21:02:36 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
-#include "mush/builtin.h"
 #include "libfthx.h"
+#include "mush/builtin.h"
 
 //To be removed
 #include <string.h>

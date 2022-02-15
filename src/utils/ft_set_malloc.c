@@ -6,12 +6,12 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 13:35:54 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/11 17:27:36 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/15 20:57:58 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "libfthx.h"
+#include "libft.h"
 
 void	**ft_set_malloc(size_t nmemb, int size)
 {

@@ -6,19 +6,18 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:13 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/15 19:58:55 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/15 20:54:44 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include "libfthx.h"
 #include "mush/parser.h"
-#include "mush/builtin.h"
+// #include "mush/builtin.h"
 
-// tok be removed
 #include <string.h>
+
 char	*exec_expn_cmd(t_state *state_ref, char *name)
 {
 	char	*slash_name;
@@ -33,7 +32,6 @@ char	*exec_expn_cmd(t_state *state_ref, char *name)
 	path = getenv("PATH");
 	if (path == NULL)
 		return (name);
-	dprintf(2, "%p: `%s'\n", name, name);
 	slash_name = ft_strjoin("/", name);
 	free(name);
 	if (slash_name == NULL)
@@ -75,7 +73,7 @@ size_t	exec_expn_buffer_putenv(t_state *state_ref, t_buf *buffer, char *word)
 	free(key);
 	value_len = 0;
 	if (value != NULL)
-		value_len = strlen(value);
+		value_len = ft_strlen(value);
 	hx_buffer_putstr(buffer, value, value_len);
 	return (key_len);
 }

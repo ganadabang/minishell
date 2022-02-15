@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:53 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/11 16:55:41 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/15 20:41:38 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ struct s_builtin {
 };	
 
 /*
-**utils
+** utils
 */
 void	**ft_set_malloc(size_t nmemb, int size);
 void	ft_free_arr(char **arr);

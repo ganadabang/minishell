@@ -6,14 +6,12 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:39 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/11 15:41:20 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/15 20:51:05 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <sys/wait.h>
-#include <unistd.h>
-#include "libfthx.h"
 #include "mush/parser.h"
 
 int	mush_job_status_update(t_array	*pipeline_ref)

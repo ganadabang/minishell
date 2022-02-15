@@ -6,14 +6,13 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:12 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/11 17:29:31 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/15 21:00:15 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include "libfthx.h"
-#include "mush/parser.h"
 #include "mush/builtin.h"
 
 //To be removed
