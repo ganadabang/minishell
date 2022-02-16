@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 19:42:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/16 00:54:14 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/16 16:57:42 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,10 @@ static int	mush_syntax_error(t_parser *parser_ref)
 static int	mush_parser_with_input(t_state *state_ref, t_parser *parser_ref, \
 	char *input)
 {
-	if (!input)
+	if (input == NULL || input[ft_strspn(input, " \t\n")] == '\0')
 	{
-		state_ref->exit = 0;
-		return (-1);
-	}
-	if (!*input)
-	{
+		if (input == NULL)
+			state_ref->exit = 0;
 		free(input);
 		return (-1);
 	}

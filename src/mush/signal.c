@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 02:54:41 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/16 00:53:55 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/16 18:38:35 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	sig_handler_int(int signum)
 	if (signum == SIGINT)
 	{
 		write(1, "\n", 1);
-		// rl_replace_line("", 1);
+		rl_replace_line("", 1);
 		rl_on_new_line();
 		rl_redisplay();
 	}
