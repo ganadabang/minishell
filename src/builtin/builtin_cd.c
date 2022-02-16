@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/15 21:02:36 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/16 13:31:42 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	ft_update_env(t_state *state, char *path_n, char *path_v)
 			path_name = strndup(state->envp[i], j+1);
 			path = ft_strjoin(path_name, path_v);
 			state->envp[i] = path;
+			free(path_name);
+			free(path);
 		}
 		i++;
 	}
@@ -74,6 +76,7 @@ int	ft_do_chdir(t_state *state, char *path_v, char *oldpwd, char **argv)
 	pwd = ft_get_pwd("PWD");
 	ft_update_env(state, "PWD", pwd);
 	ft_update_env(state, "OLDPWD", oldpwd);
+	free(pwd);
 	return (0);
 }
 
