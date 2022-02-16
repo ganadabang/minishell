@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 16:49:34 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/16 13:25:48 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/16 15:43:22 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ int	ft_check_first(char c)
 	return (1);
 }
 
-int ft_check_all(char *str)
+int	ft_check_all(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -72,7 +72,7 @@ int ft_check_all(char *str)
 		i++;
 	}
 	return (0);
- }
+}
 
 int	builtin_unset(t_state *state, int argc, char *argv[])
 {
