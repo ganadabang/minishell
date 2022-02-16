@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   env_deepcpy.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/05 16:55:48 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/16 16:43:25 by gpaeng           ###   ########.fr       */
+/*   Created: 2022/02/16 16:31:06 by gpaeng            #+#    #+#             */
+/*   Updated: 2022/02/16 16:33:25 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "libft/string.h"
+#include "libft.h"
+#include "mush/builtin.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	**env_deepcpy(t_state *state)
 {
-	int		ls1;
-	int		ls2;
-	char	*arr;
+	char	**env;
+	int		cnt_env_arr;
+	int		i;
 
-	ls1 = ft_strlen(s1);
-	ls2 = ft_strlen(s2);
-	if (!(arr = (char *)malloc(sizeof(char) * (ls1 + ls2))))
-		return (0);
-	ft_memcpy(arr, s1, ls1);
-	ft_memcpy(arr + ls1, s2, ls2);
-	arr[ls1 + ls2] = '\0';
-	return (arr);
+	cnt_env_arr = ft_cnt_arg(state->envp);
+	env = (char **)ft_set_malloc(sizeof(char *), cnt_env_arr + 1);
+	i = 0;
+	while (cnt_env_arr-- > 0 && state->envp[cnt_env_arr])
+	{
+		env[i] = ft_strdup(state->envp[i]);
+		i++;
+	}
+	return (env);
 }

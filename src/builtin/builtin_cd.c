@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/16 13:31:42 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/16 18:14:07 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,37 +20,39 @@
 //To be removed
 #include <string.h>
 
-void	ft_update_env(t_state *state, char *path_n, char *path_v)
+char	**ft_update_env(t_state *state, char *path_n, char *path_v)
 {
 	int		i;
 	int		j;
 	char	*path;
 	char	*path_name;
+	char	**env;
 
 	i = 0;
-	while (state->envp[i])
+	env = env_deepcpy(state);
+	while (env[i])
 	{
-		j = ft_strchrspn(state->envp[i], '=');
-		if (ft_strncmp(state->envp[i], path_n, j) == 0)
+		j = ft_strchrspn(env[i], '=');
+		if (ft_strncmp(env[i], path_n, j - 1) == 0)
 		{
-			path_name = strndup(state->envp[i], j+1);
-			path = ft_strjoin(path_name, path_v);
-			state->envp[i] = path;
+			path_name = strndup(env[i], j + 1);
+			env[i] = ft_strjoin(path_name, path_v);
 			free(path_name);
 			free(path);
 		}
 		i++;
 	}
+	return (env);
 }
 
-char	*ft_get_pwd(char *path_n)
+char *get_pwd(t_state *state) 
 {
-	char	buffer[4096];
-	char	*pwd;
+	char buffer[4096];
+	char *pwd;
 
 	if (getcwd(buffer, 4096) == 0)
 	{
-		pwd = getenv(path_n);
+		pwd = state->pwd;
 		return (pwd);
 	}
 	pwd = ft_strdup(buffer);
@@ -61,8 +63,9 @@ int	ft_do_chdir(t_state *state, char *path_v, char *oldpwd, char **argv)
 {
 	struct stat	file_buffer;
 	char		*pwd;
+	char		**env;
 	int			file_status;
-
+	
 	if (chdir(path_v) == -1)
 	{
 		chdir(oldpwd);
@@ -70,13 +73,12 @@ int	ft_do_chdir(t_state *state, char *path_v, char *oldpwd, char **argv)
 		if (file_status == -1 && ft_strncmp(argv[0], "-", 1))
 			printf("mush: cd: %s No such file or directory\n", argv[0]);
 		else if (file_status == 0)
-			printf("mush: cd: %s Not a directory", argv[0]);
+			printf("mush: cd: %s Not a directory\n", argv[0]);
 		return (1);
 	}
-	pwd = ft_get_pwd("PWD");
-	ft_update_env(state, "PWD", pwd);
-	ft_update_env(state, "OLDPWD", oldpwd);
-	free(pwd);
+	pwd = get_pwd(state);
+	state->envp = ft_update_env(state, "OLDPWD", oldpwd);
+	state->envp = ft_update_env(state, "PWD", pwd);
 	return (0);
 }
 
@@ -115,7 +117,7 @@ int	builtin_cd(t_state *state, int argc, char *argv[])
 	if (!ft_check_args_cd(state, argc, argv))
 		return (1);
 	splitted_path = ft_split(*argv, "/");
-	pwd = state->pwd;
+	pwd = get_pwd(state);
 	if (!splitted_path || ft_cnt_arg(splitted_path) == 0)
 	{
 		path_value = getenv("HOME");
@@ -125,9 +127,8 @@ int	builtin_cd(t_state *state, int argc, char *argv[])
 	{
 		if (i == 0 && argv[0][0] == '/')
 			ft_add_path(&splitted_path[i], "/");
-		if (ft_do_chdir(state, splitted_path[i], pwd, argv))
+		if (ft_do_chdir(state, splitted_path[i++], pwd, argv))
 			break ;
-		i++;
 	}
 	ft_free_arr(splitted_path);
 	return (0);

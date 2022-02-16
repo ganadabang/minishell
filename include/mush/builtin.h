@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:53 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/15 20:41:38 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/16 16:32:10 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int		ft_check_arg_form(char *args[]);
 void	ft_add_path(char **path_v, char *slash);
 void	ft_strswap(char **str1, char **str2);
 int		bubble_sort_envp(char **str);
+char	**env_deepcpy(t_state *state);
 
 int	builtin_cd(t_state *state, int argc, char *argv[]);
 int	builtin_echo(t_state *state, int argc, char *argv[]);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+         #
+#    By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/02/15 19:30:00 by hyeonsok         ###   ########.fr        #
+#    Updated: 2022/02/16 16:31:50 by gpaeng           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,6 +66,7 @@ OBJS		+=	$(addprefix $(OBJDIR)/, \
 				ft_add_path.o			\
 				ft_strswap.o			\
 				bubble_sort_envp.o		\
+				env_deepcpy.o			\
 				mush_fatal.o)
 
 DEBUG		+=	$(addprefix lib/libft/src/hx/, \
