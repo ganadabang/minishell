@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 16:31:06 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/16 16:33:25 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/16 18:48:53 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ char	**env_deepcpy(t_state *state)
 		env[i] = ft_strdup(state->envp[i]);
 		i++;
 	}
+	env[i] = 0;
 	return (env);
 }
