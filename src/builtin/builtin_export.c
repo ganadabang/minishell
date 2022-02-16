@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:12 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/16 16:32:20 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/16 18:45:32 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,6 @@
 
 //To be removed
 #include <string.h>
-
-// char	**env_deepcpy(t_state *state)
-// {
-// 	char	**env;
-// 	int		cnt_env_arr;
-// 	int		i;
-
-// 	cnt_env_arr = ft_cnt_arg(state->envp);
-// 	env = (char **)ft_set_malloc(sizeof(char *), cnt_env_arr + 1);
-// 	i = 0;
-// 	while (cnt_env_arr-- > 0 && state->envp[cnt_env_arr])
-// 	{
-// 		env[i] = ft_strdup(state->envp[i]);
-// 		i++;
-// 	}
-// 	return (env);
-// }
 
 void	ft_print_env_export(t_state *state)
 {
