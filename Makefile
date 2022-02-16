@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+         #
+#    By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/02/16 16:31:50 by gpaeng           ###   ########.fr        #
+#    Updated: 2022/02/16 22:05:14 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ OBJS		+=	$(addprefix $(OBJDIR)/, \
 				parser_iofile.o \
 				parser_pipeline.o \
 				parser_token.o \
+				parser_error.o \
 				exec.o \
 				exec_expn.o \
 				exec_redir.o \

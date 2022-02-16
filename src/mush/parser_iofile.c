@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 02:02:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/16 00:54:42 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/16 22:51:03 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static void	infile_init(t_file *file, char *redir_op)
 {
 	file->fd = STDIN_FILENO;
 	file->oflag = O_RDONLY;
-	printf("ret: %d\n", ft_memcmp("<", redir_op, 2));
 	if (ft_memcmp("<", redir_op, 2) == 0)
 	{
 		file->io_type = IO_IN;
@@ -31,6 +30,7 @@ static void	infile_init(t_file *file, char *redir_op)
 	file->io_type = IO_HERE;
 	return ;
 }
+
 static void	outfile_init(t_file *file, char *redir_op)
 {
 	file->fd = STDOUT_FILENO;

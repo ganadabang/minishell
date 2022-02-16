@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   mush.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 17:25:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/12 15:56:50 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/16 23:48:25 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MUSH_H
 # define MUSH_H
 
-#include <termios.h>
-#include "libhx/array.h"
-#include "libhx/buffer.h"
+# include <termios.h>
+# include "libhx/array.h"
+# include "libhx/buffer.h"
 
 enum e_mush_token {
 	TOKEN_WORD,
@@ -31,12 +31,12 @@ enum	e_iotype {
 	IO_HERE
 };
 
-typedef struct	s_word {
+typedef struct s_word {
 	char	*str;
 	int		word_type;
 }	t_word;
 
-typedef struct	s_token {
+typedef struct s_token {
 	char	*str;
 	int		type;
 }	t_token;

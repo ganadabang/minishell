@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 17:33:52 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/12 16:43:29 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/16 23:46:30 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-#include "libhx/array.h"
-#include "libhx/buffer.h"
-#include "mush.h"
+# include "libhx/array.h"
+# include "libhx/buffer.h"
+# include "mush.h"
 
 typedef struct s_parser
 {
@@ -29,6 +29,9 @@ typedef struct s_parser
 int		mush_parser_readline(t_state *state);
 int		mush_parser_tokenize(t_parser *parser_ref);
 void	mush_parser_init_pipeline(t_array *pipeline, t_parser *parser);
+
+/** src/mush/parser_error.c */
+int		mush_syntax_error(t_parser *parser_ref);
 
 /** src/mush/parser_buffer.c */
 int		parser_buffer_write_quoted(t_parser *parser_ref, char quoting);

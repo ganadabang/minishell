@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:47:55 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/16 15:15:44 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/16 23:42:03 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,17 @@
 #include "mush/parser.h"
 #include "mush/exec.h"
 
-static void	mush_init(t_state *state_ref, char **envp);
+static void	mush_init(t_state *state_ref, char **envp)
+{
+	ft_memset(state_ref, 0, sizeof(t_state));
+	tcgetattr(STDOUT_FILENO, &state_ref->term);
+	state_ref->envp = envp;
+	state_ref->exit = -1;
+	state_ref->last_status = 0;
+	state_ref->pwd = getenv("PWD");
+	state_ref->old_pwd = getenv("OLDPWD");
+	return ;
+}
 
 int	main(int argc, char *argv[], char *envp[])
 {
@@ -32,24 +42,11 @@ int	main(int argc, char *argv[], char *envp[])
 		mush_prompt_interactive(&state.term);
 		if (mush_parser_readline(&state) < 0)
 			continue ;
-		mush_prompt_executive(&state.term);
+		mush_prompt_blocked(&state.term);
 		mush_execute(&state);
 		mush_cleanup_pipeline(&state.job.pipeline);
 	}
 	mush_prompt_restored(&state.term);
 	printf("exit\n");
-	// system("leaks minishell");
 	return (0);
-}
-
-static void	mush_init(t_state *state_ref, char **envp)
-{
-	ft_memset(state_ref, 0, sizeof(t_state));
-	tcgetattr(STDOUT_FILENO, &state_ref->term);
-	state_ref->envp = envp;
-	state_ref->exit = -1;
-	state_ref->last_status = 0;
-	state_ref->pwd = getenv("PWD");
-	state_ref->old_pwd = getenv("OLDPWD");
-	return ;
 }

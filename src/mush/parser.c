@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 19:42:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/16 16:57:42 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/16 22:36:49 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,45 +16,6 @@
 #include <readline/history.h>
 #include "libfthx.h"
 #include "mush/parser.h"
-
-static const char *g_syntex_error_prefix = \
-	"mush: syntax error unexpected token `";
-
-static int	mush_syntax_error(t_parser *parser_ref)
-{
-	char	*unexpected;
-	t_token	**tokens;
-	size_t	len;
-	size_t	i;
-
-	unexpected = NULL;
-	tokens = (t_token **)parser_ref->token_list.data;
-	if (tokens[0]->type == TOKEN_PIPE)
-		unexpected = "|";
-	i = 0;
-	while (tokens[++i - 1]->type != TOKEN_NEWLINE && unexpected == NULL)
-	{
-		if (tokens[i]->type == TOKEN_NEWLINE \
-			&& tokens[i - 1]->type != TOKEN_WORD)
-			unexpected = "newline";
-		else if (tokens[i]->type == TOKEN_REDIR \
-			&& tokens[i - 1]->type == TOKEN_REDIR)
-			unexpected = tokens[i]->str;
-		else if (tokens[i]->type == TOKEN_PIPE \
-			&& tokens[i - 1]->type != TOKEN_WORD)
-			unexpected = "|";
-	}
-	if (unexpected != NULL)
-	{
-		len = ft_strlen(unexpected);
-		hx_buffer_cleanup(&parser_ref->buffer);
-		hx_buffer_putstr(&parser_ref->buffer, g_syntex_error_prefix, 37);
-		hx_buffer_putstr(&parser_ref->buffer, unexpected, len);
-		hx_buffer_putstr(&parser_ref->buffer, "'\n", 3);
-		return (-1);
-	}
-	return (0);
-}
 
 static int	mush_parser_with_input(t_state *state_ref, t_parser *parser_ref, \
 	char *input)
@@ -79,9 +40,9 @@ static void	mush_parser_destroy(t_parser *parser_ref)
 
 	tokens = (t_token **)parser_ref->token_list.data;
 	i = parser_ref->token_list.len;
-	while (i > 0)
+	while (i-- > 0)
 	{
-		free(tokens[--i]->str);
+		free(tokens[i]->str);
 		free(tokens[i]);
 	}
 	hx_array_cleanup(&parser_ref->token_list);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_buffer.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 01:58:30 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/11 18:35:02 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/16 22:50:26 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,12 @@ int	parser_buffer_write_quoted(t_parser *parser_ref, char quoting)
 	pos_ref = &parser_ref->input[parser_ref->pos];
 	brk = ft_strchr(&pos_ref[1], quoting);
 	if (brk == NULL)
+	{
+		hx_buffer_cleanup(&parser_ref->buffer);
+		hx_buffer_putstr(&parser_ref->buffer, "mush: syntax error unclosed \
+			quotation mark\n", 45);
 		return (-1);
+	}
 	len = brk - pos_ref + 1;
 	hx_buffer_putstr(&parser_ref->buffer, pos_ref, len);
 	parser_ref->pos += len;
