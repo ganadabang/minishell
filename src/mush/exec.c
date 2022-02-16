@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/17 04:46:55 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/17 05:58:07 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ void	mush_execute(t_state *state)
 			close(procs[len - 1]->stdin);
 		state->job.status = mush_job_status_update(&state->job.pipeline);
 	}
-	free(state->last_status);
 	state->last_status = ft_itoa(state->job.status);
 	if (state->last_status == NULL)
 		mush_fatal("malloc");
