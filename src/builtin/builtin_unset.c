@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 16:49:34 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/16 15:43:22 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/17 03:01:35 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ void	ft_remove_env(t_state *state, int env_line)
 	int		envp_i;
 	int		i;
 
-	cnt_env_arr = ft_cnt_arg(state->envp);
-	env = (char **)ft_set_malloc(sizeof(char *), cnt_env_arr);
+	cnt_env_arr = ft_strvlen(state->envp);
+	env = (char **)ft_calloc(cnt_env_arr, sizeof(char *));
 	i = 0;
 	envp_i = 0;
 	while (envp_i < cnt_env_arr)

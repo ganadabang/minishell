@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_check_arg_form.c                                :+:      :+:    :+:   */
+/*   mush_regex.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 15:17:49 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/16 12:23:47 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/17 01:55:58 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	ft_check_key_form(int i, int j, char *args[])
 {
 	char	*path_name;
 
-	path_name = (char *)ft_set_malloc(sizeof(char), j + 1);
+	path_name = (char *)ft_calloc(sizeof(char), j + 1);
 	ft_strlcpy(path_name, args[i], j + 1);
 	if (!ft_str_digit_check(path_name))
 	{
@@ -57,7 +57,7 @@ int	ft_check_key_form(int i, int j, char *args[])
 	return (0);
 }
 
-int	ft_check_arg_form(char *args[])
+int	mush_regex(char *args[])
 {
 	int	i;
 	int	j;
@@ -65,7 +65,7 @@ int	ft_check_arg_form(char *args[])
 	i = 1;
 	while (args[i])
 	{
-		j = ft_strchrspn(args[i], '=');
+		j = ft_chrspn(args[i], '=');
 		if (ft_check_key_value_form(i, j, args))
 			return (0);
 		if (ft_check_key_form(i, j, args))

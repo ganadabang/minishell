@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strswap.c                                       :+:      :+:    :+:   */
+/*   ft_swap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 18:31:07 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/15 20:57:46 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/17 01:49:44 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_strswap(char **str1, char **str2)
+void	ft_swap(void **ptr1, void **ptr2)
 {
-	char *tmp;
+	void	*tmp;
 
-	if (!str1 || !str2)
+	if (!ptr1 || !ptr2)
 		return ;
-	tmp = *str1;
-	*str1 = *str2;
-	*str2 = tmp;
+	tmp = *ptr1;
+	*ptr1 = *ptr2;
+	*ptr2 = tmp;
 }

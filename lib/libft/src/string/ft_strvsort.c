@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bubble_sort_envp.c                                 :+:      :+:    :+:   */
+/*   ft_strvsort.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 16:52:33 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/15 20:57:13 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/17 02:07:18 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include "mush/builtin.h"
 
-int	bubble_sort_envp(char **str)
+/*
+** bubble sort
+*/
+void	ft_strvsort(char **str)
 {
 	int	i;
 	int	j;
 	int	n;
 	int m;
 
-	j = ft_cnt_arg(str);
+	j = ft_strvlen(str);
 	while (--j)
 	{
 		i = 0;
@@ -31,9 +33,9 @@ int	bubble_sort_envp(char **str)
 			if (n < m)
 				n = m;
 			if (ft_memcmp(str[i], str[i + 1], n) > 0)
-				ft_strswap(&str[i], &str[i+1]);
+				ft_swap((void **)&str[i], (void **)&str[i + 1]);
 			i++;
 		}
 	}
-	return (0);
+	return ;
 }

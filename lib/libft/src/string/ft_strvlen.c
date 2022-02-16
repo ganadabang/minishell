@@ -1,23 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cnt_arg.c                                       :+:      :+:    :+:   */
+/*   ft_strvlen.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 13:38:55 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/15 20:58:10 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/17 02:03:50 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_cnt_arg(char *argv[])
+#include <stddef.h>
+
+size_t	ft_strvlen(char **strv)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (argv[i])
-	{
-		i++;
-	}
+	while (strv[i])
+		++i;
 	return (i);
 }

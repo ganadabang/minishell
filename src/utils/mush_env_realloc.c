@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_set_malloc.c                                    :+:      :+:    :+:   */
+/*   mush_env_realloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/13 13:35:54 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/15 20:57:58 by hyeonsok         ###   ########.fr       */
+/*   Created: 2022/02/16 16:31:06 by gpaeng            #+#    #+#             */
+/*   Updated: 2022/02/17 02:44:41 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft.h"
+#include "mush/builtin.h"
 
-void	**ft_set_malloc(size_t nmemb, int size)
+void	mush_env_realloc(t_state *state)
 {
-	void	**arr;
+	char	**env;
+	int		len;
 
-	arr = (void **)malloc(nmemb * size);
-	if (!(arr))
-		return (0);
-	ft_memset(arr, 0, nmemb * size);
-	return (arr);
+	len = ft_strvlen(state->envp);
+	env = (char **)realloc(state->envp, len + 2);
+	if (env == NULL)
+		mush_fatal("malloc");
+	free(state->envp);
+	state->envp = env;
+	return ;
 }

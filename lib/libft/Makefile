@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+         #
+#    By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/26 11:13:05 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/02/11 17:54:44 by hyeonsok         ###   ########.fr        #
+#    Updated: 2022/02/17 03:13:26 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ ft_memcpy.c \
 ft_memmove.c \
 ft_memset.c \
 ft_strchr.c \
-ft_strchrspn.c\
+ft_chrspn.c\
 ft_strdup.c \
 ft_strndup.c\
 ft_strjoin.c\
@@ -72,7 +72,10 @@ ft_strrchr.c \
 ft_strspn.c \
 ft_strcspn.c \
 ft_strpbrk.c \
-ft_strtok.c)
+ft_strtok.c \
+ft_strvfree.c \
+ft_strvlen.c \
+ft_strvsort.c)
 
 SRCS	+=	$(addprefix src/ft/, \
 ft_itoa.c \
@@ -85,7 +88,8 @@ ft_substr.c)
 SRCS	+=	$(addprefix src/, \
 ft_atoi.c \
 ft_atoll.c \
-ft_calloc.c)
+ft_calloc.c \
+ft_swap.c)
 
 SRCS	+=	$(addprefix src/hx/, \
 array.c \

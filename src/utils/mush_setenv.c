@@ -1,23 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_add_path.c                                      :+:      :+:    :+:   */
+/*   mush_setenv.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/06 15:24:06 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/15 20:57:20 by hyeonsok         ###   ########.fr       */
+/*   Created: 2022/02/17 03:10:38 by hyeonsok          #+#    #+#             */
+/*   Updated: 2022/02/17 03:10:38 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "libft.h"
-
-void	ft_add_path(char **path_v, char *slash)
-{
-	char	*tmp;
-
-	tmp = ft_strjoin(*path_v, slash);
-	free(*path_v);
-	*path_v = tmp;
-}

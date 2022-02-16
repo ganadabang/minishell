@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:56:20 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/16 23:45:19 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/17 03:09:57 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ size_t	exec_expn_buffer_putenv(t_state *state_ref, t_buf *buffer, char *word);
 char	*exec_expn_word(t_state *state_ref, t_buf *buffer, char *word);
 void	exec_expn_filename(t_state *state_ref, t_array *filenames_ref);
 void	exec_expn_argv(t_state *state_ref, t_array *args_ref);
-
+int		mush_exec_builtin(t_state *state_ref);
 char	*exec_expn_cmd(t_state *state_ref, char *name);
 void	mush_cleanup_pipeline(t_array *pipeline);
 void	mush_signal_retored(void);

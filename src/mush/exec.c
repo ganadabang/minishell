@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/15 20:52:27 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/17 03:09:05 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,6 @@
 #include "mush/exec.h"
 #include "mush/builtin.h"
 #include "mush/signal.h"
-
-int mush_exec_builtin(t_state *state_ref)
-{
-	t_proc	*proc;
-	t_array	*io_files_ref;
-	int		(*fn)(t_state *, int, char *[]);
-	int		fd_backup[2];
-
-	proc = (t_proc *)state_ref->job.pipeline.data[0];
-	io_files_ref = &proc->io_files;
-	fd_backup[0] = dup(0);
-	fd_backup[1] = dup(1);
-	exec_io_redirect(state_ref, io_files_ref);
-	exec_expn_argv(state_ref, &proc->argv);
-	state_ref->last_status = proc->fn_builtin(state_ref, proc->argv.len, \
-		(char **)proc->argv.data);
-	dup2(fd_backup[0], 0);
-	dup2(fd_backup[1], 1);
-	close(fd_backup[0]);
-	close(fd_backup[1]);
-	return (state_ref->last_status);
-}
 
 void	exec_pipe_init(t_proc **procs)
 {

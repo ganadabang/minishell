@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:12 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/16 18:45:32 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/17 03:13:26 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ void	ft_print_env_export(t_state *state)
 	int		j;
 
 	i = 0;
-	state_cpy = env_deepcpy(state);
-	bubble_sort_envp(state_cpy);
+	state_cpy = (char **)realloc(state->envp, ft_strvlen(state->envp) + 1);
+	ft_strvsort(state_cpy);
 	while (state_cpy[i])
 	{
-		j = ft_strchrspn(state->envp[i], '=');
+		j = ft_chrspn(state->envp[i], '=');
 		path_name = ft_strndup(state->envp[i], j);
 		path_value = ft_strndup(state->envp[i] + j + 1,
 				ft_strlen(state->envp[i]) - j);
@@ -50,10 +50,10 @@ void	ft_update_env_export(t_state *state, char *argv[])
 	int		cnt_env_arr;
 	int		i;
 
-	cnt_env_arr = ft_cnt_arg(state->envp);
-	env = (char **)ft_set_malloc(sizeof(char *), cnt_env_arr + 2);
+	cnt_env_arr = ft_strvlen(state->envp);
+	env = (char **)ft_calloc(cnt_env_arr + 2, sizeof(char *));
 	i = 0;
-	if (ft_check_arg_form(argv))
+	if (mush_regex(argv))
 	{
 		while (state->envp[i] && i < cnt_env_arr)
 		{

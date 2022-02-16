@@ -6,7 +6,7 @@
 #    By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/02/16 22:05:14 by hyeonsok         ###   ########.fr        #
+#    Updated: 2022/02/17 03:08:22 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,15 +60,11 @@ OBJS		+=	$(addprefix $(OBJDIR)/, \
 
 # ./src/utils
 OBJS		+=	$(addprefix $(OBJDIR)/, \
-				ft_cnt_arg.o			\
-				ft_free_arr.o			\
-				ft_set_malloc.o			\
-				ft_check_arg_form.o		\
-				ft_add_path.o			\
-				ft_strswap.o			\
-				bubble_sort_envp.o		\
-				env_deepcpy.o			\
-				mush_fatal.o)
+				mush_regex.o \
+				mush_env_realloc.o \
+				mush_fatal.o \
+				mush_getenv.o \
+				mush_setenv.o)
 
 DEBUG		+=	$(addprefix lib/libft/src/hx/, \
 				array.o \

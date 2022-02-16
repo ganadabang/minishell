@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 17:25:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/16 23:48:25 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/17 01:26:33 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,15 @@ typedef struct s_word {
 }	t_word;
 
 typedef struct s_token {
-	char	*str;
-	int		type;
+	char				*str;
+	enum e_mush_token	type;
 }	t_token;
 
 typedef struct s_file {
-	char	*name;
-	int		io_type;
-	int		oflag;
-	int		fd;
+	char			*name;
+	enum e_iotype	io_type;
+	int				oflag;
+	int				fd;
 }	t_file;
 
 typedef struct s_job {

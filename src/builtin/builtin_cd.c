@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/16 19:29:29 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/17 03:13:26 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ char	**ft_update_env(t_state *state, char *path_n, char *path_v)
 	char	**env;
 
 	i = 0;
-	env = env_deepcpy(state);
+	mush_env_realloc(state);
 	while (env[i])
 	{
-		j = ft_strchrspn(env[i], '=');
+		j = ft_chrspn(env[i], '=');
 		if (ft_strncmp(env[i], path_n, j - 1) == 0)
 		{
 			path_name = strndup(env[i], j + 1);
@@ -120,7 +120,7 @@ int	builtin_cd(t_state *state, int argc, char *argv[])
 		return (1);
 	splitted_path = ft_split(*argv, "/");
 	pwd = get_pwd(state);
-	if (!splitted_path || ft_cnt_arg(splitted_path) == 0)
+	if (!splitted_path || ft_strvlen(splitted_path) == 0)
 	{
 		path_value = getenv("HOME");
 		ft_do_chdir(state, path_value, pwd, argv);
@@ -128,10 +128,10 @@ int	builtin_cd(t_state *state, int argc, char *argv[])
 	while (splitted_path && splitted_path[i])
 	{
 		if (i == 0 && argv[0][0] == '/')
-			ft_add_path(&splitted_path[i], "/");
+			splitted_path[i] = ft_strjoin_lf(splitted_path[i], "/");
 		if (ft_do_chdir(state, splitted_path[i++], pwd, argv))
 			break ;
 	}
-	ft_free_arr(splitted_path);
+	ft_strvfree(splitted_path);
 	return (0);
 }

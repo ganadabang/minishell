@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_expn.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:13 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/15 20:54:44 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/17 02:58:53 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ char	*exec_expn_cmd(t_state *state_ref, char *name)
 	char	**pathv;
 	size_t	i;
 
+	if (name == NULL)
+		return (NULL);
 	if (ft_strchr(name, '/') != NULL)
 		return (name);
 	// tokDO: getenv => mush_getenv
@@ -87,25 +89,18 @@ char	*exec_expn_word(t_state *state_ref, t_buf *buffer, char *word)
 	double_quoted = 0;
 	single_quoted = 0;
 	i = 0;
-	while (word[i] != '\0')
+	while (1)
 	{
 		if (word[i] == '\''  && !double_quoted)
-		{
 			single_quoted = !single_quoted;
-			++i;
-		}
 		else if (word[i] == '\"' && !single_quoted)
-		{
 			double_quoted = !double_quoted;
-			++i;
-		}
 		else if (word[i] == '$' && !single_quoted)
-		{
-			++i;
-			i += exec_expn_buffer_putenv(state_ref, buffer, &word[i]);
-		}
+			i += exec_expn_buffer_putenv(state_ref, buffer, &word[i + 1]);
 		else
-			hx_buffer_putchar(buffer, word[i++]);
+			hx_buffer_putchar(buffer, word[i]);
+		if (word[++i] != '\0')
+			break ;
 	}
 	return (hx_buffer_withdraw(buffer));
 }
@@ -118,10 +113,12 @@ void	exec_expn_argv(t_state *state_ref, t_array *exec_argv)
 	size_t	len;
 	size_t	i;
 
+	len = exec_argv->len;
+	if (len == 0)
+		return ;
 	ft_memset(&buffer, 0, sizeof(t_buf));
 	argv = (char **)exec_argv->data;
 	i = 0;
-	len = exec_argv->len;
 	while (i < len)
 	{
 		tokfree = argv[i];
