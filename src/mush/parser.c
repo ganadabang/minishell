@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 19:42:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/16 22:36:49 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/17 04:44:12 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ int	mush_parser_readline(t_state *state_ref)
 	if (mush_parser_tokenize(&parser) < 0 || mush_syntax_error(&parser) < 0)
 	{
 		ft_dputs(2, parser.buffer.data);
-		state_ref->last_status = 258;
+		free(state_ref->last_status);
+		state_ref->last_status = ft_itoa(258);
 		mush_parser_destroy(&parser);
 		return (-1);
 	}

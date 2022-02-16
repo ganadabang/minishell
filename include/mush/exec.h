@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:56:20 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/17 03:09:57 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/17 04:43:23 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ int		is_last_proc(size_t idx, size_t size);
 void	exec_pipe_connect(t_proc *proc);
 void	exec_pipe_disconnect(int pde[2][2]);
 void	exec_io_redirect(t_state *state_ref, t_array *io_files_ref);
-void	mush_exec(t_job *job);
-int		mush_execute(t_state *state);
+void	mush_execute(t_state *state);
 int		mush_job_status_update(t_array *pipeline_ref);
 
 size_t	exec_expn_buffer_putenv(t_state *state_ref, t_buf *buffer, char *word);

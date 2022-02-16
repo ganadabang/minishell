@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buffer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 16:15:48 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/15 20:09:00 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/17 05:12:52 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int	hx_buffer_secure(t_buf *buf, size_t size)
 
 int	hx_buffer_putstr(t_buf *buf, const char *data, size_t size)
 {
+	if (data == NULL)
+		return (0);
 	if (!hx_buffer_secure(buf, size))
 		return (0);
 	memcpy(&buf->data[buf->len], data, size);

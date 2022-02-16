@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:13 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/17 02:58:53 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/17 04:32:01 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ char	*exec_expn_cmd(t_state *state_ref, char *name)
 		return (NULL);
 	if (ft_strchr(name, '/') != NULL)
 		return (name);
-	// tokDO: getenv => mush_getenv
-	path = getenv("PATH");
+	path = mush_getenv(state_ref, "PATH");
 	if (path == NULL)
 		return (name);
 	slash_name = ft_strjoin("/", name);
@@ -68,10 +67,7 @@ size_t	exec_expn_buffer_putenv(t_state *state_ref, t_buf *buffer, char *word)
 
 	key_len = ft_strcspn(word, "'\"$ \t\n");
 	key = strndup(word, key_len);
-	// value = getvar(state_ref, key);
-	// if (value == NULL)
-	// 	value = mush_getenv(state_ref, key);
-	value =  getenv(key);
+	value =  mush_getenv(state_ref, key);
 	free(key);
 	value_len = 0;
 	if (value != NULL)
@@ -99,7 +95,7 @@ char	*exec_expn_word(t_state *state_ref, t_buf *buffer, char *word)
 			i += exec_expn_buffer_putenv(state_ref, buffer, &word[i + 1]);
 		else
 			hx_buffer_putchar(buffer, word[i]);
-		if (word[++i] != '\0')
+		if (word[++i] == '\0')
 			break ;
 	}
 	return (hx_buffer_withdraw(buffer));

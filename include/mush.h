@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 17:25:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/17 01:26:33 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/17 04:19:12 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_state {
 	char			*pwd;
 	char			*old_pwd;
 	int				exit;
-	int				last_status;
+	char			*last_status;
 }	t_state;
 
 typedef struct s_proc {
@@ -76,5 +76,6 @@ typedef struct s_proc {
 
 void	debug_pipeline(t_array *pipeline);
 void	mush_fatal(const char *str);
+char	*mush_getenv(t_state *state, char *key);
 
 #endif

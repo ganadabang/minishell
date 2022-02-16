@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/17 03:09:05 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/17 04:46:55 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,8 @@ void	exec_check_cmd(char *name, char *argv[])
 	return ;
 }
 
-int	debug(void)
-{
-	return (1);
-}
-
 void	mush_exec_simple_command(t_state *state_ref, t_proc *proc)
 {
-	// while (debug() == 1)
-	// 	continue ;
 	mush_signal_restored();
 	exec_pipe_connect(proc);
 	exec_io_redirect(state_ref, &proc->io_files);
@@ -80,7 +73,7 @@ void	mush_exec_simple_command(t_state *state_ref, t_proc *proc)
 	execve(proc->name, (char **)proc->argv.data, state_ref->envp);
 }
 
-int	mush_execute(t_state *state)
+void	mush_execute(t_state *state)
 {
 	t_proc		**procs;
 	int			(*fn)(t_state *, int, char *[]);
@@ -93,24 +86,30 @@ int	mush_execute(t_state *state)
 	procs = (t_proc **)state->job.pipeline.data;
 	procs[i]->name = (char *)(procs[i]->argv.data[0]);
 	if (len == 1 && builtin_search(procs[i]))
-		return (mush_exec_builtin(state));
-	while (i < len)
+		state->job.status = mush_exec_builtin(state);
+	else
 	{
-		if (i + 1 < len)
-			exec_pipe_init(&procs[i]);
-		pid = fork();
-		if (pid < 0)
-			mush_fatal("fork");
-		if (pid == 0)
-			mush_exec_simple_command(state, procs[i]);
-		procs[i]->pid = pid;
-		if (i + 1 != len)
-			close(procs[i]->stdout);
-		++i;
+		while (i < len)
+		{
+			if (i + 1 < len)
+				exec_pipe_init(&procs[i]);
+			pid = fork();
+			if (pid < 0)
+				mush_fatal("fork");
+			if (pid == 0)
+				mush_exec_simple_command(state, procs[i]);
+			procs[i]->pid = pid;
+			if (i + 1 != len)
+				close(procs[i]->stdout);
+			++i;
+		}
+		if (len != 1)
+			close(procs[len - 1]->stdin);
+		state->job.status = mush_job_status_update(&state->job.pipeline);
 	}
-	if (len != 1)
-		close(procs[len - 1]->stdin);
-	state->job.status = mush_job_status_update(&state->job.pipeline);
-	state->last_status = state->job.status;
-	return (state->last_status);
+	free(state->last_status);
+	state->last_status = ft_itoa(state->job.status);
+	if (state->last_status == NULL)
+		mush_fatal("malloc");
+	return ;
 }

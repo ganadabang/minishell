@@ -6,12 +6,15 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 01:58:30 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/16 22:50:26 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/17 04:16:37 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libfthx.h"
 #include "mush/parser.h"
+
+static const char	*g_qt_error = \
+	"mush: syntax error unclosed quotation mark\n";
 
 static size_t	get_opsize(char *input)
 {
@@ -33,8 +36,7 @@ int	parser_buffer_write_quoted(t_parser *parser_ref, char quoting)
 	if (brk == NULL)
 	{
 		hx_buffer_cleanup(&parser_ref->buffer);
-		hx_buffer_putstr(&parser_ref->buffer, "mush: syntax error unclosed \
-			quotation mark\n", 45);
+		hx_buffer_putstr(&parser_ref->buffer, g_qt_error, 45);
 		return (-1);
 	}
 	len = brk - pos_ref + 1;
