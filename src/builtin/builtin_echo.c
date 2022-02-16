@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:34:22 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/16 17:32:59 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/16 19:21:55 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	builtin_echo(t_state *state, int argc, char *argv[])
 		argv++;
 		option = 1;
 	}
-	ft_echo_print(argv);
+	if (!ft_echo_option(*argv)) ft_echo_print(argv);
 	if (!option)
 		printf("\n");
 	return (0);

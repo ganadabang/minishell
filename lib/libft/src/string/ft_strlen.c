@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/24 23:10:08 by SSONG             #+#    #+#             */
-/*   Updated: 2022/02/10 21:45:33 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/16 19:22:41 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ size_t	ft_strlen(const char *str)
 {
 	const char	*s;
 
+	if (str == NULL)
+		return (0);
 	s = str;
 	while (*str != '\0')
 		++str;
