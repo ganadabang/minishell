@@ -6,7 +6,7 @@
 /*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/16 18:14:07 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/16 19:29:29 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,14 @@ char	**ft_update_env(t_state *state, char *path_n, char *path_v)
 		}
 		i++;
 	}
+	env[i] = 0;
 	return (env);
 }
 
-char *get_pwd(t_state *state) 
+char	*get_pwd(t_state *state)
 {
-	char buffer[4096];
-	char *pwd;
+	char	buffer[4096];
+	char	*pwd;
 
 	if (getcwd(buffer, 4096) == 0)
 	{
@@ -65,7 +66,8 @@ int	ft_do_chdir(t_state *state, char *path_v, char *oldpwd, char **argv)
 	char		*pwd;
 	char		**env;
 	int			file_status;
-	
+
+	printf("");
 	if (chdir(path_v) == -1)
 	{
 		chdir(oldpwd);
