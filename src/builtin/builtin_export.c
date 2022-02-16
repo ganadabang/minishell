@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:12 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/15 21:00:15 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/16 12:45:42 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,36 +22,19 @@ char	**env_deepcpy(t_state *state)
 {
 	char	**env;
 	int		cnt_env_arr;
-	size_t	i;
-	size_t	j;
-	size_t	idx;
-	char	*a;
-	char	*b;
+	int		i;
 
 	cnt_env_arr = ft_cnt_arg(state->envp);
 	env = (char **)ft_set_malloc(sizeof(char *), cnt_env_arr + 1);
 	i = 0;
 	while (cnt_env_arr-- > 0 && state->envp[cnt_env_arr])
 	{
-		j = 0;
-		while (state->envp[j + 1])
-		{
-			idx = ft_strchrspn(state->envp[j], '=');
-			a = strndup(state->envp[j], idx);
-			idx = ft_strchrspn(state->envp[j+1], '=');
-			b = strndup(state->envp[j+1], idx);
-			printf("before: %s  %s\n", state->envp[j], state->envp[j+1]);
-			if (ft_strcmp(a, b) > 0)
-				ft_strswap(&state->envp[j], &state->envp[j+1]);
-			free(a);
-			free(b);
-			printf("after: %s  %s\n", state->envp[j], state->envp[j+1]);
-			j++;
-		}
-		i--;
+		env[i] = ft_strdup(state->envp[i]);
+		i++;
 	}
 	return (env);
 }
+
 
 void	ft_print_env_export(t_state *state)
 {

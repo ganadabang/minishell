@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 16:49:34 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/11 17:29:47 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/16 13:25:48 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_check_env(t_state *state, char *str)
 	i = 0;
 	while (state->envp[i])
 	{
-		if (!(ft_strncmp(state->envp[i], str, ft_strlen(str))))
+		if ((ft_strncmp(state->envp[i], str, ft_strlen(str)) > 0))
 		{
 			return (i);
 		}
@@ -53,12 +53,26 @@ void	ft_remove_env(t_state *state, int env_line)
 	state->envp = env;
 }
 
-int	ft_check_args_unset(char c)
+int	ft_check_first(char c)
 {	
-	if (c == '_' || ft_isalpha(c) || ft_isdigit(c))
-		return (1);
-	return (0);
+	if (c == '_' || ft_isalpha(c))
+		return (0);
+	return (1);
 }
+
+int ft_check_all(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!(str[i] == '_' || ft_isalpha(str[i]) || ft_isdigit(str[i])))
+			return (1);
+		i++;
+	}
+	return (0);
+ }
 
 int	builtin_unset(t_state *state, int argc, char *argv[])
 {
@@ -70,12 +84,12 @@ int	builtin_unset(t_state *state, int argc, char *argv[])
 	while (argv[i])
 	{
 		env_line = ft_check_env(state, argv[i]);
-		if (!ft_check_args_unset(*argv[i]))
+		if (ft_check_first(*argv[i]) || ft_check_all(argv[i]))
 		{
 			printf("mush: unset: %s not a valid identifier\n", argv[i]);
 			return (1);
 		}
-		if (env_line != -1)
+		else if (env_line != -1)
 			ft_remove_env(state, env_line);
 		i++;
 	}
