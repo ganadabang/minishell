@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 20:54:27 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/17 02:59:35 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/17 13:26:55 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int mush_exec_builtin(t_state *state_ref)
 	t_array	*io_files_ref;
 	int		(*fn)(t_state *, int, char *[]);
 	int		fd_backup[2];
+	int		ret;
 
 	proc = (t_proc *)state_ref->job.pipeline.data[0];
 	io_files_ref = &proc->io_files;
@@ -63,11 +64,11 @@ int mush_exec_builtin(t_state *state_ref)
 	fd_backup[1] = dup(1);
 	exec_io_redirect(state_ref, io_files_ref);
 	exec_expn_argv(state_ref, &proc->argv);
-	state_ref->last_status = proc->fn_builtin(state_ref, proc->argv.len, \
+	ret = proc->fn_builtin(state_ref, proc->argv.len, \
 		(char **)proc->argv.data);
 	dup2(fd_backup[0], 0);
 	dup2(fd_backup[1], 1);
 	close(fd_backup[0]);
 	close(fd_backup[1]);
-	return (state_ref->last_status);
+	return (ret);
 }

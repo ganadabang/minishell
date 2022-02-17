@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/17 03:13:26 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/17 06:25:55 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,15 @@ int	builtin_cd(t_state *state, int argc, char *argv[])
 
 	argv++;
 	i = 0;
+	if (argc == 1)
+	{
+		path_value = mush_getenv(state, "HOME");
+		if (path_value == NULL)
+		{
+			write(2, "mush: cd: HOME not set\n", 24);
+			return (1);
+		}
+	}
 	if (!ft_check_args_cd(state, argc, argv))
 		return (1);
 	splitted_path = ft_split(*argv, "/");

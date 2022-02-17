@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:28:29 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/15 21:02:25 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/17 14:10:02 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,26 @@
 
 int	builtin_env(t_state *state, int argc, char *argv[])
 {
+	t_buf	buffer;
 	char	**env;
 	char	*str;
+	size_t	i;
 
-	env = state->envp;
 	if (argc > 1)
 	{
-		str = strerror(22);
-		write(2, "env: ", 4);
-		write(2, str, ft_strlen(str));
-		write(2, "\n", 1);
+		ft_dputendl(2, "env: too many arguments");
+		return (1);
 	}
-	else
+	ft_memset(&buffer, 0, sizeof(t_buf));
+	env = state->envp;
+	i = 0;
+	while (env[i] != NULL)
 	{
-		while (*env)
-		{
-			printf("%s\n", *env);
-			env++;
-		}
+		hx_buffer_putstr(&buffer, env[i], ft_strlen(env[i]));
+		hx_buffer_putchar(&buffer, '\n');
+		++i;
 	}
+	ft_puts(buffer.data);
+	hx_buffer_cleanup(&buffer);
 	return (0);
 }
