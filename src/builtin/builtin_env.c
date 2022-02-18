@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:28:29 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/19 03:10:51 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/19 05:08:02 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	mush_print_env(t_array *envlist_ref)
 	i = 0;
 	while (i < len)
 	{
-		if (strchr(vars[i], '=') != NULL)
+		if (ft_strchr(vars[i], '=') != NULL)
 		{
 			hx_buffer_putstr(&buffer, vars[i], strlen(vars[i]));
 			hx_buffer_putchar(&buffer, '\n');
@@ -46,7 +46,7 @@ int	builtin_env(t_state *state, int argc, char *argv[])
 	(void)argv;
 	if (argc > 1)
 	{
-		ft_dputendl(2, "env: too many arguments");
+		ft_dputs(2, "env: too many arguments\n");
 		return (1);
 	}
 	mush_print_env(&state->envlist);

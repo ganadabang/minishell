@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 17:25:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/19 03:56:59 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/19 04:51:26 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ char	*mush_get_env(t_state *state, char *key);
 void	mush_set_env(t_state *state, char *key, char *value);
 void	mush_put_env(t_state *state, char *str);
 void	mush_unset_env(t_state *state, char *key);
+int		mush_is_valid_name(char *name);
 
 
 #endif

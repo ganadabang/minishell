@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:32:50 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/17 15:18:51 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/19 05:18:54 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,9 @@ int	ft_isintf(const char *s)
 int	builtin_exit(t_state *state, int argc, char *argv[])
 {
 	(void)state;
-
 	if (argc > 2)
 	{
-		ft_dputendl(2, "mush: exit: too many arguments");
+		ft_dputs(2, "mush: exit: too many arguments\n");
 		return (1);
 	}
 	if (argc == 1)
@@ -50,7 +49,7 @@ int	builtin_exit(t_state *state, int argc, char *argv[])
 	{
 		ft_dputs(2, "mush: exit: ");
 		ft_dputs(2, argv[1]);
-		ft_dputendl(2, ": numberic argument required");
+		ft_dputs(2, ": numberic argument required\n");
 		exit(255);
 	}
 	exit(ft_atoi(argv[1]));

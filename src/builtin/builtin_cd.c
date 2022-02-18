@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/19 03:29:18 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/19 13:44:02 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	builtin_cd(t_state *state, int argc, char *argv[])
 	i = 0;
 	if (argc > 2)
 	{
-		ft_dputendl(2, "mush: cd: to many arguments");
+		ft_dputs(2, "mush: cd: to many arguments\n");
 		return (1);
 	}
 	path_value = NULL;
@@ -36,7 +36,7 @@ int	builtin_cd(t_state *state, int argc, char *argv[])
 		path_value = mush_get_env(state, "HOME");
 		if (path_value == NULL)
 		{
-			ft_dputendl(2, "mush: cd: HOME not set");
+			ft_dputs(2, "mush: cd: HOME not set\n");
 			return (1);
 		}
 	}

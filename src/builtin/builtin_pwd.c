@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:32:39 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/19 02:37:29 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/19 14:00:07 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	builtin_pwd(t_state *state, int argc, char *argv[])
 	char	*pwd;
 
 	(void)state;
-	(void)(argv);
+	(void)argv;
 	if (argc > 1)
 	{
-		ft_dputendl(2, "pwd: too many arguments");
+		ft_dputs(2, "pwd: too many arguments\n");
 		return (1);
 	}
 	pwd = getcwd(NULL, 0);

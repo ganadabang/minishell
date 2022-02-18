@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:47:55 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/19 02:33:21 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/19 05:04:34 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_state	state;
 
-	if (argc != 1 && argv[argc] != NULL)
+	(void)argv;
+	if (argc != 1)
 		return (1);
 	mush_init(&state, envp);
 	mush_signal_set();

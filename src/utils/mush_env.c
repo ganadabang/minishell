@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 03:10:38 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/19 03:23:49 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/19 05:16:31 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "libfthx.h"
 #include "mush.h"
 
-static int	mush_get_env_index(t_state *state, char *key)
+static int	mush_get_env_index(t_state *state, char *name)
 {
 	char		**vars;
 	size_t		cmp_len;
@@ -28,21 +28,21 @@ static int	mush_get_env_index(t_state *state, char *key)
 	while (i < len)
 	{
 		cmp_len = strcspn(vars[i], "=");
-		if (memcmp(vars[i], key, cmp_len) == 0)
+		if (memcmp(vars[i], name, cmp_len) == 0)
 			return (i);
 		++i;
 	}
 	return (-1);
 }
 
-char	*mush_get_env(t_state *state, char *key)
+char	*mush_get_env(t_state *state, char *name)
 {
 	int		index;
 	char	*value;
 
-	if (memcmp(key, "?", 2) == 0)
+	if (memcmp(name, "?", 2) == 0)
 		return (state->last_status);
-	index = mush_get_env_index(state, key);
+	index = mush_get_env_index(state, name);
 	if (index < 0)
 		return (NULL);
 	value = (char *)state->envlist.data[index];
@@ -52,7 +52,7 @@ char	*mush_get_env(t_state *state, char *key)
 	return (value);
 }
 
-void	mush_set_env(t_state *state, char *key, char *value)
+void	mush_set_env(t_state *state, char *name, char *value)
 {
 	int		index;
 	char	*str;
@@ -61,16 +61,16 @@ void	mush_set_env(t_state *state, char *key, char *value)
 
 	if (value == NULL)
 	{
-		join = ft_strjoin(key, "=");
+		join = ft_strjoin(name, "=");
 		mush_put_env(state, join);
 		free(join);
 		return ;
 	}
-	str = (char *)malloc((strlen(key) + strlen(value) + 2) * sizeof(char));
-	nul = stpcpy(str, key);
+	str = (char *)malloc((strlen(name) + strlen(value) + 2) * sizeof(char));
+	nul = stpcpy(str, name);
 	*nul = '=';
 	strcpy(++nul, value);
-	index = mush_get_env_index(state, key);
+	index = mush_get_env_index(state, name);
 	if (index < 0)
 	{
 		mush_put_env(state, str);
@@ -83,36 +83,37 @@ void	mush_set_env(t_state *state, char *key, char *value)
 
 void	mush_put_env(t_state *state, char *str)
 {
-	char	*key;
-	int		key_len;
+	char	*name;
+	int		name_len;
 	int		index;
 
-	key_len = strcspn(str, "=");
-	key = strndup(str, key_len);
-	index = mush_get_env_index(state, key);
-	free(key);
+	name_len = strcspn(str, "=");
+	name = strndup(str, name_len);
+	index = mush_get_env_index(state, name);
+	free(name);
 	if (index < 0)
 	{
 		hx_array_push(&state->envlist, strdup(str));
 		return ;
 	}
-	if (str[key_len] != '=')
+	if (str[name_len] != '=')
 		return ;
 	free(state->envlist.data[index]);
 	state->envlist.data[index] = strdup(str);
 	return ;
 }
 
-void	mush_unset_env(t_state *state, char *key)
+int	mush_is_valid_name(char *name)
 {
-	int		index;
-	char	*tofree;
+	size_t	i;
 
-	index = mush_get_env_index(state, key);
-	if (index < 0)
-		return ;
-	tofree = (char *)hx_array_pop_index(&state->envlist, index);
-	free(tofree);
-	return ;
+	i = 0;
+	if (!ft_isalpha(name[i]) && name[i] != '_')
+		return (0);
+	while (name[++i])
+	{
+		if (!ft_isalnum(name[i]) && name[i] != '_')
+			return (0);
+	}
+	return (1);
 }
-
