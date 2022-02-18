@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 16:34:22 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/17 05:41:37 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/19 02:36:08 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ int	builtin_echo(t_state *state, int argc, char *argv[])
 {
 	t_buf	buffer;
 	int		option_n;
-	size_t	i;
+	int		i;
 
+	(void)state;
 	ft_memset(&buffer, 0, sizeof(t_buf));
 	option_n = 0;
 	i = 0;

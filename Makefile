@@ -6,14 +6,13 @@
 #    By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/02/17 03:08:22 by hyeonsok         ###   ########.fr        #
+#    Updated: 2022/02/19 02:31:57 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-# CFLAGS = -Wall -Werror -Wextra -g3 
-CFLAGS = -g3 
-# CFLAGS = -g3 -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g3 
+# CFLAGS = -g3 
 
 RM = rm -f
 
@@ -61,14 +60,9 @@ OBJS		+=	$(addprefix $(OBJDIR)/, \
 # ./src/utils
 OBJS		+=	$(addprefix $(OBJDIR)/, \
 				mush_regex.o \
-				mush_env_realloc.o \
 				mush_fatal.o \
-				mush_getenv.o \
-				mush_setenv.o)
+				mush_env.o)
 
-DEBUG		+=	$(addprefix lib/libft/src/hx/, \
-				array.o \
-				buffer.o)
 SRC_DIR = ./src
 SRC_UTILS_DIR = ./src/utils
 SRC_BUILTIN_DIR = ./src/builtin

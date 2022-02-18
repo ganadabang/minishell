@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/17 15:20:43 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/19 03:29:18 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 int	builtin_cd(t_state *state, int argc, char *argv[])
 {
 	char	*pwd;
+	char	*old_pwd;
 	char	*path_value;
 	int		i;
 
@@ -32,7 +33,7 @@ int	builtin_cd(t_state *state, int argc, char *argv[])
 	path_value = NULL;
 	if (argc == 1)
 	{
-		path_value = mush_getenv(state, "HOME");
+		path_value = mush_get_env(state, "HOME");
 		if (path_value == NULL)
 		{
 			ft_dputendl(2, "mush: cd: HOME not set");
@@ -41,17 +42,19 @@ int	builtin_cd(t_state *state, int argc, char *argv[])
 	}
 	if (path_value == NULL)
 		path_value = argv[1];
+	old_pwd = getcwd(NULL, 0);
 	if (chdir(path_value) < 0)
 	{
 		ft_dputs(2, "mush: cd: ");
 		ft_dputendl(2, strerror(errno));
 		return (1);
 	}
-	// mush_setenv(state, "OLDPWD", mush_getenv(state, "PWD"));
-	// pwd = getcwd(NULL, 0);
-	// if (pwd == NULL)
-	// 	mush_fatal("getcwd");
-	// mush_setenv(state, "PWD", pwd);
-	// free(pwd);
+	pwd = getcwd(NULL, 0);
+	if (pwd == NULL || old_pwd == NULL)
+		mush_fatal("getcwd");
+	mush_set_env(state, "OLDPWD", old_pwd);
+	free(old_pwd);
+	mush_set_env(state, "PWD", pwd);
+	free(pwd);
 	return (0);
 }

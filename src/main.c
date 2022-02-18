@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:47:55 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/17 04:32:32 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/19 02:33:21 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,15 @@ void	debug_pipeline(t_array *pipeline)
 
 static void	mush_init(t_state *state_ref, char **envp)
 {
+	size_t	i;
+
 	ft_memset(state_ref, 0, sizeof(t_state));
 	tcgetattr(STDOUT_FILENO, &state_ref->term);
-	state_ref->envp = envp;
+	i = 0;
+	while (envp[i] != NULL)
+		hx_array_push(&state_ref->envlist, ft_strdup(envp[i++]));
 	state_ref->exit = -1;
 	state_ref->last_status = ft_itoa(0);
-	state_ref->pwd = getenv("PWD");
-	state_ref->old_pwd = getenv("OLDPWD");
 	return ;
 }
 
@@ -74,6 +76,8 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_state	state;
 
+	if (argc != 1 && argv[argc] != NULL)
+		return (1);
 	mush_init(&state, envp);
 	mush_signal_set();
 	while (state.exit == -1)

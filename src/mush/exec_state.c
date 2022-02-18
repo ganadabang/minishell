@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_state.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:39 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/15 20:51:05 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/19 02:34:33 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int	mush_job_status_update(t_array	*pipeline_ref)
 		wpid = wait(&status);
 		if (wpid < 0)
 			break ;
-		for (size_t i = 0; i < len; ++i)
+		i = 0;
+		while (i < len)
 		{
 			if (wpid == procs[i]->pid)
 			{	
@@ -42,6 +43,7 @@ int	mush_job_status_update(t_array	*pipeline_ref)
 				}
 				procs[i]->status = WEXITSTATUS(status);
 			}
+			++i;
 		}
 	}
 	return (procs[len - 1]->status);

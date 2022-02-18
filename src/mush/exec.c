@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/17 13:23:23 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/19 02:33:52 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	exec_pipe_init(t_proc **procs)
 	pipe(fd_pipe);
 	procs[0]->stdout = fd_pipe[1];
 	procs[1]->stdin = fd_pipe[0];
+	return ;
 }
 
 void	exec_pipe_connect(t_proc *proc)
@@ -40,6 +41,7 @@ void	exec_pipe_connect(t_proc *proc)
 		dup2(proc->stdout, STDOUT_FILENO);
 		close(proc->stdout);
 	}
+	return ;
 }
 
 void	exec_check_cmd(char *name, char *argv[])
@@ -70,13 +72,13 @@ void	mush_exec_simple_command(t_state *state_ref, t_proc *proc)
 	exec_check_cmd(proc->name, (char **)proc->argv.data);
 	if (builtin_search(proc) == 1)
 		exit(proc->fn_builtin(state_ref, proc->argv.len, (char **)proc->argv.data));
-	execve(proc->name, (char **)proc->argv.data, state_ref->envp);
+	execve(proc->name, (char **)proc->argv.data, (char **)state_ref->envlist.data);
+	return ;
 }
 
 void	mush_execute(t_state *state)
 {
 	t_proc		**procs;
-	int			(*fn)(t_state *, int, char *[]);
 	pid_t		pid;
 	size_t		i;
 	size_t		len;

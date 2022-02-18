@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 20:54:27 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/17 13:26:55 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/19 02:34:46 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int mush_exec_builtin(t_state *state_ref)
 {
 	t_proc	*proc;
 	t_array	*io_files_ref;
-	int		(*fn)(t_state *, int, char *[]);
 	int		fd_backup[2];
 	int		ret;
 

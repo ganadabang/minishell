@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 17:25:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/19 00:20:11 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/19 03:56:59 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,6 @@ enum	e_iotype {
 	IO_APPEND,
 	IO_HERE
 };
-
-typedef struct s_mush_var
-{
-	char	*key;
-	char	*value;
-}	t_mush_var;
 
 typedef struct s_word {
 	char	*str;

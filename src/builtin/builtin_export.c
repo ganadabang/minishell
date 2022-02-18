@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:12 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/17 03:13:26 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/19 03:10:02 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,63 +14,49 @@
 #include <stdio.h>
 #include "libfthx.h"
 #include "mush/builtin.h"
-
 //To be removed
 #include <string.h>
 
-void	ft_print_env_export(t_state *state)
+static void	mush_export_print(t_state *state)
 {
-	char	**state_cpy;
-	char	*path_name;
-	char	*path_value;
+	t_buf	buffer;
+	char	**envcpy;
 	int		i;
-	int		j;
+	int		len;
 
+	memset(&buffer, 0, sizeof(buffer));
+	len = state->envlist.len;
+	envcpy = (char **)malloc((len + 1) * sizeof(char *));
+	memcpy(envcpy, state->envlist.data, (len + 1) * sizeof(char *));
+	envcpy[len] = NULL;
+	ft_strvsort(envcpy);
 	i = 0;
-	state_cpy = (char **)realloc(state->envp, ft_strvlen(state->envp) + 1);
-	ft_strvsort(state_cpy);
-	while (state_cpy[i])
+	while (i < len)
 	{
-		j = ft_chrspn(state->envp[i], '=');
-		path_name = ft_strndup(state->envp[i], j);
-		path_value = ft_strndup(state->envp[i] + j + 1,
-				ft_strlen(state->envp[i]) - j);
-		printf("declare -x %s=\"%s\"\n", path_name, path_value);
-		free(path_name);
-		free(path_value);
-		free(state_cpy[i]);
-		i++;
+		hx_buffer_putstr(&buffer, envcpy[i], ft_strlen(envcpy[i]));
+		hx_buffer_putchar(&buffer, '\n');
+		++i;
 	}
-	free(state_cpy);
+	free(envcpy);
+	ft_puts(buffer.data);
+	hx_buffer_cleanup(&buffer);
 }
 
-void	ft_update_env_export(t_state *state, char *argv[])
+void	ft_update_env_export(t_state *state, int argc, char *argv[])
 {
-	char	**env;
-	int		cnt_env_arr;
-	int		i;
+	int	i;
 
-	cnt_env_arr = ft_strvlen(state->envp);
-	env = (char **)ft_calloc(cnt_env_arr + 2, sizeof(char *));
-	i = 0;
-	if (mush_regex(argv))
-	{
-		while (state->envp[i] && i < cnt_env_arr)
-		{
-			env[i] = ft_strdup(state->envp[i]);
-			i++;
-		}
-		env[i] = ft_strdup(argv[1]);
-		state->envp = env;
-	}
+	i = 1;
+	while (i < argc)
+		mush_put_env(state, argv[i++]);
 	return ;
 }
 
 int	builtin_export(t_state *state, int argc, char *argv[])
 {
 	if (argc == 1)
-		ft_print_env_export(state);
+		mush_export_print(state);
 	else if (argc >= 2)
-		ft_update_env_export(state, argv);
+		ft_update_env_export(state, argc, argv);
 	return (0);
 }

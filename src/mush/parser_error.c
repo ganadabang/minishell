@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 22:04:01 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/16 23:32:20 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/19 02:33:42 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ static void	parser_put_syntax_error(t_buf *buffer_ref, const char *unexpected)
 static int	parser_check_unexpected(enum e_mush_token cur_type, \
 	enum e_mush_token prev_type)
 {
-	if (cur_type == TOKEN_NEWLINE && prev_type != TOKEN_WORD
-		|| cur_type == TOKEN_REDIR && prev_type == TOKEN_REDIR
-		|| cur_type == TOKEN_PIPE && prev_type != TOKEN_WORD)
+	if ((cur_type == TOKEN_NEWLINE && prev_type != TOKEN_WORD)
+		|| (cur_type == TOKEN_REDIR && prev_type == TOKEN_REDIR)
+		|| (cur_type == TOKEN_PIPE && prev_type != TOKEN_WORD))
 		return (-1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:13 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/17 04:32:01 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/19 03:50:52 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*exec_expn_cmd(t_state *state_ref, char *name)
 		return (NULL);
 	if (ft_strchr(name, '/') != NULL)
 		return (name);
-	path = mush_getenv(state_ref, "PATH");
+	path = mush_get_env(state_ref, "PATH");
 	if (path == NULL)
 		return (name);
 	slash_name = ft_strjoin("/", name);
@@ -67,7 +67,7 @@ size_t	exec_expn_buffer_putenv(t_state *state_ref, t_buf *buffer, char *word)
 
 	key_len = ft_strcspn(word, "'\"$ \t\n");
 	key = strndup(word, key_len);
-	value =  mush_getenv(state_ref, key);
+	value =  mush_get_env(state_ref, key);
 	free(key);
 	value_len = 0;
 	if (value != NULL)
@@ -119,6 +119,12 @@ void	exec_expn_argv(t_state *state_ref, t_array *exec_argv)
 	{
 		tokfree = argv[i];
 		argv[i] = exec_expn_word(state_ref, &buffer, argv[i]);
+		if (argv[i] == NULL)
+		{
+			argv[i] = strdup("");
+			if (argv[i] == NULL)
+				mush_fatal("malloc");
+		}
 		free(tokfree);
 		++i;
 	}
