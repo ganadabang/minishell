@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   array.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 21:16:00 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/15 20:04:22 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/19 00:14:39 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,17 @@ void	hx_array_cleanup(t_array *array)
 	array->cap = 0;
 	array->len = 0;
 	return ;
+}
+
+void	*hx_array_pop_index(t_array *array, size_t i)
+{
+	size_t	last_index;
+	void	*ret;
+
+	ret = array->data[i];
+	last_index = array->len - 1;
+	array->data[i] = array->data[last_index];
+	array->data[last_index] = NULL;
+	array->len -= 1;
+	return (ret);
 }

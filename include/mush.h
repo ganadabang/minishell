@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 17:25:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/17 04:19:12 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/19 00:20:11 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ enum	e_iotype {
 	IO_APPEND,
 	IO_HERE
 };
+
+typedef struct s_mush_var
+{
+	char	*key;
+	char	*value;
+}	t_mush_var;
 
 typedef struct s_word {
 	char	*str;
@@ -56,7 +62,7 @@ typedef struct s_job {
 typedef struct s_state {
 	struct termios	term;
 	t_job			job;
-	char			**envp;
+	t_array			envlist;
 	char			*pwd;
 	char			*old_pwd;
 	int				exit;
@@ -76,6 +82,10 @@ typedef struct s_proc {
 
 void	debug_pipeline(t_array *pipeline);
 void	mush_fatal(const char *str);
-char	*mush_getenv(t_state *state, char *key);
+char	*mush_get_env(t_state *state, char *key);
+void	mush_set_env(t_state *state, char *key, char *value);
+void	mush_put_env(t_state *state, char *str);
+void	mush_unset_env(t_state *state, char *key);
+
 
 #endif
