@@ -6,7 +6,7 @@
 #    By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/26 11:13:05 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/02/17 03:13:26 by hyeonsok         ###   ########.fr        #
+#    Updated: 2022/02/21 00:42:48 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,6 +89,7 @@ SRCS	+=	$(addprefix src/, \
 ft_atoi.c \
 ft_atoll.c \
 ft_calloc.c \
+ft_realloc.c \
 ft_swap.c)
 
 SRCS	+=	$(addprefix src/hx/, \

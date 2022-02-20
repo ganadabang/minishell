@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 16:15:48 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/17 05:12:52 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 00:40:51 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	hx_buffer_secure(t_buf *buf, size_t size)
 	if (buf->data == NULL)
 		buf->data = (char *)ft_calloc(new_cap, sizeof(char));
 	else
-		buf->data = (char *)realloc(buf->data, new_cap);
+		buf->data = (char *)ft_realloc(buf->data, new_cap);
 	if (!buf->data)
 		return (0);
 	buf->cap = new_cap;

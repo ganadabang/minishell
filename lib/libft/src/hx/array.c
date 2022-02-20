@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 21:16:00 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/19 00:14:39 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 00:40:44 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	hx_array_secure(t_array *array, size_t new_cap)
 	if (array->data == NULL)
 		array->data = (void **)ft_calloc(new_cap, sizeof(void *));
 	else
-		array->data = (void **)realloc(array->data, new_cap * sizeof(void *));
+		array->data = (void **)ft_realloc(array->data, new_cap * sizeof(void *));
 	if (!array->data)
 		return (0);
 	array->cap = new_cap;
