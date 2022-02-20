@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/20 21:44:47 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/20 23:55:03 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void	exec_run_simple_command(t_state *state_ref, t_proc *proc, int toclose)
 
 	len = state_ref->job.pipeline.len;
 	exec_expn_argv(state_ref, &proc->argv);
-	proc->name = (char *)proc->argv.data[0];
 	if (builtin_search(proc) == 1 && len == 1)
 		mush_exec_builtin(state_ref);
 	else
@@ -64,7 +63,7 @@ void	exec_run_simple_command(t_state *state_ref, t_proc *proc, int toclose)
 		{
 			exec_proc_pipe_redirection(proc, toclose);
 			mush_signal_restored();
-			exec_proc_io_redirect(state_ref, &proc->io_files);
+			exec_proc_io_redirect(state_ref, &proc->io_files);	
 			if (proc->fn_builtin != NULL)
 				exit(proc->fn_builtin(state_ref, proc->argv.len, \
 					(char **)proc->argv.data));

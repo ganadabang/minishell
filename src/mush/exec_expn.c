@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_expn.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:13 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/20 21:40:22 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 00:20:49 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*exec_expn_cmd(t_state *state_ref, char *name)
 	char	**pathv;
 	size_t	i;
 
-	if (name == NULL)
+	if (*name == '\0')
 		return (NULL);
 	if (ft_strchr(name, '/') != NULL)
 		return (name);
@@ -37,9 +37,9 @@ char	*exec_expn_cmd(t_state *state_ref, char *name)
 	if (path == NULL)
 		return (name);
 	slash_name = ft_strjoin("/", name);
-	free(name);
 	if (slash_name == NULL)
 		mush_fatal("malloc");
+	free(name);
 	pathv = ft_split(path, ":");
 	if (pathv == NULL)
 		mush_fatal("malloc");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 20:54:27 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/20 17:49:09 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 00:01:38 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ int	builtin_search(t_proc *proc)
 	size_t	cmp_len;
 	size_t	i;
 
-	name = proc->name;
-	if (name == NULL)
+	if (proc->argv.len == 0)
 		return (0);
+	name = (char *)proc->argv.data[0];
 	cmp_len = ft_strlen(name) + 1;
 	fn_ref = &proc->fn_builtin;
 	i = 0;
@@ -43,6 +43,7 @@ int	builtin_search(t_proc *proc)
 		if (!ft_memcmp(g_builtins[i].name, name, cmp_len))
 		{
 			*fn_ref = g_builtins[i].builtin;
+			proc->name = name;
 			return (1);
 		}
 		++i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cleanup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 19:24:30 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/15 20:55:42 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 00:29:51 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ static void	cleanup_io_files(t_array *io_files)
 	t_file	**data;
 	size_t	len;
 	size_t	i;
+	int		here_flag;
 
+	here_flag = 0;
 	data = (t_file **)io_files->data;
 	if (data == NULL)
 		return ;
@@ -45,12 +47,14 @@ static void	cleanup_io_files(t_array *io_files)
 	{
 		if (data[i]->io_type == IO_HERE)
 		{
-			unlink("./here_tmp");
+			here_flag = 1;
 			data[i]->name = NULL;
 		}
 		free(data[i]->name);
 		free(data[i++]);
 	}
+	if (here_flag == 1)
+		unlink("./.here_tmp");
 	free(data);
 	data = NULL;
 }

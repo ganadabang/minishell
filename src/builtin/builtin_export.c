@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:12 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/19 13:45:26 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 00:08:21 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,12 @@ static void	mush_export_print(t_state *state)
 	int		i;
 	int		len;
 
-	memset(&buffer, 0, sizeof(buffer));
+	ft_memset(&buffer, 0, sizeof(buffer));
 	len = state->envlist.len;
 	envcpy = (char **)malloc((len + 1) * sizeof(char *));
-	memcpy(envcpy, state->envlist.data, (len + 1) * sizeof(char *));
+	if (envcpy == NULL)
+		mush_fatal("malloc");
+	ft_memcpy(envcpy, state->envlist.data, (len + 1) * sizeof(char *));
 	envcpy[len] = NULL;
 	ft_strvsort(envcpy);
 	i = 0;

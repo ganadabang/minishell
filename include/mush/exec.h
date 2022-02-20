@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:56:20 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/20 19:42:31 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 00:25:34 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,3 @@ void	mush_cleanup_pipeline(t_array *pipeline);
 void	mush_signal_retored(void);
 
 #endif /* EXEC_H */
-// bash-3.2$ brew
-// bash: /Users/hyeonsok/.brew/bin/brew: Permission denied
-// bash-3.2$ /brew
-// bash: /brew: No such file or directory
-// bash-3.2$ brewf
-// bash: brewf: command not found
