@@ -3,18 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/25 17:14:02 by SSONG             #+#    #+#             */
-/*   Updated: 2022/02/10 18:01:19 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 03:27:28 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-inline static int	ft_isalpha(int c)
-{
-	return (((unsigned char)c >= 'a' && (unsigned char)c <= 'z')
-			|| ((unsigned char)c >= 'A' && (unsigned char)c <= 'Z'));
-}
+#include "libft/is.h"
 
 int	ft_isalnum(int c)
 {

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_dputnbr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 23:16:29 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/10 18:47:34 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 03:29:10 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include "libft/io.h"
 
 int	ft_dputnbr(int fd, int n)
 {

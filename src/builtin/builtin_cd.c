@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/20 14:31:24 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 02:11:19 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,40 +17,10 @@
 #include "libft.h"
 #include "mush/builtin.h"
 
-int	builtin_cd(t_state *state, int argc, char *argv[])
+static void	update_env_pwd(t_state *state, char *old_pwd)
 {
 	char	*pwd;
-	char	*old_pwd;
-	char	*path_value;
-	int		i;
 
-	i = 0;
-	if (argc > 2)
-	{
-		ft_dputs(2, "mush: cd: to many arguments\n");
-		return (1);
-	}
-	path_value = NULL;
-	if (argc == 1)
-	{
-		path_value = mush_get_env(state, "HOME");
-		if (path_value == NULL)
-		{
-			ft_dputs(2, "mush: cd: HOME not set\n");
-			return (1);
-		}
-	}
-	if (path_value == NULL)
-		path_value = argv[1];
-	old_pwd = getcwd(NULL, 0);
-	if (chdir(path_value) < 0)
-	{
-		ft_dputs(2, "mush: ");
-		ft_dputs(2, argv[1]);
-		ft_dputs(2, ": ");
-		ft_dputendl(2, strerror(errno));
-		return (1);
-	}
 	pwd = getcwd(NULL, 0);
 	if (pwd == NULL || old_pwd == NULL)
 		mush_fatal("getcwd");
@@ -58,5 +28,46 @@ int	builtin_cd(t_state *state, int argc, char *argv[])
 	free(old_pwd);
 	mush_set_env(state, "PWD", pwd);
 	free(pwd);
+	return ;
+}
+
+static char	*get_home_path(t_state *state)
+{
+	char	*path_value;
+
+	path_value = mush_get_env(state, "HOME");
+	if (path_value == NULL)
+	{
+		mush_error("cd", "HOME not set");
+		return (NULL);
+	}
+	return (path_value);
+}
+
+int	builtin_cd(t_state *state, int argc, char *argv[])
+{
+	char	*old_pwd;
+	char	*path_value;
+
+	if (argc > 2)
+	{
+		mush_error("cd", "to many arguments\n");
+		return (1);
+	}
+	if (argc == 1)
+	{
+		path_value = get_home_path(state);
+		if (path_value == NULL)
+			return (1);
+	}
+	else if (argc == 2)
+		path_value = argv[1];
+	old_pwd = getcwd(NULL, 0);
+	if (chdir(path_value) < 0)
+	{
+		mush_error(path_value, strerror(errno));
+		return (1);
+	}
+	update_env_pwd(state, old_pwd);
 	return (0);
 }

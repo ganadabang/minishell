@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 18:22:07 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/10 21:49:42 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 03:31:42 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "libft/string.h"
+#include "libft.h"
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {

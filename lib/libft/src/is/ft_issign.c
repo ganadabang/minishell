@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_issign.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 13:51:40 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/10 18:02:54 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 03:27:58 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft/is.h"
 
 int	ft_issign(int c)
 {

@@ -6,11 +6,11 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 13:38:55 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/17 02:03:50 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 03:26:28 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libft/string.h"
 
 size_t	ft_strvlen(char **strv)
 {

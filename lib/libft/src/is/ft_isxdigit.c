@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isxdigit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 21:47:49 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/10 18:03:08 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 03:28:07 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft/is.h"
 
 int	ft_isxdigit(int c)
 {

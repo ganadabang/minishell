@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/24 21:09:45 by SSONG             #+#    #+#             */
-/*   Updated: 2022/02/15 17:36:49 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 03:25:22 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libft/string.h"
 
 int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {

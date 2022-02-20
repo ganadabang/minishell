@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/24 20:35:12 by SSONG             #+#    #+#             */
-/*   Updated: 2022/02/10 21:38:48 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 03:25:19 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libft/string.h"
 
 void	*ft_memchr(const void *s, int c, size_t n)
 {

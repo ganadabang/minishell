@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mush.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 17:25:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/20 14:26:32 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 02:55:58 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ typedef struct s_proc {
 	int		stdout;
 }	t_proc;
 
-void	debug_pipeline(t_array *pipeline);
 void	mush_fatal(const char *str);
+int		mush_error(const char *str, const char *strerr);
 char	*mush_get_env(t_state *state, char *name);
 void	mush_set_env(t_state *state, char *name, char *value);
 void	mush_put_env(t_state *state, char *str);

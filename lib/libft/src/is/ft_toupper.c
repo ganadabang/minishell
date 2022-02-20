@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/25 17:25:26 by SSONG             #+#    #+#             */
-/*   Updated: 2022/02/11 14:08:29 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 03:28:14 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft/is.h"
 
 int	ft_toupper(int c)
 {

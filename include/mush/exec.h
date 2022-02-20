@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:56:20 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 00:25:34 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 02:56:13 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "mush.h"
 
-void	exec_proc_io_redirect(t_state *state_ref, t_array *io_files_ref);
+int		exec_proc_io_redirect(t_state *state_ref, t_array *io_files_ref);
 void	mush_execute(t_state *state);
 int		mush_job_status_update(t_array *pipeline_ref);
 

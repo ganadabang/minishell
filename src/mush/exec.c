@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/20 23:55:03 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 03:12:58 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,24 +63,20 @@ void	exec_run_simple_command(t_state *state_ref, t_proc *proc, int toclose)
 		{
 			exec_proc_pipe_redirection(proc, toclose);
 			mush_signal_restored();
-			exec_proc_io_redirect(state_ref, &proc->io_files);	
+			if(exec_proc_io_redirect(state_ref, &proc->io_files) != 0)
+				exit(1);
 			if (proc->fn_builtin != NULL)
 				exit(proc->fn_builtin(state_ref, proc->argv.len, \
 					(char **)proc->argv.data));
 			proc->name = exec_expn_cmd(state_ref, proc->argv.data[0]);
 			if (proc->name == NULL)
 			{
-				ft_dputs(2, "mush: ");
-				ft_dputs(2, (char *)proc->argv.data[0]);
-				ft_dputs(2, ": command not found\n");
+				mush_error((char *)proc->argv.data[0], "command not found");
 				exit(127);
 			}
 			execve(proc->name, (char **)proc->argv.data, \
 			(char **)state_ref->envlist.data);
-			ft_dputs(2, "mush: ");
-			ft_dputs(2, proc->name);
-			ft_dputs(2, ": ");
-			ft_dputendl(2, strerror(errno));
+			mush_error(proc->name, strerror(errno));
 			if (errno == ENOEXEC || errno == EACCES)
 				exit(126);
 			exit(127);
@@ -89,7 +85,6 @@ void	exec_run_simple_command(t_state *state_ref, t_proc *proc, int toclose)
 	}
 	return ;
 }
-
 
 void	mush_execute(t_state *state)
 {
@@ -115,12 +110,9 @@ void	mush_execute(t_state *state)
 	if (pipe_fd[0] != -1)
 		close(procs[i]->stdin);
 	state->job.status = mush_job_status_update(&state->job.pipeline);
-	if (state->job.status != 0)
-	{
-		free(state->last_status);
-		state->last_status = ft_itoa(state->job.status);
-		if (state->last_status == NULL)
-			mush_fatal("malloc");
-	}
+	free(state->last_status);
+	state->last_status = ft_itoa(state->job.status);
+	if (state->last_status == NULL)
+		mush_fatal("malloc");
 	return ;
 }

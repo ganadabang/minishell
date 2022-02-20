@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 20:54:27 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 00:01:38 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 02:57:47 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 #include "mush/exec.h"
 #include "libfthx.h"
 
-static const struct s_builtin	g_builtins[] = { \
-	{"cd", builtin_cd},
-	{"echo", builtin_echo},
-	{"env", builtin_env},
-	{"exit", builtin_exit},
-	{"export", builtin_export},
-	{"pwd", builtin_pwd},
-	{"unset", builtin_unset}
+static const struct s_builtin	g_builtins[] = {\
+	{"cd", builtin_cd}, \
+	{"echo", builtin_echo}, \
+	{"env", builtin_env}, \
+	{"exit", builtin_exit}, \
+	{"export", builtin_export}, \
+	{"pwd", builtin_pwd}, \
+	{"unset", builtin_unset} \
 };
 
 int	builtin_search(t_proc *proc)
@@ -61,11 +61,16 @@ void	mush_exec_builtin(t_state *state_ref)
 	io_files_ref = &proc->io_files;
 	fd_backup[0] = dup(0);
 	fd_backup[1] = dup(1);
-	exec_proc_io_redirect(state_ref, io_files_ref);
+	if (exec_proc_io_redirect(state_ref, io_files_ref) != 0)
+	{
+		state_ref->job.status = 1;
+		return ;
+	}
 	state_ref->job.status = proc->fn_builtin(state_ref, proc->argv.len, \
 		(char **)proc->argv.data);
 	dup2(fd_backup[0], 0);
 	dup2(fd_backup[1], 1);
 	close(fd_backup[0]);
 	close(fd_backup[1]);
+	return ;
 }

@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_islower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 19:59:59 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/10 18:02:44 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 03:27:48 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft/is.h"
 
 int	ft_islower(int c)
 {

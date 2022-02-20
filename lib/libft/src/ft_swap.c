@@ -6,9 +6,11 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 18:31:07 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/17 01:49:44 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 03:27:04 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 void	ft_swap(void **ptr1, void **ptr2)
 {

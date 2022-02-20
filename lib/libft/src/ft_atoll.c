@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoll.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 13:57:08 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/10 21:53:56 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 03:26:51 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 long long	ft_atoll(const char *str)
 {

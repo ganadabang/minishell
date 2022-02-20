@@ -6,13 +6,13 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 21:16:00 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 00:40:44 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 03:30:31 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <string.h>
-#include "libfthx.h"
+#include "libft.h"
+#include "libhx/array.h"
 
 int	hx_array_secure(t_array *array, size_t new_cap)
 {

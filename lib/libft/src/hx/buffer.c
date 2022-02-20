@@ -6,12 +6,11 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 16:15:48 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 00:40:51 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 03:30:42 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <string.h>
 #include "libft.h"
 #include "libhx/buffer.h"
 
@@ -44,7 +43,7 @@ int	hx_buffer_putstr(t_buf *buf, const char *data, size_t size)
 		return (0);
 	if (!hx_buffer_secure(buf, size))
 		return (0);
-	memcpy(&buf->data[buf->len], data, size);
+	ft_memcpy(&buf->data[buf->len], data, size);
 	buf->len += size;
 	return (1);
 }

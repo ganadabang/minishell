@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mush_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 03:10:38 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/20 14:25:44 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 02:44:01 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ int	mush_get_env_index(t_state *state, char *name)
 	i = 0;
 	while (i < len)
 	{
-		cmp_len = strcspn(vars[i], "=");
-		if (memcmp(vars[i], name, cmp_len) == 0)
+		cmp_len = ft_strcspn(vars[i], "=");
+		if (ft_memcmp(vars[i], name, cmp_len) == 0)
 			return (i);
 		++i;
 	}
@@ -40,13 +40,13 @@ char	*mush_get_env(t_state *state, char *name)
 	int		index;
 	char	*value;
 
-	if (memcmp(name, "?", 2) == 0)
+	if (ft_memcmp(name, "?", 2) == 0)
 		return (state->last_status);
 	index = mush_get_env_index(state, name);
 	if (index < 0)
 		return (NULL);
 	value = (char *)state->envlist.data[index];
-	value += strcspn(value, "=");
+	value += ft_strcspn(value, "=");
 	if (*value == '=')
 		++value;
 	return (value);
@@ -87,8 +87,8 @@ void	mush_put_env(t_state *state, char *str)
 	int		name_len;
 	int		index;
 
-	name_len = strcspn(str, "=");
-	name = strndup(str, name_len);
+	name_len = ft_strcspn(str, "=");
+	name = ft_strndup(str, name_len);
 	index = mush_get_env_index(state, name);
 	free(name);
 	if (index < 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_state.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:39 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/20 20:06:52 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 01:45:26 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 int	mush_job_status_update(t_array	*pipeline_ref)
 {
-	t_proc **procs;
+	t_proc	**procs;
 	int		status;
 	int		wpid;
 	size_t	len;
@@ -40,7 +40,7 @@ int	mush_job_status_update(t_array	*pipeline_ref)
 			{	
 				if (WIFSIGNALED(status) == 1)
 				{
-					if (WTERMSIG(status) == SIGINT 
+					if (WTERMSIG(status) == SIGINT \
 						|| WTERMSIG(status) == SIGQUIT)
 					{
 						procs[i]->status = 128 + WTERMSIG(status);

@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:13 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 00:20:49 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 02:47:09 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,6 @@
 #include "sys/stat.h"
 #include "libfthx.h"
 #include "mush/parser.h"
-// #include "mush/builtin.h"
-
-#include <string.h>
-
 char	*exec_expn_cmd(t_state *state_ref, char *name)
 {
 	char	*slash_name;
@@ -31,10 +27,8 @@ char	*exec_expn_cmd(t_state *state_ref, char *name)
 
 	if (*name == '\0')
 		return (NULL);
-	if (ft_strchr(name, '/') != NULL)
-		return (name);
 	path = mush_get_env(state_ref, "PATH");
-	if (path == NULL)
+	if (ft_strchr(name, '/') != NULL || path == NULL)
 		return (name);
 	slash_name = ft_strjoin("/", name);
 	if (slash_name == NULL)
@@ -49,18 +43,16 @@ char	*exec_expn_cmd(t_state *state_ref, char *name)
 	{
 		path_cmd = ft_strjoin(pathv[i], slash_name);
 		free(pathv[i++]);
-		{
-			stat(path_cmd, NULL);
-			if (errno != ENOENT)
-				break ;
-		}
+		stat(path_cmd, NULL);
+		if (errno != ENOENT)
+			break ;
 		free(path_cmd);
 		path_cmd = NULL;
 	}
-	free(slash_name);
 	while (pathv[i] != NULL)
 		free(pathv[i++]);
 	free(pathv);
+	free(slash_name);
 	return (path_cmd);
 }
 
@@ -72,8 +64,8 @@ size_t	exec_expn_buffer_putenv(t_state *state_ref, t_buf *buffer, char *word)
 	size_t	value_len;
 
 	key_len = ft_strcspn(word, "'\"$ \t\n");
-	key = strndup(word, key_len);
-	value =  mush_get_env(state_ref, key);
+	key = ft_strndup(word, key_len);
+	value = mush_get_env(state_ref, key);
 	free(key);
 	value_len = 0;
 	if (value != NULL)
@@ -93,7 +85,7 @@ char	*exec_expn_word(t_state *state_ref, t_buf *buffer, char *word)
 	i = 0;
 	while (1)
 	{
-		if (word[i] == '\''  && !double_quoted)
+		if (word[i] == '\'' && !double_quoted)
 			single_quoted = !single_quoted;
 		else if (word[i] == '\"' && !single_quoted)
 			double_quoted = !double_quoted;
