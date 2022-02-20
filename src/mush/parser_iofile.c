@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_iofile.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 02:02:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/16 22:51:03 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/20 19:42:13 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ static char	*here_remove_quoting(char *word)
 		++i;
 	}
 	here_end = hx_buffer_withdraw(&buffer);
+	if (here_end == NULL)
+		here_end = ft_strdup("");
 	return (here_end);
 }
 
@@ -80,11 +82,12 @@ static void	heredoc_init(t_file *file)
 	while (1)
 	{
 		input = readline("heredoc> ");
-		if (ft_memcmp(here_end, input, here_len) == 0)
+		if (input == NULL || ft_memcmp(here_end, input, here_len) == 0)
 			break ;
 		ft_dputendl(fd, input);
 		free(input);
 	}
+	free(here_end);
 	free(input);
 	close(fd);
 	return ;

@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   exec_state.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:39 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/19 02:34:33 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/20 20:06:52 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <sys/errno.h>
 #include <sys/wait.h>
 #include "mush/parser.h"
+
+#include <stdio.h>
 
 int	mush_job_status_update(t_array	*pipeline_ref)
 {
@@ -37,9 +40,13 @@ int	mush_job_status_update(t_array	*pipeline_ref)
 			{	
 				if (WIFSIGNALED(status) == 1)
 				{
-					procs[i]->status = 128 + WTERMSIG(status);
-					write(1, "\n", 1);
-					return (procs[len - 1]->status);
+					if (WTERMSIG(status) == SIGINT 
+						|| WTERMSIG(status) == SIGQUIT)
+					{
+						procs[i]->status = 128 + WTERMSIG(status);
+						write(1, "\n", 1);
+						return (procs[len - 1]->status);
+					}
 				}
 				procs[i]->status = WEXITSTATUS(status);
 			}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mush_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 03:10:38 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/19 05:16:31 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/20 14:25:44 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "libfthx.h"
 #include "mush.h"
 
-static int	mush_get_env_index(t_state *state, char *name)
+int	mush_get_env_index(t_state *state, char *name)
 {
 	char		**vars;
 	size_t		cmp_len;

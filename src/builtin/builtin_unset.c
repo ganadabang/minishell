@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_unset.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/11 16:49:34 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/19 05:17:04 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/20 14:35:05 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "mush/builtin.h"
 #include "libfthx.h"
 

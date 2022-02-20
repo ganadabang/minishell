@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 19:42:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/17 04:44:12 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/20 18:16:19 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,6 @@ int	mush_parser_readline(t_state *state_ref)
 	}
 	mush_parser_drop_input(&parser, &input);
 	mush_parser_init_pipeline(&state_ref->job.pipeline, &parser);
-	hx_array_cleanup(&parser.token_list);
+	free(parser.token_list.data);
 	return (0);
 }

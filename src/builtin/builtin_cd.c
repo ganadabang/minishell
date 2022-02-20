@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/19 13:44:02 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/20 14:31:24 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ int	builtin_cd(t_state *state, int argc, char *argv[])
 	old_pwd = getcwd(NULL, 0);
 	if (chdir(path_value) < 0)
 	{
-		ft_dputs(2, "mush: cd: ");
+		ft_dputs(2, "mush: ");
+		ft_dputs(2, argv[1]);
+		ft_dputs(2, ": ");
 		ft_dputendl(2, strerror(errno));
 		return (1);
 	}

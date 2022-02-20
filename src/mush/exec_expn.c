@@ -3,15 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   exec_expn.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:13 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/19 03:50:52 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/20 21:40:22 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include "sys/errno.h"
+#include "sys/stat.h"
 #include "libfthx.h"
 #include "mush/parser.h"
 // #include "mush/builtin.h"
@@ -46,8 +49,11 @@ char	*exec_expn_cmd(t_state *state_ref, char *name)
 	{
 		path_cmd = ft_strjoin(pathv[i], slash_name);
 		free(pathv[i++]);
-		if (access(path_cmd, F_OK) == 0)
-			break ;
+		{
+			stat(path_cmd, NULL);
+			if (errno != ENOENT)
+				break ;
+		}
 		free(path_cmd);
 		path_cmd = NULL;
 	}
@@ -121,7 +127,7 @@ void	exec_expn_argv(t_state *state_ref, t_array *exec_argv)
 		argv[i] = exec_expn_word(state_ref, &buffer, argv[i]);
 		if (argv[i] == NULL)
 		{
-			argv[i] = strdup("");
+			argv[i] = ft_strdup("");
 			if (argv[i] == NULL)
 				mush_fatal("malloc");
 		}

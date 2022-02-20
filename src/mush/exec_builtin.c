@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 20:54:27 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/19 02:34:46 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/20 17:49:09 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,21 @@ int	builtin_search(t_proc *proc)
 	return (0);
 }
 
-int mush_exec_builtin(t_state *state_ref)
+void	mush_exec_builtin(t_state *state_ref)
 {
 	t_proc	*proc;
 	t_array	*io_files_ref;
 	int		fd_backup[2];
-	int		ret;
 
 	proc = (t_proc *)state_ref->job.pipeline.data[0];
 	io_files_ref = &proc->io_files;
 	fd_backup[0] = dup(0);
 	fd_backup[1] = dup(1);
-	exec_io_redirect(state_ref, io_files_ref);
-	exec_expn_argv(state_ref, &proc->argv);
-	ret = proc->fn_builtin(state_ref, proc->argv.len, \
+	exec_proc_io_redirect(state_ref, io_files_ref);
+	state_ref->job.status = proc->fn_builtin(state_ref, proc->argv.len, \
 		(char **)proc->argv.data);
 	dup2(fd_backup[0], 0);
 	dup2(fd_backup[1], 1);
 	close(fd_backup[0]);
 	close(fd_backup[1]);
-	return (ret);
 }

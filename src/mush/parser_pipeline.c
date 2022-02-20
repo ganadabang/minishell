@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_pipeline.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 01:54:44 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/16 23:38:53 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/20 18:17:56 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static void	pipeline_push_proc(t_array *pipeline, t_proc **process_ref, \
 	t_token **tokens, size_t i)
 {
 	free(tokens[i]->str);
+	free(tokens[i]);
 	hx_array_push(pipeline, *process_ref);
 	*process_ref = NULL;
 	*process_ref = mush_create_simple_command();

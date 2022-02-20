@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/19 02:33:52 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/20 21:44:47 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/errno.h>
+#include <string.h>
 #include "libfthx.h"
 #include "mush/exec.h"
 #include "mush/builtin.h"
 #include "mush/signal.h"
 
-void	exec_pipe_init(t_proc **procs)
+static void	exec_proc_pipe_init(t_proc **procs, int pipe_fd[2])
 {
-	int fd_pipe[2];
-
-	pipe(fd_pipe);
-	procs[0]->stdout = fd_pipe[1];
-	procs[1]->stdin = fd_pipe[0];
+	if (pipe(pipe_fd) < 0)
+		mush_fatal("pipe");
+	procs[0]->stdout = pipe_fd[1];
+	procs[1]->stdin = pipe_fd[0];
 	return ;
 }
 
-void	exec_pipe_connect(t_proc *proc)
+static void	exec_proc_pipe_redirection(t_proc *proc, int toclose)
 {
 	if (proc->stdin != STDIN_FILENO)
 	{
@@ -41,77 +41,87 @@ void	exec_pipe_connect(t_proc *proc)
 		dup2(proc->stdout, STDOUT_FILENO);
 		close(proc->stdout);
 	}
+	close(toclose);
 	return ;
 }
 
-void	exec_check_cmd(char *name, char *argv[])
+void	exec_run_simple_command(t_state *state_ref, t_proc *proc, int toclose)
 {
-	if (!name)
-	{
-		ft_dputs(2, argv[0]);
-		ft_dputendl(2, ": command not found");
-		exit(127);
-	}
-	if (access(name, F_OK) < 0 || access(name, X_OK) < 0)
-	{
-		perror(argv[0]);
-		exit(errno);
-	}
-	ft_putendl(name);
-	return ;
-}
+	size_t	len;
+	pid_t	pid;
 
-void	mush_exec_simple_command(t_state *state_ref, t_proc *proc)
-{
-	mush_signal_restored();
-	exec_pipe_connect(proc);
-	exec_io_redirect(state_ref, &proc->io_files);
+	len = state_ref->job.pipeline.len;
 	exec_expn_argv(state_ref, &proc->argv);
-	proc->argv.data[0] = exec_expn_cmd(state_ref, proc->argv.data[0]);
-	proc->name = proc->argv.data[0];
-	exec_check_cmd(proc->name, (char **)proc->argv.data);
-	if (builtin_search(proc) == 1)
-		exit(proc->fn_builtin(state_ref, proc->argv.len, (char **)proc->argv.data));
-	execve(proc->name, (char **)proc->argv.data, (char **)state_ref->envlist.data);
+	proc->name = (char *)proc->argv.data[0];
+	if (builtin_search(proc) == 1 && len == 1)
+		mush_exec_builtin(state_ref);
+	else
+	{
+		pid = fork();
+		if (pid < 0)
+			mush_fatal("fork");
+		if (pid == 0)
+		{
+			exec_proc_pipe_redirection(proc, toclose);
+			mush_signal_restored();
+			exec_proc_io_redirect(state_ref, &proc->io_files);
+			if (proc->fn_builtin != NULL)
+				exit(proc->fn_builtin(state_ref, proc->argv.len, \
+					(char **)proc->argv.data));
+			proc->name = exec_expn_cmd(state_ref, proc->argv.data[0]);
+			if (proc->name == NULL)
+			{
+				ft_dputs(2, "mush: ");
+				ft_dputs(2, (char *)proc->argv.data[0]);
+				ft_dputs(2, ": command not found\n");
+				exit(127);
+			}
+			execve(proc->name, (char **)proc->argv.data, \
+			(char **)state_ref->envlist.data);
+			ft_dputs(2, "mush: ");
+			ft_dputs(2, proc->name);
+			ft_dputs(2, ": ");
+			ft_dputendl(2, strerror(errno));
+			if (errno == ENOEXEC || errno == EACCES)
+				exit(126);
+			exit(127);
+		}
+		proc->pid = pid;
+	}
 	return ;
 }
+
 
 void	mush_execute(t_state *state)
 {
 	t_proc		**procs;
-	pid_t		pid;
-	size_t		i;
+	int			pipe_fd[2];
 	size_t		len;
+	size_t		i;
 
-	i = 0;
-	len = state->job.pipeline.len;
 	procs = (t_proc **)state->job.pipeline.data;
-	procs[i]->name = (char *)(procs[i]->argv.data[0]);
-	if (len == 1 && builtin_search(procs[i]))
-		state->job.status = mush_exec_builtin(state);
-	else
+	pipe_fd[0] = -1;
+	len = state->job.pipeline.len;
+	i = 0;
+	while (i < len - 1)
 	{
-		while (i < len)
-		{
-			if (i + 1 < len)
-				exec_pipe_init(&procs[i]);
-			pid = fork();
-			if (pid < 0)
-				mush_fatal("fork");
-			if (pid == 0)
-				mush_exec_simple_command(state, procs[i]);
-			procs[i]->pid = pid;
-			if (i + 1 != len)
-				close(procs[i]->stdout);
-			++i;
-		}
-		if (len != 1)
-			close(procs[len - 1]->stdin);
-		state->job.status = mush_job_status_update(&state->job.pipeline);
+		exec_proc_pipe_init(&procs[i], pipe_fd);
+		exec_run_simple_command(state, procs[i], pipe_fd[0]);
+		if (procs[i]->stdin != STDIN_FILENO)
+			close(procs[i]->stdin);
+		close(procs[i]->stdout);
+		++i;
 	}
-	free(state->last_status);
-	state->last_status = ft_itoa(state->job.status);
-	if (state->last_status == NULL)
-		mush_fatal("malloc");
+	exec_run_simple_command(state, procs[i], pipe_fd[0]);
+	if (pipe_fd[0] != -1)
+		close(procs[i]->stdin);
+	state->job.status = mush_job_status_update(&state->job.pipeline);
+	if (state->job.status != 0)
+	{
+		free(state->last_status);
+		state->last_status = ft_itoa(state->job.status);
+		if (state->last_status == NULL)
+			mush_fatal("malloc");
+	}
 	return ;
 }
