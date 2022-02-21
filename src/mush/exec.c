@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 15:28:29 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:58:27 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <sys/errno.h>
 #include <string.h>
+#include <signal.h>
 #include "libfthx.h"
 #include "mush/exec.h"
 #include "mush/builtin.h"
@@ -77,7 +78,10 @@ void	exec_run_simple_command(t_state *state_ref, t_proc *proc, int toclose)
 	len = state_ref->job.pipeline.len;
 	exec_expn_argv(state_ref, &proc->argv);
 	if (builtin_search(proc) == 1 && len == 1)
+	{
 		mush_exec_builtin(state_ref);
+		kill(0, SIGCHLD);
+	}
 	else
 	{
 		pid = fork();
@@ -112,7 +116,9 @@ void	mush_execute(t_state *state)
 	exec_run_simple_command(state, procs[i], pipe_fd[0]);
 	if (pipe_fd[0] != -1)
 		close(procs[i]->stdin);
-	while (wait(NULL) != -1)
+	while (state->job.is_completed == 0)
 		continue ;
+	mush_cleanup_pipeline(&state->job.pipeline);
+	state->job.is_completed = 0;
 	return ;
 }

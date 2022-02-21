@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 13:12:54 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 14:36:34 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:31:35 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,5 @@ int	mush_error(const char *str, const char *strerr)
 	hx_buffer_putchar(&buffer, '\n');
 	write(2, buffer.data, buffer.len);
 	free(buffer.data);
-	return (1);
+	return (-1);
 }

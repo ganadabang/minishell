@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:39 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 15:24:07 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:52:14 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 #include <sys/errno.h>
 #include <sys/wait.h>
 #include <signal.h>
-#include "mush/parser.h"
-
 #include <stdio.h>
+#include "mush/parser.h"
 
 inline static int	is_interrupted(int status)
 {
@@ -26,7 +25,6 @@ inline static int	is_interrupted(int status)
 
 static void	update_status(t_proc *proc, int status)
 {
-	
 	if (WIFSIGNALED(status) == 1)
 		status = WTERMSIG(status);
 	else
@@ -53,12 +51,10 @@ int	mush_poll_status(t_array	*pipeline)
 		while (procs[i] != NULL)
 		{
 			if (wpid == procs[i]->pid)
-			{
-				update_status(procs[i], status);
 				break ;
-			}
 			++i;
 		}
+		update_status(procs[i], status);
 	}
 	write(1, "\n", 1);
 	return (128 + WTERMSIG(status));

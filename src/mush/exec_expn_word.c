@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:13 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 14:12:28 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:01:30 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,11 @@ static int	expn_argv_word(t_state *state, t_buf *buffer, char **word_ref)
 	*word_ref = exec_expn_word(state, buffer, tofree);
 	free(tofree);
 	if (*word_ref == NULL)
+	{
 		*word_ref = ft_strdup("");
-	if (*word_ref == NULL)
-		return (-1);
+		if (*word_ref == NULL)
+			return (-1);
+	}
 	return (0);
 }
 

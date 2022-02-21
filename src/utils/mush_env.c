@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 03:10:38 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 14:48:15 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:46:27 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	mush_put_env(t_state *state, char *str)
 		hx_array_push(&state->envlist, ft_strdup(str));
 		return ;
 	}
-	if (str[name_len] != '=')
+	if (str[name_len] == '\0')
 		return ;
 	free(state->envlist.data[index]);
 	state->envlist.data[index] = ft_strdup(str);

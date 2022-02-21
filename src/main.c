@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:47:55 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 15:01:08 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:07:24 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,22 @@ static void	mush_init(t_state *state_ref, char **envp)
 	return ;
 }
 
+void	sig_handler_sigchld(int signum)
+{
+	t_state	*state;
+
+	if (signum != SIGCHLD)
+		return ;
+	state = g_state;
+	state->job.status = mush_poll_status(&state->job.pipeline);
+	free(state->last_status);
+	state->last_status = ft_itoa(state->job.status);
+	if (state->last_status == NULL)
+		mush_fatal("malloc");
+	state->job.is_completed = 1;
+	return ;
+}
+
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_state	state;
@@ -53,6 +69,7 @@ int	main(int argc, char *argv[], char *envp[])
 		if (mush_parser_readline(&state) < 0)
 			continue ;
 		mush_prompt_blocked(&state.term);
+		signal(SIGCHLD, sig_handler_sigchld);
 		mush_execute(&state);
 	}
 	mush_prompt_restored(&state.term);

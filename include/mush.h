@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 17:25:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 14:09:47 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:48:43 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,13 @@ typedef struct s_file {
 typedef struct s_job {
 	t_array	pipeline;
 	int		status;
+	int		is_completed;
 }	t_job;
 
 typedef struct s_state {
 	struct termios	term;
 	t_job			job;
 	t_array			envlist;
-	char			*pwd;
-	char			*old_pwd;
 	int				exit;
 	char			*last_status;
 }	t_state;

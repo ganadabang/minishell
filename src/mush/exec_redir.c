@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:56:00 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 11:20:47 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:38:16 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,21 @@
 
 #include <stdio.h>
 
-static void	exec_expn_filename(t_state *state_ref, t_buf *buffer, t_file *file)
+static int	exec_expn_filename(t_state *state, t_buf *buffer, t_file *file)
 {
 	char		*tofree;
 
 	tofree = file->name;
-	file->name = exec_expn_word(state_ref, buffer, file->name);
+	file->name = exec_expn_word(state, buffer, file->name);
 	free(tofree);
-	return ;
+	if (file->io_type == IO_IN)
+		stat(file->name, NULL);
+	if (file->name == NULL || file->name[0] == '\0' || errno == ENOENT)
+		return (-1);
+	return (0);
 }
 
-int	exec_proc_iofile_redirect(t_state *state_ref, t_array *io_files_ref)
+int	exec_proc_iofile_redirect(t_state *state, t_array *io_files_ref)
 {
 	t_buf	buffer;
 	t_file	**files;
@@ -45,14 +49,12 @@ int	exec_proc_iofile_redirect(t_state *state_ref, t_array *io_files_ref)
 	i = 0;
 	while (files[i] != NULL)
 	{
-		if (files[i]->io_type != IO_HERE)
-			exec_expn_filename(state_ref, &buffer, files[i]);
+		if (files[i]->io_type != IO_HERE \
+			&& exec_expn_filename(state, &buffer, files[i]) < 0)
+			return (mush_error(files[i]->name, strerror(ENOENT)));
 		fd = open(files[i]->name, files[i]->oflag, 0644);
 		if (fd < 0)
-		{
-			mush_error(files[i]->name, strerror(errno));
-			return (-1);
-		}
+			return (mush_error(files[i]->name, strerror(errno)));
 		dup2(fd, files[i]->fd);
 		close(fd);
 		++i;
