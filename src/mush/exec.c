@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 12:54:26 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 14:49:01 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,7 @@
 #include "libfthx.h"
 #include "mush/exec.h"
 #include "mush/builtin.h"
-#include "mush/signal.h"
-
-t_state	*g_state;
-
-void	sig_handler_sigchld(int signum)
-{
-	t_state	*state;
-
-	if (signum != SIGCHLD)
-		return ;
-	state = g_state;
-	state->job.status = mush_poll_status(&state->job.pipeline);
-	free(state->last_status);
-	state->last_status = ft_itoa(state->job.status);
-	if (state->last_status == NULL)
-		mush_fatal("malloc");
-	mush_cleanup_pipeline(&state->job.pipeline);
-}
+#include "mush/front.h"
 
 static void	exec_proc_pipe_init(t_proc **procs, int pipe_fd[2])
 {
@@ -62,6 +45,30 @@ static void	exec_proc_pipe_redirection(t_proc *proc, int toclose)
 	return ;
 }
 
+static void	exec_run_on_child(t_state *state, t_proc *proc, int toclose)
+{
+	mush_signal_restored();
+	exec_proc_pipe_redirection(proc, toclose);
+	if (exec_proc_iofile_redirect(state, &proc->io_files) < 0)
+		exit(1);
+	if (proc->fn_builtin != NULL)
+		exit(proc->fn_builtin(state, proc->argv.len, \
+			(char **)proc->argv.data));
+	proc->name = exec_expn_cmd(state, (char *)proc->argv.data[0]);
+	if (proc->name == NULL)
+	{
+		mush_error((char *)proc->argv.data[0], "command not found");
+		exit(127);
+	}
+	execve(proc->name, (char **)proc->argv.data, \
+		(char **)state->envlist.data);
+	mush_error(proc->name, strerror(errno));
+	if (errno == ENOEXEC || errno == EACCES)
+		exit(126);
+	exit(127);
+	return ;
+}
+
 void	exec_run_simple_command(t_state *state_ref, t_proc *proc, int toclose)
 {
 	size_t	len;
@@ -77,27 +84,7 @@ void	exec_run_simple_command(t_state *state_ref, t_proc *proc, int toclose)
 		if (pid < 0)
 			mush_fatal("fork");
 		if (pid == 0)
-		{
-			mush_signal_restored();
-			exec_proc_pipe_redirection(proc, toclose);
-			if (exec_proc_iofile_redirect(state_ref, &proc->io_files) < 0)
-				exit(1);
-			if (proc->fn_builtin != NULL)
-				exit(proc->fn_builtin(state_ref, proc->argv.len, \
-					(char **)proc->argv.data));
-			proc->name = exec_expn_cmd(state_ref, (char *)proc->argv.data[0]);
-			if (proc->name == NULL)
-			{
-				mush_error((char *)proc->argv.data[0], "command not found");
-				exit(127);
-			}
-			execve(proc->name, (char **)proc->argv.data, \
-				(char **)state_ref->envlist.data);
-			mush_error(proc->name, strerror(errno));
-			if (errno == ENOEXEC || errno == EACCES)
-				exit(126);
-			exit(127);
-		}
+			exec_run_on_child(state_ref, proc, toclose);
 		proc->pid = pid;
 	}
 	return ;
@@ -110,8 +97,6 @@ void	mush_execute(t_state *state)
 	size_t		len;
 	size_t		i;
 
-	g_state = state;
-	signal(SIGCHLD, sig_handler_sigchld);
 	procs = (t_proc **)state->job.pipeline.data;
 	pipe_fd[0] = -1;
 	len = state->job.pipeline.len;
@@ -122,8 +107,7 @@ void	mush_execute(t_state *state)
 		exec_run_simple_command(state, procs[i], pipe_fd[0]);
 		if (procs[i]->stdin != STDIN_FILENO)
 			close(procs[i]->stdin);
-		close(procs[i]->stdout);
-		++i;
+		close(procs[i++]->stdout);
 	}
 	exec_run_simple_command(state, procs[i], pipe_fd[0]);
 	if (pipe_fd[0] != -1)

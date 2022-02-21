@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mush_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/07 13:12:54 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 03:23:20 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 14:36:34 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "libfthx.h"
+#include "mush.h"
 
 void	mush_fatal(const char *fn_name)
 {

@@ -6,15 +6,15 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:39 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 13:28:15 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 14:30:32 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <sys/errno.h>
 #include <sys/wait.h>
-#include "mush/parser.h"
 #include <signal.h>
+#include "mush/parser.h"
 
 #include <stdio.h>
 
@@ -46,12 +46,9 @@ int	mush_poll_status(t_array	*pipeline)
 	{
 		wpid = wait(&status);
 		if (wpid < 0)
+			return (procs[len - 1]->status);
+		if (is_interrupted(status) == 1)
 			break ;
-		if (is_interrupted(status))
-		{
-			write(1, "\n", 1);
-			return (128 + WTERMSIG(status));
-		}
 		i = 0;
 		while (i < len)
 		{
@@ -60,5 +57,6 @@ int	mush_poll_status(t_array	*pipeline)
 			++i;
 		}
 	}
-	return (procs[len - 1]->status);
+	write(1, "\n", 1);
+	return (128 + WTERMSIG(status));
 }

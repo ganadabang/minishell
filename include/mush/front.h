@@ -1,19 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.h                                           :+:      :+:    :+:   */
+/*   front.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 03:01:39 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/15 20:48:27 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 14:52:13 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SIGNAL_H
-# define SIGNAL_H
+#ifndef FRONT_H
+# define FRONT_H
 
+# include <termios.h>
+
+void	mush_prompt_interactive(struct termios *term);
+void	mush_prompt_blocked(struct termios *term);
+void	mush_prompt_restored(struct termios *term);
 void	mush_signal_set(void);
 void	mush_signal_restored(void);
 
-#endif /* SIGNAL_H */
+#endif /* FRONT_H */

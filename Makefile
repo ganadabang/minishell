@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+         #
+#    By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/02/21 02:28:12 by hyeonsok         ###   ########.fr        #
+#    Updated: 2022/02/21 14:36:18 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,8 +32,8 @@ OBJS		=	$(addprefix $(OBJDIR)/, \
 
 # ./src/mush
 OBJS		+=	$(addprefix $(OBJDIR)/, \
-				signal.o \
-				prompt.o \
+				front_signal.o \
+				front_prompt.o \
 				parser.o \
 				parser_buffer.o \
 				parser_iofile.o \
@@ -41,7 +41,8 @@ OBJS		+=	$(addprefix $(OBJDIR)/, \
 				parser_token.o \
 				parser_error.o \
 				exec.o \
-				exec_expn.o \
+				exec_expn_word.o \
+				exec_expn_cmd.o \
 				exec_redir.o \
 				exec_state.o \
 				exec_builtin.o \
@@ -59,6 +60,7 @@ OBJS		+=	$(addprefix $(OBJDIR)/, \
 
 # ./src/utils
 OBJS		+=	$(addprefix $(OBJDIR)/, \
+				mush_valid_name.o \
 				mush_error.o \
 				mush_env.o)
 

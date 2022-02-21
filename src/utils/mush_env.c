@@ -3,17 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   mush_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 03:10:38 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 02:44:01 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 14:48:15 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
 #include <stdlib.h>
 #include "libfthx.h"
 #include "mush.h"
+
+#include <string.h>
+
+static int	join_key_value(char **str_ref, char *name, char *value)
+{
+	char	*nul;
+	char	*str;
+
+	*str_ref = NULL;
+	str = (char *)malloc((ft_strlen(name) + ft_strlen(value) + 2) \
+		* sizeof(char));
+	if (str == NULL)
+		return (-1);
+	nul = stpcpy(str, name);
+	*nul = '=';
+	strcpy(++nul, value);
+	*str_ref = str;
+	return (0);
+}
+
+void	mush_set_env(t_state *state, char *name, char *value)
+{
+	int		index;
+	char	*str;
+	char	*join;
+
+	if (value == NULL)
+	{
+		join = ft_strjoin(name, "=");
+		mush_put_env(state, join);
+		free(join);
+		return ;
+	}
+	if (join_key_value(&str, name, value) < 0)
+		return ;
+	index = mush_get_env_index(state, name);
+	if (index < 0)
+	{
+		mush_put_env(state, str);
+		free(str);
+		return ;
+	}
+	free(state->envlist.data[index]);
+	state->envlist.data[index] = str;
+	return ;
+}
 
 int	mush_get_env_index(t_state *state, char *name)
 {
@@ -52,35 +97,6 @@ char	*mush_get_env(t_state *state, char *name)
 	return (value);
 }
 
-void	mush_set_env(t_state *state, char *name, char *value)
-{
-	int		index;
-	char	*str;
-	char	*nul;
-	char	*join;
-
-	if (value == NULL)
-	{
-		join = ft_strjoin(name, "=");
-		mush_put_env(state, join);
-		free(join);
-		return ;
-	}
-	str = (char *)malloc((strlen(name) + strlen(value) + 2) * sizeof(char));
-	nul = stpcpy(str, name);
-	*nul = '=';
-	strcpy(++nul, value);
-	index = mush_get_env_index(state, name);
-	if (index < 0)
-	{
-		mush_put_env(state, str);
-		free(str);
-		return ;
-	}
-	free(state->envlist.data[index]);
-	state->envlist.data[index] = str;
-}
-
 void	mush_put_env(t_state *state, char *str)
 {
 	char	*name;
@@ -93,27 +109,12 @@ void	mush_put_env(t_state *state, char *str)
 	free(name);
 	if (index < 0)
 	{
-		hx_array_push(&state->envlist, strdup(str));
+		hx_array_push(&state->envlist, ft_strdup(str));
 		return ;
 	}
 	if (str[name_len] != '=')
 		return ;
 	free(state->envlist.data[index]);
-	state->envlist.data[index] = strdup(str);
+	state->envlist.data[index] = ft_strdup(str);
 	return ;
-}
-
-int	mush_is_valid_name(char *name)
-{
-	size_t	i;
-
-	i = 0;
-	if (!ft_isalpha(name[i]) && name[i] != '_')
-		return (0);
-	while (name[++i])
-	{
-		if (!ft_isalnum(name[i]) && name[i] != '_')
-			return (0);
-	}
-	return (1);
 }

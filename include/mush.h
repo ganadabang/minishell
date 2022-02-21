@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mush.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/04 17:25:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 02:55:58 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 14:09:47 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ typedef struct s_proc {
 	int		stdin;
 	int		stdout;
 }	t_proc;
+
+t_state	*g_state;
 
 void	mush_fatal(const char *str);
 int		mush_error(const char *str, const char *strerr);

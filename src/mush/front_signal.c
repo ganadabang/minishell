@@ -1,19 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   front_signal.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 02:54:41 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/16 21:55:21 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 14:20:47 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdio.h>
 #include <signal.h>
+#include <stdlib.h>
 #include <readline/readline.h>
+#include "libfthx.h"
+#include "mush/exec.h"
 
 static void	sig_handler_int(int signum)
 {
