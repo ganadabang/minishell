@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/21 02:11:19 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 21:08:10 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,19 @@
 #include "libft.h"
 #include "mush/builtin.h"
 
+#include <stdio.h>
+
 static void	update_env_pwd(t_state *state, char *old_pwd)
 {
 	char	*pwd;
 
-	pwd = getcwd(NULL, 0);
-	if (pwd == NULL || old_pwd == NULL)
-		mush_fatal("getcwd");
 	mush_set_env(state, "OLDPWD", old_pwd);
+	ft_memset(old_pwd, 0, (ft_strlen(old_pwd) + 1));
 	free(old_pwd);
+	pwd = getcwd(NULL, 0);
+	printf("%p\n", old_pwd);
+	if (pwd == NULL)
+		mush_fatal("getcwd");
 	mush_set_env(state, "PWD", pwd);
 	free(pwd);
 	return ;
@@ -60,11 +64,15 @@ int	builtin_cd(t_state *state, int argc, char *argv[])
 		if (path_value == NULL)
 			return (1);
 	}
-	else if (argc == 2)
+	else
 		path_value = argv[1];
 	old_pwd = getcwd(NULL, 0);
+	printf("%p\n", old_pwd);
+	if (old_pwd == NULL)
+		mush_fatal("getcwd");
 	if (chdir(path_value) < 0)
 	{
+		free(old_pwd);
 		mush_error(path_value, strerror(errno));
 		return (1);
 	}
