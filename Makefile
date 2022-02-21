@@ -6,7 +6,7 @@
 #    By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/02/21 14:36:18 by hyeonsok         ###   ########.fr        #
+#    Updated: 2022/02/21 15:01:59 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ OBJS		+=	$(addprefix $(OBJDIR)/, \
 				exec_expn_word.o \
 				exec_expn_cmd.o \
 				exec_redir.o \
-				exec_state.o \
+				exec_poll.o \
 				exec_builtin.o \
 				exec_cleanup.o)
 

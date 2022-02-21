@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_state.c                                       :+:      :+:    :+:   */
+/*   exec_poll.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:39 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 14:30:32 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:24:07 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ inline static int	is_interrupted(int status)
 
 static void	update_status(t_proc *proc, int status)
 {
-	status = WEXITSTATUS(status);
+	
 	if (WIFSIGNALED(status) == 1)
 		status = WTERMSIG(status);
+	else
+		status = WEXITSTATUS(status);
 	proc->status = status;
 }
 
@@ -37,23 +39,24 @@ int	mush_poll_status(t_array	*pipeline)
 	t_proc	**procs;
 	int		status;
 	int		wpid;
-	size_t	len;
 	size_t	i;
 
 	procs = (t_proc **)pipeline->data;
-	len = pipeline->len;
 	while (1)
 	{
 		wpid = wait(&status);
 		if (wpid < 0)
-			return (procs[len - 1]->status);
+			return (procs[pipeline->len - 1]->status);
 		if (is_interrupted(status) == 1)
 			break ;
 		i = 0;
-		while (i < len)
+		while (procs[i] != NULL)
 		{
 			if (wpid == procs[i]->pid)
+			{
 				update_status(procs[i], status);
+				break ;
+			}
 			++i;
 		}
 	}

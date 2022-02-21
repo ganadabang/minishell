@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 14:06:43 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 14:30:42 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:31:53 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,10 @@ static void	exec_expn_check_path(char **cmd_path_ref, char *path, char *name)
 	size_t	i;
 
 	slash_name = ft_strjoin("/", name);
-	free(name);
 	pathv = ft_split(path, ":");
 	if (slash_name == NULL || pathv == NULL)
 		mush_fatal("malloc");
-	cmd_path = *cmd_path_ref;
+	cmd_path = NULL;
 	i = 0;
 	while (pathv[i] != NULL)
 	{
@@ -41,6 +40,7 @@ static void	exec_expn_check_path(char **cmd_path_ref, char *path, char *name)
 	}
 	ft_strvfree(pathv);
 	free(slash_name);
+	*cmd_path_ref = cmd_path;
 	return ;
 }
 

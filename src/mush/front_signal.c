@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 02:54:41 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 14:20:47 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 15:11:05 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,6 @@
 #include <readline/readline.h>
 #include "libfthx.h"
 #include "mush/exec.h"
-
-static void	sig_handler_int(int signum)
-{
-	if (signum == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_replace_line("", 1);
-		rl_on_new_line();
-		rl_redisplay();
-	}
-	return ;
-}
 
 static void	sig_handler_winch(int signum)
 {
@@ -52,7 +40,6 @@ void	mush_signal_restored(void)
 void	mush_signal_set(void)
 {
 	signal(SIGWINCH, sig_handler_winch);
-	signal(SIGINT, sig_handler_int);
 	signal(SIGCHLD, SIG_DFL);
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
