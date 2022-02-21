@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libfthx.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/11 14:31:42 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/11 14:42:32 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:49:43 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 /*
 ** My libft extension
 */
-#include "libft.h"
-#include "libhx/array.h"
-#include "libhx/buffer.h"
+# include "libft.h"
+# include "libhx/array.h"
+# include "libhx/buffer.h"
 
 #endif /* LIBFTX_H */

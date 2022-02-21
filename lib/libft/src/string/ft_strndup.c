@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 13:05:46 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/11 16:43:44 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:43:28 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "libft/string.h"
 
-char *ft_strndup(char *str, size_t idx)
+char	*ft_strndup(char *str, size_t idx)
 {
-	char *tmp;
-	size_t i;
+	char	*tmp;
+	size_t	i;
 
 	i = 0;
 	while (i < idx && str[i])
@@ -26,5 +26,5 @@ char *ft_strndup(char *str, size_t idx)
 		return (NULL);
 	ft_memcpy(tmp, str, i);
 	tmp[i] = '\0';
-	return tmp;
+	return (tmp);
 }

@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   array.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 21:08:07 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/19 00:14:12 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:49:21 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ARRAY_H
 # define ARRAY_H
 
-#include "stddef.h"
+# include <stddef.h>
 
 typedef struct s_array {
 	void	**data;

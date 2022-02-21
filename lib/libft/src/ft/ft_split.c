@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/30 20:28:18 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/12 21:01:28 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:39:17 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static char	**fill_tokarr(const char *input, const char *sep, char **tokarr)
 	char	*token;
 	char	*copy;
 	int		i;
-	
+
 	if (!tokarr)
 		return (NULL);
 	copy = ft_strdup(input);
@@ -68,7 +68,7 @@ char	**init_tokarr(const char *input, const char *sep)
 {
 	char	**tokarr;
 	int		count;
-	
+
 	if (!input)
 		return (NULL);
 	count = get_count(input, sep);

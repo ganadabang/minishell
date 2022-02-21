@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/25 14:51:45 by SSONG             #+#    #+#             */
-/*   Updated: 2022/02/10 21:20:30 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:43:41 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*ft_strnstr(const char *str, const char *substr, size_t len)
 {
 	char	*s;
 	size_t	sublen;
-	
+
 	sublen = ft_strlen(substr);
 	len -= sublen;
 	while (len > 0)

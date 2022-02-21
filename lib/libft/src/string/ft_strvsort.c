@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strvsort.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/10 16:52:33 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/21 03:26:37 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:44:01 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_strvsort(char **str)
 	int	i;
 	int	j;
 	int	n;
-	int m;
+	int	m;
 
 	j = ft_strvlen(str);
 	while (--j)

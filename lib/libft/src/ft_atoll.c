@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoll.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 13:57:08 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 03:26:51 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:37:59 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ long long	ft_atoll(const char *str)
 	int					sign;
 
 	while ((*str >= '\t' && *str <= '\r') || *str == ' ')
-	{
 		++str;
-	};
 	if (*str == '+' || *str == '-')
 	{
 		sign = 44 - *str;

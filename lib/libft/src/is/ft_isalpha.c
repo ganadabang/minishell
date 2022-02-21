@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/25 16:57:45 by SSONG             #+#    #+#             */
-/*   Updated: 2022/02/21 03:27:31 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:39:45 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 int	ft_isalpha(int c)
 {
 	return (((unsigned char)c >= 'a' && (unsigned char)c <= 'z')
-			|| ((unsigned char)c >= 'A' && (unsigned char)c <= 'Z'));
+		|| ((unsigned char)c >= 'A' && (unsigned char)c <= 'Z'));
 }

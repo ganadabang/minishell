@@ -12,9 +12,9 @@
 
 #include "libft/string.h"
 
-size_t	ft_chrspn(const char *str, int c) 
+size_t	ft_chrspn(const char *str, int c)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (str[i] != '\0')

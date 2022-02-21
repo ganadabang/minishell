@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   array.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 21:16:00 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 12:41:34 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:39:28 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	hx_array_push(t_array *array, void *value)
 	array->data[array->len] = value;
 	array->len += 1;
 	return (1);
-
 }
 
 void	hx_array_cleanup(t_array *array)

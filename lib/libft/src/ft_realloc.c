@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 00:37:47 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 00:48:38 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:38:11 by gpaeng           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*ft_realloc(void *ptr, size_t size)
 {
 	void	*new;
 
-	new = (void  *)malloc(size);
+	new = (void *)malloc(size);
 	if (new == NULL)
 		return (NULL);
 	ft_memcpy(new, ptr, size);
