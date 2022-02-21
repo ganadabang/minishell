@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 17:41:10 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 19:47:59 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ static void	exec_run_simple_command(t_state *state_ref, t_proc *proc, \
 	if (builtin_search(proc) == 1 && len == 1)
 	{
 		mush_exec_builtin(state_ref);
-		kill(0, SIGCHLD);
+		state_ref->job.is_completed = 1;
+		return ;
 	}
 	else
 	{

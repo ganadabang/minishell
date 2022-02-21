@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:39 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 17:00:21 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 19:47:06 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int	mush_poll_status(t_array	*pipeline)
 		}
 		update_status(procs[i], status);
 	}
+	while (wait(NULL) != -1)
+		continue ;
 	write(1, "\n", 1);
 	return (128 + WTERMSIG(status));
 }
