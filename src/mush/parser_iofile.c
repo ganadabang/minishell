@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 02:02:14 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/20 19:42:13 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 17:07:43 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include "libfthx.h"
-#include "mush.h"
+#include "mush/parser.h"
 
 static void	infile_init(t_file *file, char *redir_op)
 {

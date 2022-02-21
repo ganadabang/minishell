@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:12 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/21 00:08:21 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:57:09 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include <stdio.h>
 #include "libfthx.h"
 #include "mush/builtin.h"
-//To be removed
-#include <string.h>
 
 static void	mush_export_print(t_state *state)
 {
@@ -44,7 +42,7 @@ static void	mush_export_print(t_state *state)
 	hx_buffer_cleanup(&buffer);
 }
 
-void	mush_export_update(t_state *state, int argc, char *argv[])
+static void	mush_export_update(t_state *state, int argc, char *argv[])
 {
 	int	i;
 

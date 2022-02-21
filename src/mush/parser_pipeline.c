@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/05 01:54:44 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 14:29:34 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 17:45:08 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,5 @@ void	mush_parser_init_pipeline(t_array *pipeline, t_parser *parser)
 	free(tokens[i]->str);
 	free(tokens[i]);
 	hx_array_push(pipeline, process);
+	return ;
 }

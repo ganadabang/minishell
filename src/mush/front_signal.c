@@ -6,17 +6,14 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 02:54:41 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 15:11:05 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 17:05:18 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
 #include <signal.h>
-#include <stdlib.h>
+#include <stdio.h>
 #include <readline/readline.h>
-#include "libfthx.h"
-#include "mush/exec.h"
+#include "mush/front.h"
 
 static void	sig_handler_winch(int signum)
 {

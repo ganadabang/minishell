@@ -6,15 +6,15 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/21 14:06:43 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 15:31:53 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:59:08 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <sys/errno.h>
-#include "libfthx.h"
-#include "mush.h"
+#include "libft.h"
+#include "mush/exec.h"
 
 static void	exec_expn_check_path(char **cmd_path_ref, char *path, char *name)
 {

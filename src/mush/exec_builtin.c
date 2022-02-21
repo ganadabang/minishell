@@ -6,14 +6,14 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 20:54:27 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 15:22:21 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:58:17 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include "libfthx.h"
 #include "mush/builtin.h"
 #include "mush/exec.h"
-#include "libfthx.h"
 
 static const struct s_builtin	g_builtins[] = {\
 	{"cd", builtin_cd}, \

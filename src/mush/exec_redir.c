@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:56:00 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 16:38:16 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 17:00:49 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <sys/errno.h>
-#include "libft.h"
+#include "libfthx.h"
 #include "mush/exec.h"
-
-#include <stdio.h>
 
 static int	exec_expn_filename(t_state *state, t_buf *buffer, t_file *file)
 {

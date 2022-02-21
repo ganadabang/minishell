@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/16 22:04:01 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/19 02:33:42 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 17:06:53 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libfthx.h"
 #include "mush/parser.h"
 
 static const char	*g_syntex_error_prefix = \

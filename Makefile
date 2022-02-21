@@ -6,13 +6,12 @@
 #    By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/02/21 15:01:59 by hyeonsok         ###   ########.fr        #
+#    Updated: 2022/02/21 17:30:49 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g3 
-# CFLAGS = -g3 
+CC = cc
+CFLAGS = -Wall -Werror -Wextra
 
 RM = rm -f
 

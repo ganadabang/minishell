@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+         #
+#    By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/26 11:13:05 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/02/21 00:42:48 by hyeonsok         ###   ########.fr        #
+#    Updated: 2022/02/21 17:30:40 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libfthx.a
 
-CC = gcc
+CC = cc
 CFLAGS = -Wall -Werror -Wextra
 INCLUDE_PATH = -I include
 
@@ -75,7 +75,8 @@ ft_strpbrk.c \
 ft_strtok.c \
 ft_strvfree.c \
 ft_strvlen.c \
-ft_strvsort.c)
+ft_strvsort.c \
+ft_stpcpy.c)
 
 SRCS	+=	$(addprefix src/ft/, \
 ft_itoa.c \

@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cleanup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/15 19:24:30 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 00:29:51 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 16:58:41 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <unistd.h>
 #include "libfthx.h"
-#include "mush.h"
+#include "mush/exec.h"
 
 static void	cleanup_argv(t_array *exec_argv)
 {

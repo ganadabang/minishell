@@ -6,20 +6,19 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 15:58:27 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 17:41:10 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
+#include <signal.h>
 #include <sys/errno.h>
 #include <string.h>
-#include <signal.h>
 #include "libfthx.h"
-#include "mush/exec.h"
-#include "mush/builtin.h"
 #include "mush/front.h"
+#include "mush/builtin.h"
+#include "mush/exec.h"
 
 static void	exec_proc_pipe_init(t_proc **procs, int pipe_fd[2])
 {
@@ -70,7 +69,8 @@ static void	exec_run_on_child(t_state *state, t_proc *proc, int toclose)
 	return ;
 }
 
-void	exec_run_simple_command(t_state *state_ref, t_proc *proc, int toclose)
+static void	exec_run_simple_command(t_state *state_ref, t_proc *proc, \
+	int toclose)
 {
 	size_t	len;
 	pid_t	pid;

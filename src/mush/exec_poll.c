@@ -6,15 +6,12 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:39 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 16:52:14 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 17:00:21 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <sys/errno.h>
 #include <sys/wait.h>
-#include <signal.h>
-#include <stdio.h>
 #include "mush/parser.h"
 
 inline static int	is_interrupted(int status)

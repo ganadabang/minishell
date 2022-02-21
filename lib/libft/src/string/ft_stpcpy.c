@@ -1,36 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_pwd.c                                      :+:      :+:    :+:   */
+/*   ft_stpcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/01 16:32:39 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/21 16:57:23 by hyeonsok         ###   ########.fr       */
+/*   Created: 2022/02/21 17:11:53 by hyeonsok          #+#    #+#             */
+/*   Updated: 2022/02/21 17:18:31 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include "libft.h"
-#include "mush/builtin.h"
+#include "libft/string.h"
 
-int	builtin_pwd(t_state *state, int argc, char *argv[])
+char	*ft_stpcpy(char *dst, const char *src)
 {
-	char	*pwd;
+	size_t	len;
 
-	(void)state;
-	(void)argv;
-	if (argc > 1)
-	{
-		ft_dputs(2, "pwd: too many arguments\n");
-		return (1);
-	}
-	pwd = getcwd(NULL, 0);
-	if (pwd == NULL)
-		mush_fatal("getcwd");
-	ft_putendl(pwd);
-	free(pwd);
-	return (0);
+	len = ft_strlen(src);
+	ft_memcpy(dst, src, len + 1);
+	return (dst + len);
 }

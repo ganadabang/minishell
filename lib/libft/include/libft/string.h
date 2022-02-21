@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gpaeng <gpaeng@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/04 21:18:39 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 13:49:32 by gpaeng           ###   ########.fr       */
+/*   Updated: 2022/02/21 17:18:57 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ char	*ft_strtok(const char *str, const char *sep);
 void	ft_strvsort(char **strv);
 size_t	ft_strvlen(char **strv);
 void	ft_strvfree(char **strv);
+char	*ft_stpcpy(char *dst, const char *src);
 
 #endif /* string.h */

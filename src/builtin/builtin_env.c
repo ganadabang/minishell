@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:28:29 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/19 05:08:02 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 17:33:03 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdio.h>
 #include <string.h>
-#include "libft.h"
-#include "mush.h"
+#include "libfthx.h"
+#include "mush/builtin.h"
 
 static void	mush_print_env(t_array *envlist_ref)
 {
@@ -31,7 +31,7 @@ static void	mush_print_env(t_array *envlist_ref)
 	{
 		if (ft_strchr(vars[i], '=') != NULL)
 		{
-			hx_buffer_putstr(&buffer, vars[i], strlen(vars[i]));
+			hx_buffer_putstr(&buffer, vars[i], ft_strlen(vars[i]));
 			hx_buffer_putchar(&buffer, '\n');
 		}
 		++i;

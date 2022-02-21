@@ -6,15 +6,13 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 03:10:38 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 16:46:27 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 17:19:59 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "libfthx.h"
+#include "libft.h"
 #include "mush.h"
-
-#include <string.h>
 
 static int	join_key_value(char **str_ref, char *name, char *value)
 {
@@ -26,9 +24,9 @@ static int	join_key_value(char **str_ref, char *name, char *value)
 		* sizeof(char));
 	if (str == NULL)
 		return (-1);
-	nul = stpcpy(str, name);
+	nul = ft_stpcpy(str, name);
 	*nul = '=';
-	strcpy(++nul, value);
+	ft_memcpy(++nul, value, ft_strlen(value));
 	*str_ref = str;
 	return (0);
 }

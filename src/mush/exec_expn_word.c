@@ -6,19 +6,19 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:13 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 16:01:30 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 17:40:01 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include "sys/errno.h"
 #include "sys/stat.h"
 #include "libfthx.h"
-#include "mush/parser.h"
+#include "mush/exec.h"
 
-size_t	exec_expn_buffer_putenv(t_state *state_ref, t_buf *buffer, char *word)
+static size_t	exec_expn_buffer_putenv(t_state *state_ref, \
+	t_buf *buffer, char *word)
 {
 	char	*key;
 	char	*value;
@@ -34,6 +34,22 @@ size_t	exec_expn_buffer_putenv(t_state *state_ref, t_buf *buffer, char *word)
 		value_len = ft_strlen(value);
 	hx_buffer_putstr(buffer, value, value_len);
 	return (key_len);
+}
+
+static int	expn_argv_word(t_state *state, t_buf *buffer, char **word_ref)
+{
+	char	*tofree;
+
+	tofree = *word_ref;
+	*word_ref = exec_expn_word(state, buffer, tofree);
+	free(tofree);
+	if (*word_ref == NULL)
+	{
+		*word_ref = ft_strdup("");
+		if (*word_ref == NULL)
+			return (-1);
+	}
+	return (0);
 }
 
 char	*exec_expn_word(t_state *state_ref, t_buf *buffer, char *word)
@@ -59,22 +75,6 @@ char	*exec_expn_word(t_state *state_ref, t_buf *buffer, char *word)
 			break ;
 	}
 	return (hx_buffer_withdraw(buffer));
-}
-
-static int	expn_argv_word(t_state *state, t_buf *buffer, char **word_ref)
-{
-	char	*tofree;
-
-	tofree = *word_ref;
-	*word_ref = exec_expn_word(state, buffer, tofree);
-	free(tofree);
-	if (*word_ref == NULL)
-	{
-		*word_ref = ft_strdup("");
-		if (*word_ref == NULL)
-			return (-1);
-	}
-	return (0);
 }
 
 void	exec_expn_argv(t_state *state_ref, t_array *exec_argv)
