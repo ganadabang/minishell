@@ -27,7 +27,6 @@ static void	update_env_pwd(t_state *state, char *old_pwd)
 	ft_memset(old_pwd, 0, (ft_strlen(old_pwd) + 1));
 	free(old_pwd);
 	pwd = getcwd(NULL, 0);
-	printf("%p\n", old_pwd);
 	if (pwd == NULL)
 		mush_fatal("getcwd");
 	mush_set_env(state, "PWD", pwd);
@@ -67,7 +66,6 @@ int	builtin_cd(t_state *state, int argc, char *argv[])
 	else
 		path_value = argv[1];
 	old_pwd = getcwd(NULL, 0);
-	printf("%p\n", old_pwd);
 	if (old_pwd == NULL)
 		mush_fatal("getcwd");
 	if (chdir(path_value) < 0)

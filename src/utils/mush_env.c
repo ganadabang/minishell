@@ -26,7 +26,7 @@ static int	join_key_value(char **str_ref, char *name, char *value)
 		return (-1);
 	nul = ft_stpcpy(str, name);
 	*nul = '=';
-	ft_memcpy(++nul, value, ft_strlen(value));
+	ft_memcpy(++nul, value, ft_strlen(value) + 1);
 	*str_ref = str;
 	return (0);
 }
