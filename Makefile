@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+         #
+#    By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/25 19:17:03 by hyeonsok          #+#    #+#              #
-#    Updated: 2022/02/21 17:30:49 by hyeonsok         ###   ########.fr        #
+#    Updated: 2022/02/21 23:47:20 by hyeonsok         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g3
 
 RM = rm -f
 
@@ -49,12 +49,12 @@ OBJS		+=	$(addprefix $(OBJDIR)/, \
 
 # ./src/builtin
 OBJS		+=	$(addprefix $(OBJDIR)/, \
-				builtin_cd.o		\
-				builtin_echo.o	\
-				builtin_env.o	\
-				builtin_exit.o	\
-				builtin_export.o	\
-				builtin_pwd.o	\
+				builtin_cd.o \
+				builtin_echo.o \
+				builtin_env.o \
+				builtin_exit.o \
+				builtin_export.o \
+				builtin_pwd.o \
 				builtin_unset.o)
 
 # ./src/utils

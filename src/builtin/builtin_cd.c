@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 14:30:14 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/21 21:08:10 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 23:39:26 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void	update_env_pwd(t_state *state, char *old_pwd)
 	char	*pwd;
 
 	mush_set_env(state, "OLDPWD", old_pwd);
-	ft_memset(old_pwd, 0, (ft_strlen(old_pwd) + 1));
 	free(old_pwd);
 	pwd = getcwd(NULL, 0);
 	if (pwd == NULL)
@@ -34,7 +33,7 @@ static void	update_env_pwd(t_state *state, char *old_pwd)
 	return ;
 }
 
-static char	*get_home_path(t_state *state)
+static int	get_home_path(t_state *state, char **path_value_ref)
 {
 	char	*path_value;
 
@@ -42,9 +41,10 @@ static char	*get_home_path(t_state *state)
 	if (path_value == NULL)
 	{
 		mush_error("cd", "HOME not set");
-		return (NULL);
+		return (-1);
 	}
-	return (path_value);
+	*path_value_ref = path_value;
+	return (0);
 }
 
 int	builtin_cd(t_state *state, int argc, char *argv[])
@@ -54,16 +54,12 @@ int	builtin_cd(t_state *state, int argc, char *argv[])
 
 	if (argc > 2)
 	{
-		mush_error("cd", "to many arguments\n");
+		mush_error("cd", "to many arguments");
 		return (1);
 	}
-	if (argc == 1)
-	{
-		path_value = get_home_path(state);
-		if (path_value == NULL)
-			return (1);
-	}
-	else
+	if (argc == 1 && get_home_path(state, &path_value) < 0)
+		return (1);
+	else if (argc == 2)
 		path_value = argv[1];
 	old_pwd = getcwd(NULL, 0);
 	if (old_pwd == NULL)

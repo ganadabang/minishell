@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_poll.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:39 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 19:47:06 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 23:19:34 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,10 @@ int	mush_poll_status(t_array	*pipeline)
 		if (is_interrupted(status) == 1)
 			break ;
 		i = 0;
-		while (procs[i] != NULL)
-		{
-			if (wpid == procs[i]->pid)
-				break ;
+		while (procs[i] != NULL && wpid != procs[i]->pid)
 			++i;
-		}
-		update_status(procs[i], status);
+		if (procs[i] != NULL)
+			update_status(procs[i], status);
 	}
 	while (wait(NULL) != -1)
 		continue ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:31:28 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 19:47:59 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/22 00:03:50 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,22 @@ static void	exec_run_on_child(t_state *state, t_proc *proc, int toclose)
 	return ;
 }
 
-static void	exec_run_simple_command(t_state *state_ref, t_proc *proc, \
+static void	exec_run_simple_command(t_state *state, t_proc *proc, \
 	int toclose)
 {
 	size_t	len;
 	pid_t	pid;
 
-	len = state_ref->job.pipeline.len;
-	exec_expn_argv(state_ref, &proc->argv);
+	len = state->job.pipeline.len;
+	exec_expn_argv(state, &proc->argv);
 	if (builtin_search(proc) == 1 && len == 1)
 	{
-		mush_exec_builtin(state_ref);
-		state_ref->job.is_completed = 1;
+		mush_exec_builtin(state);
+		free(state->last_status);
+		state->last_status = ft_itoa(state->job.status);
+		if (state->last_status == NULL)
+			mush_fatal("malloc");
+		state->job.is_completed = 1;
 		return ;
 	}
 	else
@@ -89,7 +93,7 @@ static void	exec_run_simple_command(t_state *state_ref, t_proc *proc, \
 		if (pid < 0)
 			mush_fatal("fork");
 		if (pid == 0)
-			exec_run_on_child(state_ref, proc, toclose);
+			exec_run_on_child(state, proc, toclose);
 		proc->pid = pid;
 	}
 	return ;
