@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 20:54:27 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 02:57:47 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 11:24:54 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	mush_exec_builtin(t_state *state_ref)
 	io_files_ref = &proc->io_files;
 	fd_backup[0] = dup(0);
 	fd_backup[1] = dup(1);
-	if (exec_proc_io_redirect(state_ref, io_files_ref) != 0)
+	if (exec_proc_iofile_redirect(state_ref, io_files_ref) < 0)
 	{
 		state_ref->job.status = 1;
 		return ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/27 18:47:55 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 01:43:16 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 12:46:09 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	main(int argc, char *argv[], char *envp[])
 			continue ;
 		mush_prompt_blocked(&state.term);
 		mush_execute(&state);
-		mush_cleanup_pipeline(&state.job.pipeline);
 	}
 	mush_prompt_restored(&state.term);
 	printf("exit\n");

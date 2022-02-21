@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redir.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:56:00 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 03:19:16 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 11:20:47 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,20 @@
 
 #include <stdio.h>
 
-int	exec_proc_io_redirect(t_state *state_ref, t_array *io_files_ref)
+static void	exec_expn_filename(t_state *state_ref, t_buf *buffer, t_file *file)
+{
+	char		*tofree;
+
+	tofree = file->name;
+	file->name = exec_expn_word(state_ref, buffer, file->name);
+	free(tofree);
+	return ;
+}
+
+int	exec_proc_iofile_redirect(t_state *state_ref, t_array *io_files_ref)
 {
 	t_buf	buffer;
 	t_file	**files;
-	char	*tofree;
 	int		fd;
 	size_t	i;
 
@@ -37,19 +46,14 @@ int	exec_proc_io_redirect(t_state *state_ref, t_array *io_files_ref)
 	while (files[i] != NULL)
 	{
 		if (files[i]->io_type != IO_HERE)
-		{
-			tofree = files[i]->name;
-			files[i]->name = exec_expn_word(state_ref, &buffer, files[i]->name);
-			free(tofree);
-			stat(files[i]->name, NULL);
-			if (errno == ENOENT || errno == EFAULT)
-				return (mush_error(files[i++]->name, strerror(ENOENT)));
-		}
+			exec_expn_filename(state_ref, &buffer, files[i]);
 		fd = open(files[i]->name, files[i]->oflag, 0644);
 		if (fd < 0)
-			mush_fatal("open");
-		if (dup2(fd, files[i]->fd) < 0)
-			mush_fatal("dup2");
+		{
+			mush_error(files[i]->name, strerror(errno));
+			return (-1);
+		}
+		dup2(fd, files[i]->fd);
 		close(fd);
 		++i;
 	}

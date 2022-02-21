@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_state.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:39 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 01:45:26 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/21 13:28:15 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,25 @@
 #include <sys/errno.h>
 #include <sys/wait.h>
 #include "mush/parser.h"
+#include <signal.h>
 
 #include <stdio.h>
 
-int	mush_job_status_update(t_array	*pipeline_ref)
+inline static int	is_interrupted(int status)
+{
+	return (WIFSIGNALED(status) == 1 \
+		&& (WTERMSIG(status) == SIGINT || WTERMSIG(status) == SIGQUIT));
+}
+
+static void	update_status(t_proc *proc, int status)
+{
+	status = WEXITSTATUS(status);
+	if (WIFSIGNALED(status) == 1)
+		status = WTERMSIG(status);
+	proc->status = status;
+}
+
+int	mush_poll_status(t_array	*pipeline)
 {
 	t_proc	**procs;
 	int		status;
@@ -25,31 +40,23 @@ int	mush_job_status_update(t_array	*pipeline_ref)
 	size_t	len;
 	size_t	i;
 
-	procs = (t_proc **)pipeline_ref->data;
-	len = pipeline_ref->len;
-	status = 0;
+	procs = (t_proc **)pipeline->data;
+	len = pipeline->len;
 	while (1)
 	{
 		wpid = wait(&status);
 		if (wpid < 0)
 			break ;
+		if (is_interrupted(status))
+		{
+			write(1, "\n", 1);
+			return (128 + WTERMSIG(status));
+		}
 		i = 0;
 		while (i < len)
 		{
 			if (wpid == procs[i]->pid)
-			{	
-				if (WIFSIGNALED(status) == 1)
-				{
-					if (WTERMSIG(status) == SIGINT \
-						|| WTERMSIG(status) == SIGQUIT)
-					{
-						procs[i]->status = 128 + WTERMSIG(status);
-						write(1, "\n", 1);
-						return (procs[len - 1]->status);
-					}
-				}
-				procs[i]->status = WEXITSTATUS(status);
-			}
+				update_status(procs[i], status);
 			++i;
 		}
 	}
