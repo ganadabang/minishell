@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_poll.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonsok <hyeonsok@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 22:50:39 by hyeonsok          #+#    #+#             */
-/*   Updated: 2022/02/21 23:19:34 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/23 16:07:11 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,18 @@
 #include <sys/wait.h>
 #include "mush/parser.h"
 
-inline static int	is_interrupted(int status)
-{
-	return (WIFSIGNALED(status) == 1 \
-		&& (WTERMSIG(status) == SIGINT || WTERMSIG(status) == SIGQUIT));
-}
-
-static void	update_status(t_proc *proc, int status)
+static int	update_status(t_proc *proc, int status)
 {
 	if (WIFSIGNALED(status) == 1)
-		status = WTERMSIG(status);
+	{
+		if (WTERMSIG(status) == SIGINT || WTERMSIG(status) == SIGQUIT)
+			write(1, "\n", 1);
+		status = 128 + WTERMSIG(status);
+	}
 	else
 		status = WEXITSTATUS(status);
 	proc->status = status;
+	return (1);
 }
 
 int	mush_poll_status(t_array	*pipeline)
@@ -41,17 +40,14 @@ int	mush_poll_status(t_array	*pipeline)
 	{
 		wpid = wait(&status);
 		if (wpid < 0)
-			return (procs[pipeline->len - 1]->status);
-		if (is_interrupted(status) == 1)
 			break ;
 		i = 0;
 		while (procs[i] != NULL && wpid != procs[i]->pid)
 			++i;
-		if (procs[i] != NULL)
-			update_status(procs[i], status);
+		if (procs[i] != NULL && !update_status(procs[i], status))
+			break ;
 	}
 	while (wait(NULL) != -1)
 		continue ;
-	write(1, "\n", 1);
-	return (128 + WTERMSIG(status));
+	return (procs[pipeline->len - 1]->status);
 }
