@@ -6,7 +6,7 @@
 /*   By: hyeonsok <hyeonsok@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 14:53:12 by gpaeng            #+#    #+#             */
-/*   Updated: 2022/02/21 16:57:09 by hyeonsok         ###   ########.fr       */
+/*   Updated: 2022/02/23 16:26:59 by hyeonsok         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ static void	mush_export_print(t_state *state)
 	hx_buffer_cleanup(&buffer);
 }
 
-static void	mush_export_update(t_state *state, int argc, char *argv[])
+static void	mush_export_update(t_state *state, int argc, char *argv[], \
+	int *result)
 {
 	int	i;
 
@@ -54,6 +55,7 @@ static void	mush_export_update(t_state *state, int argc, char *argv[])
 			ft_dputs(2, "mush: export: `");
 			ft_dputs(2, argv[i]);
 			ft_dputs(2, "': not a valid identifier\n");
+			*result = 1;
 		}
 		else
 		{
@@ -66,9 +68,12 @@ static void	mush_export_update(t_state *state, int argc, char *argv[])
 
 int	builtin_export(t_state *state, int argc, char *argv[])
 {
+	int	result;
+
+	result = 0;
 	if (argc == 1)
 		mush_export_print(state);
 	else if (argc >= 2)
-		mush_export_update(state, argc, argv);
-	return (0);
+		mush_export_update(state, argc, argv, &result);
+	return (result);
 }
